@@ -1,57 +1,65 @@
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 import { useState } from "react";
+import LoginModal from "./components/LoginModal";
+import RegisterModal from "./components/RegisterModal";
 import LanguageModal from "./components/LanguageModal";
+
+
+
 
 export default function App() {
   const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+
 
   return (
     <div className="min-h-screen bg-[#f1f5f9]">
       {/* Üst Menü */}
       <header className="flex justify-between items-center px-10 py-6 bg-white shadow-md">
-        <div className="text-2xl font-bold text-[#3620D9]">HotelBooking</div>
+  <div className="text-2xl font-bold text-[#3620D9]">HotelBooking</div>
 
-        <nav className="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <a href="#" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">
-            Oteller
-          </a>
-          <a href="#" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">
-            Turlar
-          </a>
-          <a href="#" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">
-            Deneyimler
-          </a>
-          <a href="#" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">
-            Favoriler
-          </a>
-          <a href="#" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">
-            İletişim
-          </a>
-        </nav>
+  {/* orta menü */}
+  <nav className="hidden md:flex space-x-8 text-gray-700 font-medium">
+    {/* ...linkler... */}
+  </nav>
 
-        <div className="flex items-center space-x-4">
-          {/* Dil & Para */}
-          <button
-            onClick={() => setOpen(true)}
-            className="flex items-center space-x-2 border px-3 py-2 rounded-md hover:bg-gray-100 transition"
-          >
-            <Globe className="w-4 h-4" />
-            <span>TR · TL</span>
-          </button>
+  {/* >>> BURADAN AŞAĞISI: düzeltilmiş buton bölümü <<< */}
+  <div className="flex items-center space-x-4">
+    {/* dil & para */}
+    <button
+      onClick={() => setOpen(true)}
+      className="flex items-center space-x-2 border px-3 py-2 rounded-md hover:bg-gray-100 transition"
+    >
+      <Globe className="w-4 h-4" />
+      <span>TR · TL</span>
+    </button>
 
-          <Button variant="outline">Giriş Yap</Button>
-          <Button className="bg-[#3620D9] hover:bg-[#4230FF] text-white">
-            Kaydol
-          </Button>
-        </div>
-      </header>
+    {/* Giriş dropdown + overlayi bu relative içinde konumlanır */}
+    <div className="relative">
+  <Button variant="outline" onClick={() => setLoginOpen(true)}>
+    Giriş Yap
+  </Button>
+  <LoginModal open={loginOpen} setOpen={setLoginOpen} />
+</div>
+
+<div className="relative">
+  <Button
+    className="bg-[#3620D9] hover:bg-[#4230FF] text-white"
+    onClick={() => setRegisterOpen(true)}
+  >
+    Kaydol
+  </Button>
+  <RegisterModal open={registerOpen} setOpen={setRegisterOpen} />
+</div>
+  </div> {/* <<< EKSİK OLAN KAPANIŞ BUYDU */}
+</header>
+
 
       {/* Modal */}
-      <LanguageModal open={open} setOpen={setOpen} />
-
-      {/* Hero Alanı */}
-      <section className="relative">
+ <LanguageModal open={open} setOpen={setOpen} /> 
+<section className="relative">
         <div
           className="w-full h-[500px] bg-cover bg-center"
           style={{
