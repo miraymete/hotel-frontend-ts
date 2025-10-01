@@ -1,69 +1,163 @@
-# React + TypeScript + Vite
+# 🏨 Hotel Booking System - CS50 Final Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack hotel booking application built with React/TypeScript frontend and Spring Boot backend.
 
-Currently, two official plugins are available:
+## 🎯 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project solves a real-world problem by providing a comprehensive hotel booking platform where users can:
+- Browse and search hotels
+- Create accounts and manage profiles
+- Save favorite hotels
+- Book accommodations
+- Admins can manage hotel inventory
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend (React + TypeScript)
+- **Modern UI**: Built with React 19, TypeScript, and Tailwind CSS
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **User Authentication**: Login/Register with JWT tokens
+- **Hotel Search**: Advanced filtering by price, stars, location
+- **Favorites System**: Save and manage favorite hotels
+- **Multi-language Support**: Turkish and English
+- **Real-time Updates**: Dynamic content loading
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Backend (Spring Boot + Java)
+- **RESTful API**: Clean, well-documented endpoints
+- **JWT Security**: Secure authentication and authorization
+- **Database Integration**: H2 (development) and PostgreSQL (production)
+- **Admin Panel**: Hotel management for administrators
+- **Search & Filtering**: Advanced hotel search capabilities
+- **API Documentation**: Swagger/OpenAPI integration
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Technology Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Frontend
+- React 19.1.1
+- TypeScript 5.8.3
+- Vite 7.1.2
+- Tailwind CSS 3.4.15
+- React Router 7.8.2
+- Axios 1.12.2
+- Lucide React (Icons)
+
+### Backend
+- Java 21
+- Spring Boot 3.5.3
+- Spring Security
+- Spring Data JPA
+- JWT (JSON Web Tokens)
+- H2 Database / PostgreSQL
+- Maven
+- Swagger/OpenAPI
+
+## 📦 Installation & Setup
+
+### Prerequisites
+- Node.js 18+ 
+- Java 21+
+- Maven 3.6+
+
+### Backend Setup
+```bash
+cd jwtsecurity
+mvn clean install
+mvn spring-boot:run
+```
+Backend will run on: http://localhost:8080
+
+### Frontend Setup
+```bash
+cd hotel-frontend-ts
+npm install
+npm run dev
+```
+Frontend will run on: http://localhost:5173
+
+## 🔧 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/reset-password` - Password reset
+
+### Hotels
+- `GET /api/hotels` - List all hotels
+- `GET /api/hotels/{id}` - Get hotel by ID
+- `GET /api/hotels/search` - Search hotels with filters
+- `GET /api/hotels/last-minute` - Get last-minute deals
+- `POST /api/hotels` - Create hotel (Admin only)
+- `PUT /api/hotels/{id}` - Update hotel (Admin only)
+- `DELETE /api/hotels/{id}` - Delete hotel (Admin only)
+
+### Users
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update user profile
+
+## 🎨 Screenshots
+
+[Add screenshots of your application here]
+
+## 🏗️ Project Structure
+
+```
+hotel-frontend-ts/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/         # Page components
+│   ├── contexts/      # React contexts (Favorites, Language)
+│   ├── lib/          # Utilities and services
+│   └── assets/       # Static assets
+
+jwtsecurity/
+├── src/main/java/com/example/jwtsecurity/
+│   ├── controller/    # REST controllers
+│   ├── service/      # Business logic
+│   ├── repository/   # Data access layer
+│   ├── model/        # Entity models
+│   ├── dto/          # Data transfer objects
+│   └── security/     # Security configuration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔐 Security Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- JWT-based authentication
+- Role-based access control (USER, ADMIN)
+- Password encryption
+- CORS configuration
+- Input validation
+- SQL injection prevention
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🌟 Key Learning Outcomes
+
+This project demonstrates mastery of:
+- Full-stack web development
+- Modern JavaScript/TypeScript
+- React ecosystem and hooks
+- RESTful API design
+- Database design and ORM
+- Authentication and security
+- Responsive web design
+- Version control with Git
+
+## 🚀 Future Enhancements
+
+- [ ] Payment integration
+- [ ] Email notifications
+- [ ] Hotel reviews and ratings
+- [ ] Booking calendar
+- [ ] Mobile app (React Native)
+- [ ] Real-time chat support
+- [ ] Advanced analytics dashboard
+
+## 📝 License
+
+This project is created for educational purposes as part of CS50 course.
+
+## 👨‍💻 Author
+
+[Your Name] - CS50 Student
+
+---
+
+**Note**: This project was developed as the final project for CS50 Introduction to Computer Science course, demonstrating comprehensive understanding of modern web development practices and full-stack application architecture.
