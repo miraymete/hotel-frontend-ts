@@ -437,8 +437,8 @@ export default function HomePage({
             <div>
               <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">İletişim</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">+90 212 555 0123</a></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">info@luxurytravel.com</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">+90 533 602 07 04</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">mirayaymete@gmail.com</a></li>
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">7/24 Destek</a></li>
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Rezervasyon</a></li>
               </ul>
