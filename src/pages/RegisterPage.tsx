@@ -44,7 +44,7 @@ export default function RegisterPage() {
       subtitle: "Endonezya",
       description: "Yeşil çeltik tarlaları ve egzotik plajlar",
       price: "€399",
-      image: "https://calakalem.com/wp-content/uploads/2009/02/Bali-1.jpg",
+      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Globe className="w-6 h-6" />
     },
     {
