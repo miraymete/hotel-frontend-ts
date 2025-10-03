@@ -47,7 +47,7 @@ export default function LoginPage() {
       subtitle: "Fransa",
       description: "Eyfel Kulesi ve Seine Nehri kıyısında romantizm",
       price: "€449",
-      image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      image: "https://www.olielo.com/wp-content/uploads/2013/12/Shangri-La-Paris-hotel-Eiffel-Tower.jpg",
       icon: <Star className="w-6 h-6" />
     },
     {
