@@ -38,7 +38,7 @@ export default function LoginPage() {
       subtitle: "Endonezya",
       description: "Yeşil çeltik tarlaları ve egzotik plajlar",
       price: "€399",
-      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/f8/1c/13/padma-resort-ubud.jpg?w=1200&h=-1&s=1",
       icon: <Globe className="w-6 h-6" />
     },
     {
