@@ -1,27 +1,27 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-// backend api adresi
-const API_BASE_URL = 'http://localhost:6060';
+// backend api adresi geliştirme ve üretim için env uzerinden gelir
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:6060';
 
-// axios instance oluştur
+// axios instance ortak ayarlar ve credential kullanımı
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Include credentials for CORS
+  timeout: 10000, // 10 second timeout
 });
 
-// request interceptor - jwt token ekleme
+// request interceptor her isteğe jwt token ekler
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // tarayıcıdan token al
     const token = localStorage.getItem('token');
     if (token) {
       // her isteğe authorization header ekle (Axios v1 tipleriyle uyumlu)
-      const headers: any = config.headers;
-      if (headers && typeof headers.set === 'function') {
-        headers.set('Authorization', `Bearer ${token}`);
-      } else if (headers) {
+      const headers = config.headers as Record<string, string>;
+      if (headers) {
         headers['Authorization'] = `Bearer ${token}`;
       }
     }
@@ -32,7 +32,7 @@ api.interceptors.request.use(
   }
 );
 
-// response interceptor - hata yönetimi
+// response interceptor 401 durumunda kullanıcıyı çıkış yapar
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {

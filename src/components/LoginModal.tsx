@@ -41,7 +41,7 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
 
   return (
     <>
-      {/* Arka plan karartma */}
+      {/* Arka plan karartma */}image.png
       <div
         className="fixed inset-0 z-[70] bg-black/50"
         role="presentation"

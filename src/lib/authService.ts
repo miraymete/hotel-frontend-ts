@@ -1,15 +1,16 @@
 import api from './api';
 
-// giriş yapmak için gerekli bilgiler
+// login isteği için gerekli alanlar
 export interface LoginRequest {
   username: string;
   password: string;
 }
 
-// kayıt olmak için gerekli bilgiler
+// register isteği için gerekli alanlar
 export interface RegisterRequest {
   username: string;
   password: string;
+  role?: string; // Optional role alanı
 }
 
 // kullanıcı bilgileri
@@ -19,13 +20,13 @@ export interface User {
   role: string;
 }
 
-// backend'den dönen authentication response
+// backendden dönen auth cevabı token ve user içerir
 export interface AuthResponse {
   token: string;
   user: User;
 }
 
-// backend ile giriş yapma fonksiyonu
+// backend ile giriş yapma fonksiyonu tokeni localstorage a yazar
 export const login = async (credentials: LoginRequest): Promise<AuthResponse> => {
   try {
     // backend'e giriş isteği gönder
@@ -52,7 +53,7 @@ export const login = async (credentials: LoginRequest): Promise<AuthResponse> =>
   }
 };
 
-// backend ile kayıt olma fonksiyonu
+// backend ile kayıt olma fonksiyonu başarıda token ve user döndürür
 export const register = async (userData: RegisterRequest): Promise<AuthResponse> => {
   try {
     // backend'e kayıt isteği gönder
@@ -73,20 +74,23 @@ export const register = async (userData: RegisterRequest): Promise<AuthResponse>
     if (error && typeof error === 'object' && 'response' in error) {
       const axiosError = error as { response?: { data?: { message?: string } } };
       errorMessage = axiosError.response?.data?.message || errorMessage;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
     }
     
+    console.error('Register error:', error); // Debug için log ekle
     throw new Error(errorMessage);
   }
 };
 
-// çıkış yapma fonksiyonu
+// çıkış fonksiyonu localstorage i temizler
 export const logout = () => {
   // tarayıcıdan token ve kullanıcı bilgilerini sil
   localStorage.removeItem('token');
   localStorage.removeItem('user');
 };
 
-// mevcut kullanıcıyı getir
+// mevcut kullanıcıyı localstorage dan okur
 export const getCurrentUser = (): User | null => {
   // tarayıcıdan kullanıcı bilgilerini al
   const userStr = localStorage.getItem('user');
@@ -100,7 +104,7 @@ export const getCurrentUser = (): User | null => {
   }
 };
 
-// kullanıcı giriş yapmış mı kontrol et
+// kullanıcı oturumu var mı kontrol eder
 export const isAuthenticated = (): boolean => {
   // token var mı kontrol et
   return !!localStorage.getItem('token');

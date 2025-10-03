@@ -8,9 +8,8 @@
  * - son aramalar
  * - keşfetme kartları (favori ekleme özelliği ile)
  */
-import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Search, BedDouble, Package2, Plane, Globe, Heart, ArrowLeft, ArrowRight } from "lucide-react";
+import { Search, Globe, Heart } from "lucide-react";
 import type { PublicUser } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
@@ -20,40 +19,18 @@ import { Link } from "react-router-dom";
 type Props = {
   user: PublicUser | null;        // giriş yapmış kullanıcı bilgisi
   onLogout: () => void;           // çıkış yapma fonksiyonu
-  onOpenLogin: () => void;        // giriş modal'ını açma fonksiyonu
-  onOpenRegister: () => void;     // kayıt modal'ını açma fonksiyonu
   onOpenLanguage: () => void;     // dil seçim modal'ını açma fonksiyonu
 };
 
 export default function HomePage({
   user,
   onLogout,
-  onOpenLogin,
-  onOpenRegister,
   onOpenLanguage,
 }: Props) {
   // context'lerden gelen fonksiyonlar
   const { t } = useLanguage();                    // çeviri fonksiyonu
   const { addToFavorites, isFavorite } = useFavorites(); // favori yönetimi
-
-  // arama formu state'leri
-  const [adults, setAdults] = useState(2);        // yetişkin sayısı
-  const [children, setChildren] = useState(0);    // çocuk sayısı
-  const [onlyAvailable, setOnlyAvailable] = useState(false); // sadece müsait oteller
-  const [activeTab, setActiveTab] = useState<'otel' | 'paket' | 'ucak'>('otel'); // aktif sekme
-
-  // keşfetme kartları için scroll referansı
-  const ideasRef = useRef<HTMLDivElement>(null);
-
-  // keşfetme kartlarını yatay olarak kaydırma fonksiyonu
-  const scrollIdeas = (dir: 1 | -1) => {
-    const el = ideasRef.current;
-    if (!el) return;
-    const firstCard = el.querySelector<HTMLElement>("a");
-    const step = firstCard ? firstCard.offsetWidth + 32 /* gap-8 */ : 360;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  };
-
+  
   // keşfetme kartları için örnek otel verileri
   const discoveryHotels = [
     {
@@ -93,50 +70,55 @@ export default function HomePage({
   };
 
   return (
-    <div className="min-h-screen">
-      {/* üst menü */}
-      <header className="sticky top-0 z-[60] flex justify-between items-center px-10 py-6 bg-white/90 backdrop-blur shadow-md">
-        <Link to="/" className="text-2xl font-bold text-[#3620D9] hover:text-[#4230FF] transition-colors">{t('brand')}</Link>
+    <div className="min-h-screen bg-black">
+      {/* üst menü - lüks koyu tema */}
+      <header className="sticky top-0 z-[60] flex justify-between items-center px-8 py-4 bg-black/95 backdrop-blur-md border-b border-gray-800">
+        {/* Logo - Four Seasons tarzı ağaç ikonu */}
+        <Link to="/" className="flex items-center space-x-3 text-white hover:text-yellow-400 transition-colors">
+          <div className="w-8 h-8 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+              <path d="M12 2L8 8H16L12 2Z"/>
+              <path d="M8 8L4 14H20L16 8H8Z"/>
+              <path d="M4 14L2 20H22L20 14H4Z"/>
+            </svg>
+          </div>
+          <span className="text-xl font-light tracking-wider">{t('brand')}</span>
+        </Link>
 
-        {/* orta menü */}
-        <nav className="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <Link to="/hotels" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">{t('hotels')}</Link>
-          <Link to="/tours" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">{t('tours')}</Link>
-          <Link to="/experiences" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">{t('experiences')}</Link>
-          <Link to="/favorites" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">{t('favorites')}</Link>
-          <Link to="/contact" className="px-3 py-2 hover:border-b-2 hover:border-gray-500 transition">{t('contact')}</Link>
+        {/* orta menü - minimal ve elegant */}
+        <nav className="hidden lg:flex space-x-8 text-white/90 font-light text-sm tracking-wide">
+          <Link to="/hotels" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('hotels')}</Link>
+          <Link to="/tours" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('tours')}</Link>
+          <Link to="/experiences" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('experiences')}</Link>
+          <Link to="/favorites" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('favorites')}</Link>
         </nav>
 
-        <div className="flex items-center space-x-4">
-          {/* dil para */}
+        <div className="flex items-center space-x-6">
+          {/* dil para - minimal */}
           <button
             onClick={onOpenLanguage}
-            className="flex items-center space-x-2 border px-3 py-2 rounded-md hover:bg-gray-100 transition"
+            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors text-sm"
           >
             <Globe className="w-4 h-4" />
-            <span>TR · TL</span>
+            <span className="uppercase tracking-wide">TR · TL</span>
           </button>
 
           {!user ? (
             <>
-              <div className="relative">
-                <Link to="/login">
-                  <Button variant="outline">
-                    {t('login')}
-                  </Button>
-                </Link>
-              </div>
-              <div className="relative">
-                <Link to="/register">
-                  <Button className="bg-[#3620D9] hover:bg-[#4230FF] text-white">
-                    {t('register')}
-                  </Button>
-                </Link>
-              </div>
+              <Link to="/login">
+                <Button variant="ghost" className="text-white hover:text-yellow-400 hover:bg-white/10 border-0">
+                  {t('login')}
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button className="bg-white text-black hover:bg-yellow-400 hover:text-black font-medium px-6 py-2 rounded-none border-0">
+                  {t('register')}
+                </Button>
+              </Link>
             </>
           ) : (
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3620D9]/10 text-[#3620D9] font-bold">
+            <div className="flex items-center gap-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400 font-medium text-sm">
                 {user.name
                   .split(" ")
                   .map((s) => s[0])
@@ -144,10 +126,10 @@ export default function HomePage({
                   .join("")
                   .toUpperCase()}
               </div>
-              <span className="hidden md:inline text-sm text-gray-700">
-                {t('hello')}, <b>{user.name}</b>
+              <span className="hidden md:inline text-sm text-white/90 font-light">
+                {t('hello')}, <span className="text-yellow-400">{user.name}</span>
               </span>
-              <Button variant="outline" onClick={onLogout}>
+              <Button variant="ghost" onClick={onLogout} className="text-white/80 hover:text-white hover:bg-white/10 border-0">
                 {t('logout')}
               </Button>
             </div>
@@ -155,422 +137,327 @@ export default function HomePage({
         </div>
       </header>
 
-      {/* modal tetikleyiciler App seviyesinde yönetiliyor */}
-      <section className="relative pb-36 md:pb-44">
+      {/* Hero Section - Ultra Lüks konsept */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Arkaplan görseli - lüks yat/otel */}
         <div
-          className="w-full h-[500px] bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url('https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg')",
+              "url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
           }}
-        ></div>
+        >
+          {/* Sophisticated gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
 
-        {/* dikey rezervasyon arama kartı*/}
-        <div className="absolute top-24 left-1/2 -translate-x-1/2 z-30">
-          <div className="w-[420px] bg-white/95 rounded-2xl shadow-xl border-2 border-[#3620D9] p-5">
-            {/* sekmeler */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              <button
-                onClick={() => setActiveTab('otel')}
-                className={`flex items-center justify-center gap-2 py-2 rounded-lg border transition
-                  ${activeTab==='otel' ? 'bg-[#3620D9] text-white border-[#3620D9]' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}`}
-              >
-                <BedDouble className="w-4 h-4" /> {t('hotels')}
-              </button>
-              <button
-                onClick={() => setActiveTab('paket')}
-                className={`flex items-center justify-center gap-2 py-2 rounded-lg border transition
-                  ${activeTab==='paket' ? 'bg-[#3620D9] text-white border-[#3620D9]' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}`}
-              >
-                <Package2 className="w-4 h-4" /> {t('tours')}
-              </button>
-              <button
-                onClick={() => setActiveTab('ucak')}
-                className={`flex items-center justify-center gap-2 py-2 rounded-lg border transition
-                  ${activeTab==='ucak' ? 'bg-[#3620D9] text-white border-[#3620D9]' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}`}
-              >
-                <Plane className="w-4 h-4" /> {t('experiences')}
-              </button>
+        {/* Ana içerik */}
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-6">
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 24 24" className="w-12 h-12 fill-current text-yellow-400">
+                <path d="M12 2L8 8H16L12 2Z"/>
+                <path d="M8 8L4 14H20L16 8H8Z"/>
+                <path d="M4 14L2 20H22L20 14H4Z"/>
+              </svg>
             </div>
+          </div>
 
-            <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
-              <Search className="w-5 h-5 text-[#3620D9]" /> {t('searchHoliday')}
-            </h3>
+          {/* Ana başlık - Ultra lüks tipografi */}
+          <h1 className="text-6xl md:text-8xl font-extralight tracking-[0.1em] mb-8 leading-[0.9]">
+            <span className="block text-white/95">YENİ KEŞİFLERİN</span>
+            <span className="block text-yellow-400/90 font-thin tracking-[0.15em]">AYRICALIKLARLA</span>
+            <span className="block text-white/95">BULUŞTUĞU NOKTA</span>
+          </h1>
 
-            <label className="text-sm text-gray-600">{t('region')}</label>
-            <input
-              type="text"
-              placeholder={t('regionPlaceholder')}
-              className="w-full border border-gray-300 rounded-lg p-2 mt-1"
-            />
+          {/* Alt başlık */}
+          <p className="text-xl md:text-2xl font-light text-white/80 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
+            Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın
+          </p>
 
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              <div>
-                <label className="text-sm text-gray-600">{t('checkIn')}</label>
-                <input type="date" className="w-full border border-gray-300 rounded-lg p-2 mt-1" />
-              </div>
-              <div>
-                <label className="text-sm text-gray-600">{t('checkOut')}</label>
-                <input type="date" className="w-full border border-gray-300 rounded-lg p-2 mt-1" />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              <div>
-                <label className="text-sm text-gray-600">{t('adults')}</label>
-                <div className="mt-1 flex items-center border border-gray-300 rounded-lg">
-                  <button
-                    onClick={() => setAdults(Math.max(1, adults - 1))}
-                    className="px-3 py-2 text-lg hover:bg-gray-100 rounded-l-lg"
-                    aria-label="Yetişkin azalt"
-                  >−</button>
-                  <div className="flex-1 text-center select-none">{adults}</div>
-                  <button
-                    onClick={() => setAdults(adults + 1)}
-                    className="px-3 py-2 text-lg hover:bg-gray-100 rounded-r-lg"
-                    aria-label="Yetişkin arttır"
-                  >+</button>
-                </div>
-              </div>
-
-              <div>
-                <label className="text-sm text-gray-600">{t('children')}</label>
-                <div className="mt-1 flex items-center border border-gray-300 rounded-lg">
-                  <button
-                    onClick={() => setChildren(Math.max(0, children - 1))}
-                    className="px-3 py-2 text-lg hover:bg-gray-100 rounded-l-lg"
-                    aria-label="Çocuk azalt"
-                  >−</button>
-                  <div className="flex-1 text-center select-none">{children}</div>
-                  <button
-                    onClick={() => setChildren(children + 1)}
-                    className="px-3 py-2 text-lg hover:bg-gray-100 rounded-r-lg"
-                    aria-label="Çocuk arttır"
-                  >+</button>
-                </div>
-              </div>
-            </div>
-
-            <label className="flex items-center gap-2 mt-4">
+          {/* Arama çubuğu */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
               <input
-                type="checkbox"
-                className="accent-[#3620D9]"
-                checked={onlyAvailable}
-                onChange={(e) => setOnlyAvailable(e.target.checked)}
+                type="text"
+                placeholder="Destinasyonunuzu bulun"
+                className="w-full bg-white/95 text-black placeholder-gray-500 px-8 py-4 text-lg rounded-none border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
-              <span className="text-sm text-gray-700">{t('onlyAvailable')}</span>
-            </label>
-
-            <button className="mt-4 w-full bg-[#3620D9] hover:bg-[#4230FF] text-white font-semibold py-3 rounded-xl">
-              {t('searchHotel')}
-            </button>
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-3 hover:bg-yellow-400 hover:text-black transition-colors">
+                <Search className="w-6 h-6" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* sol panel son dakika fırsatlar*/}
-        <div className="absolute top-20 left-10 bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 w-[340px]">
-          <h2 className="text-xl font-bold mb-4 text-[#3620D9]">{t('lastMinuteDeals')}</h2>
-
-          <div className="space-y-4">
-            {/* 1. kart */}
-            <a
-              href="/otel/vogue-hotel-supreme-bodrum"
-              className="flex items-start gap-3 p-3 border-b rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition"
-            >
-              <img
-                src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Vogue Hotel Supreme Bodrum"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">Vogue Hotel Supreme Bodrum</h3>
-                <p className="text-sm text-gray-500">Muğla, Bodrum</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">9.0</span>
-                  <span className="text-xs text-gray-700">{t('excellent')}</span>
+        {/* Alt navigasyon - Four Seasons tarzı */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-gray-800">
+          <div className="max-w-6xl mx-auto px-6 py-6">
+            <div className="flex justify-center space-x-12">
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                    <path d="M2 17L12 22L22 17"/>
+                    <path d="M2 12L12 17L22 12"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">TÜM OTELLER</span>
               </div>
-            </a>
-
-            {/* 2. kart */}
-            <a
-              href="/otel/fashiontv-luxe-resort"
-              className="flex items-start gap-3 p-3 border-b rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition"
-            >
-              <img
-                src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="FashionTV Luxe Resort"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">FashionTV Luxe Resort</h3>
-                <p className="text-sm text-gray-500">Antalya, Kemer</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">9.0</span>
-                  <span className="text-xs text-gray-700">{t('excellent')}</span>
+              
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">KONUTLAR</span>
               </div>
-            </a>
-
-            {/* 3. kart */}
-            <a
-              href="/otel/litore-resort-hotel-spa"
-              className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition"
-            >
-              <img
-                src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Litore Resort Hotel & Spa"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">Litore Resort Hotel & Spa</h3>
-                <p className="text-sm text-gray-500">Antalya, Alanya</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">9.2</span>
-                  <span className="text-xs text-gray-700">{t('excellent')}</span>
+              
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">VİLLALAR</span>
               </div>
-            </a>
-          </div>
-        </div>
-
-        {/* sağ panelson Aramalar */}
-        <div className="absolute top-20 right-10 bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-6 w-[340px]">
-          <h2 className="text-xl font-bold mb-4 text-[#3620D9]">{t('recentSearches')}</h2>
-
-          <div className="space-y-4">
-            {/* 1. kart */}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => (window.location.href = '/otel/homely-studios')}
-              onKeyDown={(e) => e.key === 'Enter' && (window.location.href = '/otel/homely-studios')}
-              className="flex items-start gap-3 p-3 border-b rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition cursor-pointer"
-            >
-              <img
-                src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Homely Studios"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">Homely Studios</h3>
-                <p className="text-sm text-gray-500">Sakız, Yunanistan</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">8.8</span>
-                  <a
-                    href="/otel/homely-studios/yorumlar"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-[#3620D9] underline underline-offset-2 hover:text-[#4230FF]"
-                  >
-                    506 {t('reviews')}
-                  </a>
+              
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M8.1 13.34L2 9.27L13.36 1.47L21.39 6.2L8.1 13.34Z"/>
+                    <path d="M22 21L2 21L2 19L22 19L22 21Z"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">YİYECEK</span>
               </div>
-            </div>
-
-            {/* 2. kart */}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => (window.location.href = '/otel/sweet-cottage-in-the-city')}
-              onKeyDown={(e) => e.key === 'Enter' && (window.location.href = '/otel/sweet-cottage-in-the-city')}
-              className="flex items-start gap-3 p-3 border-b rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition cursor-pointer"
-            >
-              <img
-                src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Sweet Cottage In The City"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">Sweet Cottage In The City</h3>
-                <p className="text-sm text-gray-500">Sakız, Yunanistan</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">9.1</span>
-                  <a
-                    href="/otel/sweet-cottage-in-the-city/yorumlar"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-[#3620D9] underline underline-offset-2 hover:text-[#4230FF]"
-                  >
-                    12 {t('reviews')}
-                  </a>
+              
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">ÖZEL JET</span>
               </div>
-            </div>
-
-            {/* 3. kart */}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => (window.location.href = '/otel/grecian-castle-chios')}
-              onKeyDown={(e) => e.key === 'Enter' && (window.location.href = '/otel/grecian-castle-chios')}
-              className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#3620D9] transition cursor-pointer"
-            >
-              <img
-                src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Grecian Castle Chios"
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">Grecian Castle Chios</h3>
-                <p className="text-sm text-gray-500">Sakız, Yunanistan</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-600 px-2 text-white text-sm">7.9</span>
-                  <a
-                    href="/otel/grecian-castle-chios/yorumlar"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-[#3620D9] underline underline-offset-2 hover:text-[#4230FF]"
-                  >
-                    1.815 {t('reviews')}
-                  </a>
+              
+              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M20 21C20 19.62 19.38 19 18 19H6C4.62 19 4 19.62 4 21V22H6V21H18V22H20V21M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H5C3.89 1 3 1.89 3 3V7C3 8.11 3.89 9 5 9V19C5 20.11 5.89 21 7 21H17C18.11 21 19 20.11 19 19V9H21M17 9H7V3H12V8H17V9Z"/>
+                  </svg>
                 </div>
+                <span className="text-xs uppercase tracking-wider font-light">YATLAR</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* İkinci arkaplan görseli - Keşfetme kartları üzerinde */}
-      <section 
-        className="relative bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://images5.alphacoders.com/438/438649.jpg')" }}
-      >
-        <div className="w-full h-[600px]" />
-        
-        {/* Keşfetme kartları bu arkaplan üzerinde */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative max-w-6xl mx-auto px-6 md:px-8 py-16">
-            {/* Başlık + Kaydırma tuşları */}
-            <div className="flex items-center justify-between gap-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#3620D9] drop-shadow-2xl text-center flex-1">
-                {t('discover')}
-              </h2>
+      {/* Keşfetme Bölümü - Lüks konsept */}
+      <section className="relative bg-black py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Başlık */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-wider">
+              <span className="block">YENİ KEŞİFLERİN</span>
+              <span className="block text-yellow-400 font-thin">AYRICALIKLARLA BULUŞTUĞU NOKTA</span>
+            </h2>
+            <p className="text-xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
+              Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın
+            </p>
+          </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => scrollIdeas(-1)}
-                  className="rounded-full p-3 bg-white/95 shadow-lg hover:bg-white active:scale-95 transition-all duration-200"
-                  aria-label="Sola kaydır"
-                >
-                  <ArrowLeft className="w-6 h-6 text-gray-700" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollIdeas(1)}
-                  className="rounded-full p-3 bg-white/95 shadow-lg hover:bg-white active:scale-95 transition-all duration-200"
-                  aria-label="Sağa kaydır"
-                >
-                  <ArrowRight className="w-6 h-6 text-gray-700" />
-                </button>
-              </div>
-            </div>
-
-            {/* yatay kaydırma kartları */}
-            <div
-              ref={ideasRef}
-              className="
-                grid grid-flow-col auto-cols-[minmax(300px,450px)]
-                gap-10 overflow-x-auto no-scrollbar pb-4
-                snap-x snap-mandatory
-              "
-            >
-              {/* kart 1 - Yıldız İzleme */}
-              <a
-                href="/fikirler/yildiz-izleme"
-                aria-label="Dünyanın dört bir yanında yıldızları izleyebileceğiniz yerler"
-                className="group snap-start bg-white/95 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
-              >
-                <div className="relative">
-                  <img
-                    src={discoveryHotels[0].image}
-                    alt="Yıldızlı gökyüzü"
-                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+          {/* Keşfetme kartları */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Kart 1 - Lüks Oteller */}
+            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Lüks Otel"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-6 right-6">
                   <button
-                    type="button"
                     onClick={(e) => handleHeartClick(discoveryHotels[0], e)}
-                    className={`absolute right-4 top-4 bg-white/95 rounded-full p-3 shadow-lg group-hover:scale-110 transition-all duration-200 ${
-                      isFavorite(discoveryHotels[0].id) ? 'text-red-500' : 'text-[#3620D9]'
+                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
+                      isFavorite(discoveryHotels[0].id) 
+                        ? 'bg-red-500/90 text-white' 
+                        : 'bg-white/20 text-white hover:bg-white/30'
                     }`}
-                    aria-label="Favorilere ekle"
                   >
-                    <Heart className={`w-6 h-6 ${isFavorite(discoveryHotels[0].id) ? 'fill-current' : ''}`} />
+                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[0].id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
-
-                <div className="px-6 py-6">
-                  <p className="text-center text-lg leading-7 font-semibold text-gray-800">
-                    Utah'tan Dubai'ye kadar yıldızları seyretmek için gidilebilecek
-                    yerleri keşfedin!
-                  </p>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
+                  LÜKS OTELLER
+                </h3>
+                <p className="text-white/70 font-light leading-relaxed mb-6">
+                  Dünyanın en prestijli otellerinde konaklayın. Her detayda mükemmellik arayanlar için tasarlandı.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
+                    Keşfet →
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-white/60 text-sm">Premium</span>
+                  </div>
                 </div>
-              </a>
+              </div>
+            </div>
 
-              {/* kart 2 - Kültür Sanat */}
-              <a
-                href="/fikirler/kultur-sanat"
-                aria-label="Paris, New York ve popüler kültür mekanlarında sanat"
-                className="group snap-start bg-white/95 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
-              >
-                <div className="relative">
-                  <img
-                    src={discoveryHotels[1].image}
-                    alt="Gothic katedral"
-                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+            {/* Kart 2 - Özel Villalar */}
+            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Özel Villa"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-6 right-6">
                   <button
-                    type="button"
                     onClick={(e) => handleHeartClick(discoveryHotels[1], e)}
-                    className={`absolute right-4 top-4 bg-white/95 rounded-full p-3 shadow-lg group-hover:scale-110 transition-all duration-200 ${
-                      isFavorite(discoveryHotels[1].id) ? 'text-red-500' : 'text-[#3620D9]'
+                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
+                      isFavorite(discoveryHotels[1].id) 
+                        ? 'bg-red-500/90 text-white' 
+                        : 'bg-white/20 text-white hover:bg-white/30'
                     }`}
-                    aria-label="Favorilere ekle"
                   >
-                    <Heart className={`w-6 h-6 ${isFavorite(discoveryHotels[1].id) ? 'fill-current' : ''}`} />
+                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[1].id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
-
-                <div className="px-6 py-6">
-                  <p className="text-center text-lg leading-7 font-semibold text-gray-800">
-                    Paris'te, New York'ta ve diğer popüler kültür mekanlarında sanatla ilgilenin!
-                  </p>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
+                  ÖZEL VİLLALAR
+                </h3>
+                <p className="text-white/70 font-light leading-relaxed mb-6">
+                  Tamamen özel villalarda konaklayın. Sadece sizin için tasarlanmış lüks deneyimler.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
+                    Keşfet →
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-white/60 text-sm">Exclusive</span>
+                  </div>
                 </div>
-              </a>
+              </div>
+            </div>
 
-              {/* kart 3 - Gurme Rotalar */}
-              <a
-                href="/fikirler/gurme-rotalar"
-                aria-label="10 şehirde 10 yemek rotası"
-                className="group snap-start bg-white/95 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
-              >
-                <div className="relative">
-                  <img
-                    src={discoveryHotels[2].image}
-                    alt="Asya mutfağı"
-                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+            {/* Kart 3 - Yat Deneyimleri */}
+            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Lüks Yat"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-6 right-6">
                   <button
-                    type="button"
                     onClick={(e) => handleHeartClick(discoveryHotels[2], e)}
-                    className={`absolute right-4 top-4 bg-white/95 rounded-full p-3 shadow-lg group-hover:scale-110 transition-all duration-200 ${
-                      isFavorite(discoveryHotels[2].id) ? 'text-red-500' : 'text-[#3620D9]'
+                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
+                      isFavorite(discoveryHotels[2].id) 
+                        ? 'bg-red-500/90 text-white' 
+                        : 'bg-white/20 text-white hover:bg-white/30'
                     }`}
-                    aria-label="Favorilere ekle"
                   >
-                    <Heart className={`w-6 h-6 ${isFavorite(discoveryHotels[2].id) ? 'fill-current' : ''}`} />
+                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[2].id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
-
-                <div className="px-6 py-6">
-                  <p className="text-center text-lg leading-7 font-semibold text-gray-800">
-                    10 şehir, 10 inanılmaz yemek kültürü!
-                  </p>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
+                  YAT DENEYİMLERİ
+                </h3>
+                <p className="text-white/70 font-light leading-relaxed mb-6">
+                  Dünyanın en güzel koylarında lüks yatlarla seyahat edin. Denizde unutulmaz anlar.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
+                    Keşfet →
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-white/60 text-sm">Luxury</span>
+                  </div>
                 </div>
-              </a>
-            </div> 
-          </div> 
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Footer - Lüks konsept */}
+      <footer className="bg-black border-t border-gray-800 py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            {/* Logo ve açıklama */}
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current text-yellow-400">
+                    <path d="M12 2L8 8H16L12 2Z"/>
+                    <path d="M8 8L4 14H20L16 8H8Z"/>
+                    <path d="M4 14L2 20H22L20 14H4Z"/>
+                  </svg>
+                </div>
+                <span className="text-2xl font-light text-white tracking-wider">{t('brand')}</span>
+              </div>
+              <p className="text-white/60 font-light leading-relaxed max-w-md">
+                Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler sunuyoruz. 
+                Her detayda mükemmellik arayanlar için tasarlandı.
+              </p>
+            </div>
+
+            {/* Hızlı linkler */}
+            <div>
+              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">Hizmetler</h3>
+              <ul className="space-y-3">
+                <li><Link to="/hotels" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Lüks Oteller</Link></li>
+                <li><Link to="/tours" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Turlar</Link></li>
+                <li><Link to="/experiences" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Deneyimler</Link></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Jet</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Yat Kiralama</a></li>
+              </ul>
+            </div>
+
+            {/* İletişim */}
+            <div>
+              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">İletişim</h3>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">+90 212 555 0123</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">info@luxurytravel.com</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">7/24 Destek</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Rezervasyon</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Alt çizgi */}
+          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white/40 font-light text-sm">
+              © 2024 {t('brand')}. Tüm hakları saklıdır.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Gizlilik Politikası</a>
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Kullanım Şartları</a>
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Çerez Politikası</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

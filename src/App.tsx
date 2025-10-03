@@ -52,8 +52,6 @@ export default function App() {
                 logout();           // localStorage'dan kullanıcıyı sil
                 setUser(null);      // state'i temizle
               }}
-              onOpenLogin={() => {}} // Artık kullanılmıyor - yeni sayfalar kullanılıyor
-              onOpenRegister={() => {}} // Artık kullanılmıyor - yeni sayfalar kullanılıyor
               onOpenLanguage={() => setOpenLang(true)}
             />
           }

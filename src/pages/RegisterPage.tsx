@@ -1,7 +1,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register, type PublicUser } from "@/lib/auth";
-import { Eye, EyeOff, MapPin, Plane, Hotel, Star, Check, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
+import { register } from "@/lib/auth";
+import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function RegisterPage() {
       subtitle: "Endonezya",
       description: "Yeşil çeltik tarlaları ve egzotik plajlar",
       price: "€399",
-      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      image: "https://calakalem.com/wp-content/uploads/2009/02/Bali-1.jpg",
       icon: <Globe className="w-6 h-6" />
     },
     {
@@ -104,7 +104,7 @@ export default function RegisterPage() {
     setLoading(true);
     
     try {
-      const user = await register(formData.name, formData.email, formData.password);
+      await register(formData.name, formData.email, formData.password);
       setLoading(false);
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                   {travelSlides[currentSlide].icon}
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold mb-2">TravelHub</h1>
+                  <h1 className="text-4xl font-bold mb-2">Hotel Booking</h1>
                   <p className="text-blue-200">Seyahat Deneyiminize Başlayın</p>
                 </div>
               </div>
@@ -333,7 +333,7 @@ export default function RegisterPage() {
             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4">
               {travelSlides[currentSlide].icon}
             </div>
-            <h1 className="text-2xl font-bold mb-2">TravelHub</h1>
+            <h1 className="text-2xl font-bold mb-2">Hotel Booking</h1>
             <p className="text-center text-sm text-blue-100 mb-4">
               {travelSlides[currentSlide].title}
             </p>

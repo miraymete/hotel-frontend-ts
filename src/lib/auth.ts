@@ -1,4 +1,4 @@
-// src/lib/auth.ts - Backend entegrasyonu için güncellenmiş
+// auth yüksek seviye fonksiyonlar backend servislerine delegasyon yapar
 import { login as backendLogin, register as backendRegister, logout as backendLogout, getCurrentUser as backendGetCurrentUser, User } from './authService';
 
 export type PublicUser = { id: string; name: string; email: string };
@@ -12,7 +12,7 @@ export function validatePasswordOrThrow(password: string) {
   }
 }
 
-// Backend ile entegre edilmiş fonksiyonlar
+// backend ile entegre olmuş fonksiyonlar
 export const getCurrentUser = (): PublicUser | null => {
   const backendUser = backendGetCurrentUser();
   if (!backendUser) return null;
@@ -39,7 +39,8 @@ export async function register(
   try {
     const response = await backendRegister({
       username: email, // Backend'de username olarak email kullanıyoruz
-      password: password
+      password: password,
+      role: "USER" // Default role ekle
     });
 
     return {

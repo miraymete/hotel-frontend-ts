@@ -1,7 +1,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login, type PublicUser } from "@/lib/auth";
-import { Eye, EyeOff, MapPin, Plane, Hotel, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
+import { login } from "@/lib/auth";
+import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export default function LoginPage() {
         throw new Error("Şifre en az 6 karakter, 1 büyük harf ve 1 rakam içermelidir");
       }
       
-      const user = await login(email, password);
+      await login(email, password);
       setLoading(false);
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
@@ -122,7 +122,7 @@ export default function LoginPage() {
                   {travelSlides[currentSlide].icon}
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold mb-2">TravelHub</h1>
+                  <h1 className="text-4xl font-bold mb-2">Hotel Booking</h1>
                   <p className="text-blue-200">Dünyayı Keşfedin</p>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export default function LoginPage() {
             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4">
               {travelSlides[currentSlide].icon}
             </div>
-            <h1 className="text-2xl font-bold mb-2">TravelHub</h1>
+            <h1 className="text-2xl font-bold mb-2">Hotel Booking</h1>
             <p className="text-center text-sm text-blue-100 mb-4">
               {travelSlides[currentSlide].title}
             </p>
