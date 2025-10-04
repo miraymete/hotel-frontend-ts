@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart, Users, Calendar } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface Yacht {
   id: string;
@@ -16,6 +17,7 @@ interface Yacht {
   reviews: number;
   capacity: string;
   length: string;
+  price: number;
   isRecommended: boolean;
 }
 
@@ -23,6 +25,7 @@ export default function YachtsPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
 
   const toggleFavorite = (yacht: Yacht) => {
     if (isFavorite(yacht.id)) {
@@ -128,7 +131,7 @@ export default function YachtsPage() {
       reviews: 1247,
       capacity: "12 kişi",
       length: "24m",
-      price: "€2,500/gün",
+      price: 120000, // 2500 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -143,7 +146,7 @@ export default function YachtsPage() {
       reviews: 892,
       capacity: "10 kişi",
       length: "21m",
-      price: "€2,200/gün",
+      price: 105600, // 2200 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -158,7 +161,7 @@ export default function YachtsPage() {
       reviews: 634,
       capacity: "8 kişi",
       length: "24m",
-      price: "€2,800/gün",
+      price: 134400, // 2800 EUR * 48 TL
       isRecommended: false
     },
 
@@ -175,7 +178,7 @@ export default function YachtsPage() {
       reviews: 423,
       capacity: "16 kişi",
       length: "18m",
-      price: "€800/gün",
+      price: 38400, // 800 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -190,7 +193,7 @@ export default function YachtsPage() {
       reviews: 756,
       capacity: "14 kişi",
       length: "16m",
-      price: "€650/gün",
+      price: 31200, // 650 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -205,7 +208,7 @@ export default function YachtsPage() {
       reviews: 345,
       capacity: "12 kişi",
       length: "14m",
-      price: "€500/gün",
+      price: 24000, // 500 EUR * 48 TL
       isRecommended: false
     },
 
@@ -222,7 +225,7 @@ export default function YachtsPage() {
       reviews: 567,
       capacity: "12 kişi",
       length: "14m",
-      price: "€1,200/gün",
+      price: 57600, // 1200 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -237,7 +240,7 @@ export default function YachtsPage() {
       reviews: 234,
       capacity: "10 kişi",
       length: "13m",
-      price: "€1,100/gün",
+      price: 52800, // 1100 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -252,7 +255,7 @@ export default function YachtsPage() {
       reviews: 178,
       capacity: "8 kişi",
       length: "12m",
-      price: "€950/gün",
+      price: 45600, // 950 EUR * 48 TL
       isRecommended: false
     },
 
@@ -269,7 +272,7 @@ export default function YachtsPage() {
       reviews: 445,
       capacity: "6 kişi",
       length: "9m",
-      price: "€300/gün",
+      price: 14400, // 300 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -284,7 +287,7 @@ export default function YachtsPage() {
       reviews: 312,
       capacity: "8 kişi",
       length: "11m",
-      price: "€400/gün",
+      price: 19200, // 400 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -299,7 +302,7 @@ export default function YachtsPage() {
       reviews: 267,
       capacity: "6 kişi",
       length: "8m",
-      price: "€250/gün",
+      price: 12000, // 250 EUR * 48 TL
       isRecommended: false
     }
   ];
@@ -453,7 +456,7 @@ export default function YachtsPage() {
                 {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {translateText(yacht.price)}
+                    {formatPrice(yacht.price)}/gün
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

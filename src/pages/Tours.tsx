@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart, Clock, Users } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface Tour {
   id: string;
@@ -16,7 +17,7 @@ interface Tour {
   reviews: number;
   duration: string;
   groupSize: string;
-  price: string;
+  price: number;
   isRecommended: boolean;
 }
 
@@ -24,6 +25,7 @@ export default function ToursPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
 
   const toggleFavorite = (tour: Tour) => {
     if (isFavorite(tour.id)) {
@@ -129,7 +131,7 @@ export default function ToursPage() {
       reviews: 1247,
       duration: "3 saat",
       groupSize: "12 kişi",
-      price: "€150",
+      price: 7200, // 150 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -144,7 +146,7 @@ export default function ToursPage() {
       reviews: 892,
       duration: "5 saat",
       groupSize: "15 kişi",
-      price: "€65",
+      price: 3120, // 65 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -159,7 +161,7 @@ export default function ToursPage() {
       reviews: 634,
       duration: "7 saat",
       groupSize: "10 kişi",
-      price: "€55",
+      price: 2640, // 55 EUR * 48 TL
       isRecommended: false
     },
 
@@ -176,7 +178,7 @@ export default function ToursPage() {
       reviews: 634,
       duration: "6 saat",
       groupSize: "8 kişi",
-      price: "€75",
+      price: 3600, // 75 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -191,7 +193,7 @@ export default function ToursPage() {
       reviews: 423,
       duration: "4 saat",
       groupSize: "12 kişi",
-      price: "€85",
+      price: 4080, // 85 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -206,7 +208,7 @@ export default function ToursPage() {
       reviews: 756,
       duration: "2 saat",
       groupSize: "6 kişi",
-      price: "€120",
+      price: 5760, // 120 EUR * 48 TL
       isRecommended: true
     },
 
@@ -223,7 +225,7 @@ export default function ToursPage() {
       reviews: 892,
       duration: "2 saat",
       groupSize: "20 kişi",
-      price: "€45",
+      price: 2160, // 45 EUR * 48 TL
       isRecommended: true
     },
     {
@@ -238,7 +240,7 @@ export default function ToursPage() {
       reviews: 1234,
       duration: "6 saat",
       groupSize: "25 kişi",
-      price: "€35",
+      price: 1680, // 35 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -253,7 +255,7 @@ export default function ToursPage() {
       reviews: 567,
       duration: "4 saat",
       groupSize: "18 kişi",
-      price: "€30",
+      price: 1440, // 30 EUR * 48 TL
       isRecommended: false
     },
 
@@ -270,7 +272,7 @@ export default function ToursPage() {
       reviews: 2156,
       duration: "4 saat",
       groupSize: "15 kişi",
-      price: "€60",
+      price: 2880, // 60 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -285,7 +287,7 @@ export default function ToursPage() {
       reviews: 789,
       duration: "3 saat",
       groupSize: "20 kişi",
-      price: "€40",
+      price: 1920, // 40 EUR * 48 TL
       isRecommended: false
     },
     {
@@ -300,7 +302,7 @@ export default function ToursPage() {
       reviews: 945,
       duration: "2 saat",
       groupSize: "12 kişi",
-      price: "€25",
+      price: 1200, // 25 EUR * 48 TL
       isRecommended: false
     }
   ];
@@ -454,7 +456,7 @@ export default function ToursPage() {
                 {/* Price and Button */}
                   <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {translateText(tour.price)}
+                    {formatPrice(tour.price)}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

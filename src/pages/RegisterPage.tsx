@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/lib/auth";
 import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import LanguageModal from "@/components/LanguageModal";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +31,7 @@ export default function RegisterPage() {
       title: t('santoriniTitle'),
       subtitle: t('santoriniSubtitle'),
       description: t('santoriniDesc'),
-      price: "€299",
+      price: formatPrice(14352), // 299 EUR * 48 TL
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Waves className="w-6 h-6" />
     },
@@ -38,7 +40,7 @@ export default function RegisterPage() {
       title: t('alpsTitle'),
       subtitle: t('alpsSubtitle'),
       description: t('alpsDesc'),
-      price: "€599",
+      price: formatPrice(28752), // 599 EUR * 48 TL
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Mountain className="w-6 h-6" />
     },
@@ -47,7 +49,7 @@ export default function RegisterPage() {
       title: t('baliTitle'),
       subtitle: t('baliSubtitle'),
       description: t('baliDesc'),
-      price: "€399",
+      price: formatPrice(19152), // 399 EUR * 48 TL
       image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/f8/1c/13/padma-resort-ubud.jpg?w=1200&h=-1&s=1",
       icon: <Globe className="w-6 h-6" />
     },
@@ -56,16 +58,16 @@ export default function RegisterPage() {
       title: t('parisTitle'),
       subtitle: t('parisSubtitle'),
       description: t('parisDesc'),
-      price: "€449",
+      price: formatPrice(21552), // 449 EUR * 48 TL
       image: "https://www.olielo.com/wp-content/uploads/2013/12/Shangri-La-Paris-hotel-Eiffel-Tower.jpg",
       icon: <Star className="w-6 h-6" />
     },
     {
       id: 5,
-      title: "Tokyo'da Gelecek",
-      subtitle: "Japonya",
-      description: "Modern teknoloji ve geleneksel kültürün buluşması",
-      price: "€699",
+      title: t('tokyoTitle'),
+      subtitle: t('tokyoSubtitle'),
+      description: t('tokyoDesc'),
+      price: formatPrice(33552), // 699 EUR * 48 TL
       image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Plane className="w-6 h-6" />
     }

@@ -268,6 +268,9 @@ export const translations = {
     parisTitle: 'Paris\'te Aşk Şehri',
     parisSubtitle: 'Fransa',
     parisDesc: 'Eyfel Kulesi ve Seine Nehri kıyısında romantizm',
+    tokyoTitle: 'Tokyo\'da Gelecek',
+    tokyoSubtitle: 'Japonya',
+    tokyoDesc: 'Modern teknoloji ve geleneksel kültürün buluşması',
     
     // register page tr
     createAccount: 'Hesap Oluşturun',
@@ -550,6 +553,9 @@ export const translations = {
     parisTitle: 'City of Love in Paris',
     parisSubtitle: 'France',
     parisDesc: 'Eiffel Tower and romance by the Seine River',
+    tokyoTitle: 'Future in Tokyo',
+    tokyoSubtitle: 'Japan',
+    tokyoDesc: 'Meeting of modern technology and traditional culture',
     
     // register page en
     createAccount: 'Create Account',
