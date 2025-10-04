@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/lib/auth";
 import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageModal from "@/components/LanguageModal";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
 
   // Seyahat destinasyonları ve fırsatları
   const travelSlides = [
@@ -89,17 +91,17 @@ export default function RegisterPage() {
     setError(null);
     
     if (!agreedToTerms) {
-      setError("Kullanım şartlarını kabul etmelisiniz");
+      setError(t('mustAcceptTerms'));
       return;
     }
     
     if (formData.password !== formData.confirmPassword) {
-      setError("Şifreler eşleşmiyor");
+      setError(t('passwordsDontMatch'));
       return;
     }
     
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/\d/.test(formData.password)) {
-      setError("Şifre en az 6 karakter, 1 büyük harf ve 1 rakam içermelidir");
+      setError(t('passwordTooShort'));
       return;
     }
     
@@ -111,7 +113,7 @@ export default function RegisterPage() {
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
       setLoading(false);
-      setError(err instanceof Error ? err.message : "Kayıt başarısız");
+      setError(err instanceof Error ? err.message : t('registrationFailed'));
     }
   };
 
@@ -194,6 +196,15 @@ export default function RegisterPage() {
             {/* Glassmorphism Register Form */}
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <div className="text-center mb-8">
+                <div className="flex justify-end mb-4">
+                  <button
+                    onClick={() => setIsLanguageModalOpen(true)}
+                    className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors text-sm"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span>{t('language')} • {t('currency')}</span>
+                  </button>
+                </div>
                 <h2 className="text-3xl font-bold text-white mb-2">{t('createAccount')}</h2>
                 <p className="text-blue-100">{t('joinUs')}</p>
               </div>
@@ -349,14 +360,14 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Adınız
+                  {t('fullName')}
                 </label>
                 <input
                   type="text"
                   name="name"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Adınız Soyadınız"
+                  placeholder={t('fullNamePlaceholder')}
                   value={formData.name}
                   onChange={handleInputChange}
                 />
@@ -364,14 +375,14 @@ export default function RegisterPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  E-posta
+                  {t('emailAddress')}
                 </label>
                 <input
                   type="email"
                   name="email"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="ornek@email.com"
+                  placeholder={t('emailPlaceholder')}
                   value={formData.email}
                   onChange={handleInputChange}
                 />
@@ -379,7 +390,7 @@ export default function RegisterPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Şifre
+                  {t('passwordLogin')}
                 </label>
                 <div className="relative">
                   <input
@@ -387,7 +398,7 @@ export default function RegisterPage() {
                     name="password"
                     required
                     className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="••••••••"
+                    placeholder={t('passwordPlaceholder')}
                     value={formData.password}
                     onChange={handleInputChange}
                   />
@@ -403,7 +414,7 @@ export default function RegisterPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Şifre Tekrarı
+                  {t('confirmPasswordRegister')}
                 </label>
                 <div className="relative">
                   <input
@@ -411,7 +422,7 @@ export default function RegisterPage() {
                     name="confirmPassword"
                     required
                     className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="••••••••"
+                    placeholder={t('passwordPlaceholder')}
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                   />
@@ -434,8 +445,7 @@ export default function RegisterPage() {
                   className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="terms-mobile" className="text-sm text-gray-600">
-                  <Link to="/terms" className="text-blue-600 underline">Kullanım Şartları</Link> ve{" "}
-                  <Link to="/privacy" className="text-blue-600 underline">Gizlilik Politikası</Link> 'nı kabul ediyorum
+                  {t('agreeTermsRegister')}
                 </label>
               </div>
 
@@ -444,21 +454,27 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg font-medium disabled:opacity-50"
               >
-                {loading ? "Kayıt oluşturuluyor..." : "Kayıt Ol"}
+                {loading ? t('creatingAccountRegister') : t('registerButtonRegister')}
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600 text-sm">
-                Zaten hesabınız var mı?{" "}
+                {t('haveAccountRegister')}{" "}
                 <Link to="/login" className="text-blue-600 font-medium">
-                  Giriş yapın
+                  {t('loginLinkRegister')}
                 </Link>
               </p>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Language Modal */}
+      <LanguageModal 
+        open={isLanguageModalOpen} 
+        setOpen={setIsLanguageModalOpen} 
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "@/lib/auth";
 import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageModal from "@/components/LanguageModal";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
 
   // Seyahat destinasyonları ve fırsatları
   const travelSlides = [
@@ -78,7 +80,7 @@ export default function LoginPage() {
     
     try {
       if (password.length < 6 || !/[A-Z]/.test(password) || !/\d/.test(password)) {
-        throw new Error("Şifre en az 6 karakter, 1 büyük harf ve 1 rakam içermelidir");
+        throw new Error(t('passwordTooShort'));
       }
       
       await login(email, password);
@@ -86,7 +88,7 @@ export default function LoginPage() {
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
       setLoading(false);
-      setError(err instanceof Error ? err.message : "Giriş başarısız");
+      setError(err instanceof Error ? err.message : t('loginFailed'));
     }
   };
 
@@ -169,6 +171,15 @@ export default function LoginPage() {
             {/* Glassmorphism Login Form */}
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <div className="text-center mb-8">
+                <div className="flex justify-end mb-4">
+                  <button
+                    onClick={() => setIsLanguageModalOpen(true)}
+                    className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors text-sm"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span>{t('language')} • {t('currency')}</span>
+                  </button>
+                </div>
                 <h2 className="text-3xl font-bold text-white mb-2">{t('welcomeBack')}</h2>
                 <p className="text-blue-100">{t('loginToAccount')}</p>
               </div>
@@ -320,21 +331,27 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg font-medium disabled:opacity-50"
               >
-                {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
+                {loading ? t('loggingInLogin') : t('loginButtonLogin')}
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600 text-sm">
-                Hesabınız yok mu?{" "}
+                {t('noAccountLogin')}{" "}
                 <Link to="/register" className="text-blue-600 font-medium">
-                  Kayıt olun
+                  {t('registerLinkLogin')}
                 </Link>
               </p>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Language Modal */}
+      <LanguageModal 
+        open={isLanguageModalOpen} 
+        setOpen={setIsLanguageModalOpen} 
+      />
     </div>
   );
 }

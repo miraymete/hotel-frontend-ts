@@ -235,6 +235,7 @@ export const translations = {
     loginFailed: 'Giriş yapılamadı',
     operationFailed: 'İşlem başarısız',
     passwordResetSent: 'Şifre sıfırlama maili gönderildi (simülasyon)',
+    mustAcceptTerms: 'Kullanım şartlarını kabul etmelisiniz',
     
     // login page tr
     welcomeBack: 'Hoş Geldiniz',
@@ -516,6 +517,7 @@ export const translations = {
     loginFailed: 'Login failed',
     operationFailed: 'Operation failed',
     passwordResetSent: 'Password reset email sent (simulation)',
+    mustAcceptTerms: 'You must accept the terms and conditions',
     
     // login page en
     welcomeBack: 'Welcome Back',
