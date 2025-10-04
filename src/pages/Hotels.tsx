@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface Hotel {
   id: string;
@@ -13,12 +14,14 @@ interface Hotel {
   category: string;
   rating: number;
   reviews: number;
+  price: number;
   isRecommended: boolean;
 }
 
 export default function HotelsPage() {
   const [activeFilter, setActiveFilter] = useState<string>("Tümü");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  const { formatPrice } = useCurrency();
 
   const toggleFavorite = (hotel: Hotel) => {
     if (isFavorite(hotel.id)) {
@@ -41,6 +44,7 @@ export default function HotelsPage() {
       category: "Resort",
       rating: 4.8,
       reviews: 1247,
+      price: 8500,
       isRecommended: true
     },
     {
@@ -53,6 +57,7 @@ export default function HotelsPage() {
       category: "Lüks",
       rating: 4.9,
       reviews: 892,
+      price: 12000,
       isRecommended: true
     },
     {
@@ -65,6 +70,7 @@ export default function HotelsPage() {
       category: "Butik",
       rating: 4.7,
       reviews: 634,
+      price: 6500,
       isRecommended: false
     },
     {
@@ -77,6 +83,7 @@ export default function HotelsPage() {
       category: "İş",
       rating: 4.5,
       reviews: 2156,
+      price: 3200,
       isRecommended: false
     },
     {
@@ -89,6 +96,7 @@ export default function HotelsPage() {
       category: "Resort",
       rating: 4.6,
       reviews: 1876,
+      price: 7200,
       isRecommended: true
     },
     {
@@ -101,6 +109,7 @@ export default function HotelsPage() {
       category: "Lüks",
       rating: 4.9,
       reviews: 1123,
+      price: 15000,
       isRecommended: true
     },
     {
@@ -113,6 +122,7 @@ export default function HotelsPage() {
       category: "Butik",
       rating: 4.8,
       reviews: 445,
+      price: 4800,
       isRecommended: false
     },
     {
@@ -125,6 +135,7 @@ export default function HotelsPage() {
       category: "İş",
       rating: 4.4,
       reviews: 987,
+      price: 2800,
       isRecommended: false
     },
     {
@@ -137,6 +148,7 @@ export default function HotelsPage() {
       category: "Resort",
       rating: 4.3,
       reviews: 2341,
+      price: 9500,
       isRecommended: false
     },
     {
@@ -149,6 +161,7 @@ export default function HotelsPage() {
       category: "Lüks",
       rating: 4.9,
       reviews: 567,
+      price: 18000,
       isRecommended: true
     }
   ];
@@ -281,10 +294,15 @@ export default function HotelsPage() {
                   </div>
                 </div>
 
-                {/* Learn More Button */}
-                <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
-                  Detayları Görüntüle
-                </button>
+                {/* Price and Button */}
+                <div className="flex items-center justify-between">
+                  <div className="text-2xl font-bold text-yellow-400">
+                    {formatPrice(hotel.price)}
+                  </div>
+                  <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                    Rezervasyon
+                  </button>
+                </div>
                 </div>
               </div>
             ))}

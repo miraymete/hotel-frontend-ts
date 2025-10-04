@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Globe, Heart } from "lucide-react";
 import type { PublicUser } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
 
 // ana sayfa bileşeninin prop'ları
@@ -27,7 +28,8 @@ export default function HomePage({
   onOpenLanguage,
 }: Props) {
   // context'lerden gelen fonksiyonlar
-  const { t } = useLanguage();                    // çeviri fonksiyonu
+  const { t, language } = useLanguage();          // çeviri fonksiyonu ve dil
+  const { currency } = useCurrency();             // para birimi
   
 
 
@@ -71,7 +73,9 @@ export default function HomePage({
             className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors text-sm"
           >
             <Globe className="w-4 h-4" />
-            <span className="uppercase tracking-wide">TR · TL</span>
+            <span className="uppercase tracking-wide">
+              {language === 'tr' ? 'TR' : 'EN'} · {currency}
+            </span>
           </button>
 
           {!user ? (

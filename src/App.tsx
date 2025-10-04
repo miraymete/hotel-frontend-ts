@@ -27,6 +27,7 @@ import LanguageModal from "@/components/LanguageModal";
 
 // context ve auth utilities
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { getCurrentUser, logout, type PublicUser } from "@/lib/auth";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
   return (
     // favoriler context'ini tüm uygulamaya sağla
     <FavoritesProvider>
+      <CurrencyProvider>
       {/* sayfa routing'i - react router ile sayfa yönlendirmeleri */}
       <Routes>
         {/* ana sayfa - kullanıcı bilgileri ve modal açma fonksiyonları prop olarak geçiliyor */}
@@ -82,6 +84,7 @@ export default function App() {
         open={openLang} 
         setOpen={setOpenLang} 
       />
+      </CurrencyProvider>
     </FavoritesProvider>
   );
 }

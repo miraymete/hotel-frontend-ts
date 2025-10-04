@@ -7,7 +7,7 @@ export interface FavoriteHotel {
   name: string;         
   image: string;        // görsel url
   location: string;     // konumu
-  price?: string;        
+  price?: string | number;        
   rating: number;       // puan (1-5)
   reviews: number;      // yorum sayısı
   description?: string; // açıklama
