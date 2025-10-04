@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart, Users, Calendar } from "lucide-react";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 export default function YachtsPage() {
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>("Tümü");
+  const { favorites, addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
-  const toggleFavorite = (yachtId: string) => {
-    setFavorites(prev => 
-      prev.includes(yachtId) 
-        ? prev.filter(id => id !== yachtId)
-        : [...prev, yachtId]
-    );
+  const toggleFavorite = (yacht: any) => {
+    if (isFavorite(yacht.id)) {
+      removeFromFavorites(yacht.id);
+    } else {
+      addToFavorites(yacht);
+    }
   };
 
   const handleFilter = (filter: string) => {
@@ -317,12 +318,12 @@ export default function YachtsPage() {
                   </div>
                 )}
                 <button
-                  onClick={() => toggleFavorite(yacht.id)}
+                  onClick={() => toggleFavorite(yacht)}
                   className="absolute top-3 left-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
                 >
                   <Heart
                     className={`w-5 h-5 ${
-                      favorites.includes(yacht.id)
+                      isFavorite(yacht.id)
                         ? "text-red-500 fill-current"
                         : "text-gray-600"
                     }`}

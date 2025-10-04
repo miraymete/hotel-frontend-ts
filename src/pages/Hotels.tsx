@@ -1,22 +1,36 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
+import { useFavorites } from "@/contexts/FavoritesContext";
+
+interface Hotel {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  location: string;
+  tags: string[];
+  category: string;
+  rating: number;
+  reviews: number;
+  isRecommended: boolean;
+}
 
 export default function HotelsPage() {
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>("Tümü");
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
-  const toggleFavorite = (hotelId: string) => {
-    setFavorites(prev => 
-      prev.includes(hotelId) 
-        ? prev.filter(id => id !== hotelId)
-        : [...prev, hotelId]
-    );
+  const toggleFavorite = (hotel: Hotel) => {
+    if (isFavorite(hotel.id)) {
+      removeFromFavorites(hotel.id);
+    } else {
+      addToFavorites(hotel);
+    }
   };
 
   const filters = ["Tümü", "Resort", "Lüks", "Butik", "İş"];
 
-  const hotels = [
+  const hotels: Hotel[] = [
     {
       id: "1",
       name: "Grand Palace Resort & Spa",
@@ -161,7 +175,7 @@ export default function HotelsPage() {
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link 
+              <Link 
               to="/" 
               className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors"
             >
@@ -211,21 +225,21 @@ export default function HotelsPage() {
                     <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-medium">
                       Önerilen
                     </span>
-                  </div>
+            </div>
                 )}
                 <button
-                  onClick={() => toggleFavorite(hotel.id)}
+                  onClick={() => toggleFavorite(hotel)}
                   className="absolute top-3 left-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
                 >
                   <Heart
                     className={`w-5 h-5 ${
-                      favorites.includes(hotel.id)
+                      isFavorite(hotel.id)
                         ? "text-red-500 fill-current"
                         : "text-gray-600"
                     }`}
                   />
-                </button>
-              </div>
+                  </button>
+                    </div>
 
               {/* Content */}
               <div className="p-6">
@@ -247,7 +261,7 @@ export default function HotelsPage() {
                     </span>
                   ))}
                 </div>
-
+                
                 {/* Rating */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
@@ -255,7 +269,7 @@ export default function HotelsPage() {
                     <span className="text-sm text-gray-600">
                       ({hotel.reviews})
                     </span>
-                  </div>
+                      </div>
                   <div className="flex items-center text-gray-600 text-sm">
                     <MapPin className="w-4 h-4 mr-1" />
                     {hotel.location}
@@ -266,9 +280,9 @@ export default function HotelsPage() {
                 <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                   Detayları Görüntüle
                 </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </main>
     </div>

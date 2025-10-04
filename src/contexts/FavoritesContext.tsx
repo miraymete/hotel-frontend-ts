@@ -7,9 +7,12 @@ export interface FavoriteHotel {
   name: string;         
   image: string;        // görsel url
   location: string;     // konumu
-  price: string;        
+  price?: string;        
   rating: number;       // puan (1-5)
-  reviews: string;      // yorum sayısı
+  reviews: number;      // yorum sayısı
+  description?: string; // açıklama
+  tags?: string[];      // etiketler
+  category?: string;    // kategori
 }
 
 interface FavoritesContextType {
