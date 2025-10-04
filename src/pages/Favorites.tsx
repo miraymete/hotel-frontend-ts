@@ -44,10 +44,10 @@ export default function FavoritesPage() {
                 <Heart className="w-12 h-12 text-gray-400" />
               </div>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                Henüz favorilere eklediğiniz bir öğe yok
+                Henüz favorilere eklediğiniz bir öge yok
               </h2>
               <p className="text-gray-600 mb-8">
-                Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yachts'ları favorilerinize ekleyin
+                Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yat'ları favorilerinize ekleyin
               </p>
               <Link to="/hotels">
                 <button className="bg-yellow-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-yellow-700 transition-colors">

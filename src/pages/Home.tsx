@@ -9,7 +9,7 @@
  * - keşfetme kartları (favori ekleme özelliği ile)
  */
 import { Button } from "@/components/ui/button";
-import { Search, Globe } from "lucide-react";
+import { Search, Globe, Heart } from "lucide-react";
 import type { PublicUser } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
@@ -57,6 +57,14 @@ export default function HomePage({
         </nav>
 
         <div className="flex items-center space-x-6">
+          {/* favoriler butonu - sağ üst */}
+          <Link to="/favorites">
+            <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors text-sm">
+              <Heart className="w-4 h-4" />
+              <span className="hidden sm:inline uppercase tracking-wide">Favoriler</span>
+            </button>
+          </Link>
+
           {/* dil para - minimal */}
           <button
             onClick={onOpenLanguage}
