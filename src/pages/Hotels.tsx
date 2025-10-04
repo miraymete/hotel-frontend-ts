@@ -20,7 +20,7 @@ interface Hotel {
 }
 
 export default function HotelsPage() {
-  const [activeFilter, setActiveFilter] = useState<string>("Tümü");
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { formatPrice } = useCurrency();
   const { t } = useLanguage();
@@ -33,7 +33,13 @@ export default function HotelsPage() {
     }
   };
 
-  const filters = ["Tümü", "Resort", "Lüks", "Butik", "İş"];
+  const filters = [
+    { key: "all", label: t('all') },
+    { key: "resort", label: t('resort') },
+    { key: "luxury", label: t('luxury') },
+    { key: "boutique", label: t('boutique') },
+    { key: "business", label: t('business') }
+  ];
 
   const hotels: Hotel[] = [
     {
@@ -169,9 +175,17 @@ export default function HotelsPage() {
   ];
 
   // Filtreleme mantığı
-  const filteredHotels = activeFilter === "Tümü" 
+  const filteredHotels = activeFilter === "all" 
     ? hotels 
-    : hotels.filter(hotel => hotel.category === activeFilter);
+    : hotels.filter(hotel => {
+        const filterMap: { [key: string]: string } = {
+          'luxury': 'Lüks',
+          'resort': 'Resort', 
+          'boutique': 'Butik',
+          'business': 'İş'
+        };
+        return hotel.category === filterMap[activeFilter];
+      });
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -215,15 +229,15 @@ export default function HotelsPage() {
           <div className="flex flex-wrap gap-2">
             {filters.map((filter) => (
               <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
+                key={filter.key}
+                onClick={() => setActiveFilter(filter.key)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeFilter === filter
+                  activeFilter === filter.key
                     ? "bg-yellow-600 text-white"
                     : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
                 }`}
               >
-                {filter}
+                {filter.label}
               </button>
             ))}
           </div>

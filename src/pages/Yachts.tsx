@@ -20,7 +20,7 @@ interface Yacht {
 }
 
 export default function YachtsPage() {
-  const [activeFilter, setActiveFilter] = useState<string>("Tümü");
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
 
@@ -35,6 +35,14 @@ export default function YachtsPage() {
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
   };
+
+  const filters = [
+    { key: "all", label: t('all') },
+    { key: "luxury", label: t('luxury') },
+    { key: "classic", label: t('classic') },
+    { key: "catamaran", label: t('catamaran') },
+    { key: "boat", label: t('boat') }
+  ];
 
   const yachts = [
     // Lüks Yatlar
@@ -266,63 +274,35 @@ export default function YachtsPage() {
         {/* Filters */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
-            <button 
-              onClick={() => handleFilter("Tümü")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Tümü" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Tümü
-            </button>
-            <button 
-              onClick={() => handleFilter("Lüks")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Lüks" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Lüks
-            </button>
-            <button 
-              onClick={() => handleFilter("Klasik")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Klasik" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Klasik
-            </button>
-            <button 
-              onClick={() => handleFilter("Katamaran")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Katamaran" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Katamaran
-            </button>
-            <button 
-              onClick={() => handleFilter("Tekne")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Tekne" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Tekne
-            </button>
+            {filters.map((filter) => (
+              <button
+                key={filter.key}
+                onClick={() => handleFilter(filter.key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeFilter === filter.key
+                    ? "bg-yellow-600 text-white"
+                    : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Yachts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {yachts
-            .filter(yacht => activeFilter === "Tümü" || yacht.category === activeFilter)
+            .filter(yacht => {
+              if (activeFilter === "all") return true;
+              const filterMap: { [key: string]: string } = {
+                'luxury': 'Lüks',
+                'classic': 'Klasik',
+                'catamaran': 'Katamaran',
+                'boat': 'Tekne'
+              };
+              return yacht.category === filterMap[activeFilter];
+            })
             .map((yacht) => (
             <div key={yacht.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
               {/* Image */}
@@ -378,7 +358,7 @@ export default function YachtsPage() {
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
-                    <span>{yacht.capacity}</span>
+                    <span>{yacht.capacity.replace('kişi', t('people'))}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4" />
@@ -403,7 +383,7 @@ export default function YachtsPage() {
                 {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {yacht.price}
+                    {yacht.price.replace('/gün', t('perDay'))}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

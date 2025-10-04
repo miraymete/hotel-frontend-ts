@@ -72,6 +72,42 @@ export const translations = {
     continueExploring: 'Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yat\'ları favorilerinize ekleyin',
     itemsInFavorites: 'öğe favorilerinizde',
     
+    // filters tr
+    nature: 'Doğa',
+    adventure: 'Macera',
+    city: 'Şehir',
+    history: 'Tarih',
+    luxury: 'Lüks',
+    classic: 'Klasik',
+    catamaran: 'Katamaran',
+    boat: 'Tekne',
+    resort: 'Resort',
+    boutique: 'Butik',
+    business: 'İş',
+    
+    // content tr
+    people: 'kişi',
+    hours: 'saat',
+    perDay: '/gün',
+    turkey: 'Türkiye',
+    cappadocia: 'Kapadokya',
+    pamukkale: 'Pamukkale',
+    antalya: 'Antalya',
+    bodrum: 'Bodrum',
+    istanbul: 'İstanbul',
+    ankara: 'Ankara',
+    cesme: 'Çeşme',
+    alanya: 'Alanya',
+    izmir: 'İzmir',
+    safranbolu: 'Safranbolu',
+    
+    // home page tr
+    newDiscoveries: 'YENİ KEŞİFLERİN',
+    privileges: 'AYRICALIKLARLA',
+    meetAt: 'BULUŞTUĞU',
+    point: 'NOKTA',
+    homeSubtitle: 'Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın.',
+    
     // errors
     invalidEmail: 'Geçersiz e-posta',
     passwordTooShort: 'Şifre en az 6 karakter, 1 büyük harf ve 1 sayı içermeli',
@@ -153,6 +189,42 @@ export const translations = {
     noFavoritesYet: 'You haven\'t added any items to your favorites yet',
     continueExploring: 'Continue exploring and add hotels, tours and yachts you like to your favorites',
     itemsInFavorites: 'items in your favorites',
+    
+    // filters en
+    nature: 'Nature',
+    adventure: 'Adventure',
+    city: 'City',
+    history: 'History',
+    luxury: 'Luxury',
+    classic: 'Classic',
+    catamaran: 'Catamaran',
+    boat: 'Boat',
+    resort: 'Resort',
+    boutique: 'Boutique',
+    business: 'Business',
+    
+    // content en
+    people: 'people',
+    hours: 'hours',
+    perDay: '/day',
+    turkey: 'Turkey',
+    cappadocia: 'Cappadocia',
+    pamukkale: 'Pamukkale',
+    antalya: 'Antalya',
+    bodrum: 'Bodrum',
+    istanbul: 'Istanbul',
+    ankara: 'Ankara',
+    cesme: 'Cesme',
+    alanya: 'Alanya',
+    izmir: 'Izmir',
+    safranbolu: 'Safranbolu',
+    
+    // home page en
+    newDiscoveries: 'WHERE NEW',
+    privileges: 'DISCOVERIES',
+    meetAt: 'MEET',
+    point: 'PRIVILEGES',
+    homeSubtitle: 'Experience unforgettable moments in the world\'s most prestigious destinations.',
     
     // errors
     invalidEmail: 'Invalid email',

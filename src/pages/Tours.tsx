@@ -21,7 +21,7 @@ interface Tour {
 }
 
 export default function ToursPage() {
-  const [activeFilter, setActiveFilter] = useState<string>("Tümü");
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
 
@@ -36,6 +36,14 @@ export default function ToursPage() {
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
   };
+
+  const filters = [
+    { key: "all", label: t('all') },
+    { key: "nature", label: t('nature') },
+    { key: "adventure", label: t('adventure') },
+    { key: "city", label: t('city') },
+    { key: "history", label: t('history') }
+  ];
 
   const tours: Tour[] = [
     // Doğa Turları
@@ -267,63 +275,35 @@ export default function ToursPage() {
         {/* Filters */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
-            <button 
-              onClick={() => handleFilter("Tümü")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Tümü" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Tümü
-            </button>
-            <button 
-              onClick={() => handleFilter("Doğa")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Doğa" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Doğa
-            </button>
-            <button 
-              onClick={() => handleFilter("Macera")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Macera" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Macera
-            </button>
-            <button 
-              onClick={() => handleFilter("Şehir")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Şehir" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Şehir
-            </button>
-            <button 
-              onClick={() => handleFilter("Tarih")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === "Tarih" 
-                  ? "bg-yellow-600 text-white" 
-                  : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
-              }`}
-            >
-              Tarih
-            </button>
+            {filters.map((filter) => (
+              <button
+                key={filter.key}
+                onClick={() => handleFilter(filter.key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeFilter === filter.key
+                    ? "bg-yellow-600 text-white"
+                    : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Tours Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {tours
-            .filter(tour => activeFilter === "Tümü" || tour.category === activeFilter)
+            .filter(tour => {
+              if (activeFilter === "all") return true;
+              const filterMap: { [key: string]: string } = {
+                'nature': 'Doğa',
+                'adventure': 'Macera',
+                'city': 'Şehir', 
+                'history': 'Tarih'
+              };
+              return tour.category === filterMap[activeFilter];
+            })
             .map((tour) => (
             <div key={tour.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
               {/* Image */}
@@ -379,11 +359,11 @@ export default function ToursPage() {
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />
-                    <span>{tour.duration}</span>
+                    <span>{tour.duration.replace('saat', t('hours'))}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
-                    <span>{tour.groupSize}</span>
+                    <span>{tour.groupSize.replace('kişi', t('people'))}</span>
                   </div>
                 </div>
 
@@ -404,7 +384,7 @@ export default function ToursPage() {
                 {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {tour.price}
+                    {tour.price.replace('/gün', t('perDay'))}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

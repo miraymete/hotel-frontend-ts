@@ -238,11 +238,11 @@ export default function HomePage({
           {/* Başlık */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-wider">
-              <span className="block">YENİ KEŞİFLERİN</span>
-              <span className="block text-yellow-400 font-thin">AYRICALIKLARLA BULUŞTUĞU NOKTA</span>
+              <span className="block">{t('newDiscoveries')}</span>
+              <span className="block text-yellow-400 font-thin">{t('privileges')} {t('meetAt')} {t('point')}</span>
             </h2>
             <p className="text-xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
-              Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın
+              {t('homeSubtitle')}
             </p>
           </div>
 
