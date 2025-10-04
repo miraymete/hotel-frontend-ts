@@ -89,6 +89,7 @@ export default function HomePage({
         <nav className="hidden lg:flex space-x-8 text-white/90 font-light text-sm tracking-wide">
           <Link to="/hotels" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('hotels')}</Link>
           <Link to="/tours" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('tours')}</Link>
+          <Link to="/yachts" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">YATLAR</Link>
           <Link to="/experiences" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('experiences')}</Link>
           <Link to="/favorites" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('favorites')}</Link>
         </nav>
