@@ -83,8 +83,8 @@ export default function YachtsPage() {
       // Açıklamalar
       'Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.': t('yachtLuxuryDesc'),
       'Modern tasarımı ve güçlü performansı ile denizde fark yaratan yat.': t('yachtSportDesc'),
-      'İngiliz tarzı lüks ve zarafet ile denizde konfor.': t('yachtEnglishDesc'),
-      'Geleneksel Türk gületi ile nostaljik deniz yolculuğu.': t('yachtClassicDesc'),
+      'İngiliz kalitesi ve zarafeti ile denizde lüks deneyim sunan yat.': t('yachtEnglishDesc'),
+      'Geleneksel Türk yatçılığının en güzel örneklerinden biri.': t('yachtClassicDesc'),
       'Ahşap işçiliği ve klasik tasarım ile özel deneyim.': t('yachtWoodDesc'),
       'Yelkenli tekne ile doğal rüzgar gücü.': t('yachtSailDesc'),
       'Katamaran\'ın stabilitesi ile konforlu seyahat.': t('yachtCatamaranDesc'),

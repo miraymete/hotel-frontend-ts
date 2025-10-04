@@ -73,17 +73,29 @@ export default function ToursPage() {
       
       // İsimler ve açıklamalar
       'Kapadokya Balon Turu': t('balloonTour'),
+      'Gün doğumunda Kapadokya\'nın büyüleyici manzarasını balonla keşfedin. Unutulmaz bir deneyim.': t('balloonDesc'),
       'Pamukkale Doğa Turu': t('natureTour'),
+      'Beyaz travertenler ve termal suların büyüleyici dünyasını keşfedin.': t('natureDesc'),
       'Uludağ Dağ Turu': t('mountainTour'),
+      'Dağ havası ve doğal güzelliklerle dolu bir gün.': t('mountainDesc'),
       'Antalya Jeep Safari': t('safariTour'),
+      'Çam ağaçları arasında adrenalin dolu safari deneyimi.': t('safariDesc'),
       'Rafting Macera Turu': t('raftingTour'),
+      'Çoruh Nehri\'nde adrenalin dolu rafting deneyimi. Doğanın gücünü hissedin.': t('raftingDesc'),
       'Fethiye Paragliding': t('paraglidingTour'),
+      'Mavi suların üzerinde uçarak unutulmaz anlar yaşayın.': t('paraglidingDesc'),
       'İstanbul Boğaz Turu': t('bosphorusTour'),
+      'Boğaz\'ın büyüleyici manzarasını tekne ile keşfedin.': t('bosporusDesc'),
       'İstanbul Tarihi Yarımada': t('historicalTour'),
+      'Tarihi yarımadanın gizemli sokaklarında gezinti.': t('historicalDesc'),
       'Ankara Modern Tur': t('modernTour'),
+      'Ankara\'nın modern yüzünü ve kültürel zenginliklerini keşfedin.': t('modernDesc'),
       'Efes Antik Kenti': t('ephesusTour'),
+      'Antik dünyanın en görkemli şehirlerinden birini keşfedin.': t('ephesusDesc'),
       'Çanakkale Gelibolu': t('gallipoliTour'),
+      'Tarihin en önemli savaşlarından birinin izlerini takip edin.': t('gallipoliDesc'),
       'Pamukkale Hierapolis': t('hierapolisTour'),
+      'Antik şehir kalıntıları ve doğal travertenler.': t('hierapolisDesc'),
     };
     
     return translations[text] || text;

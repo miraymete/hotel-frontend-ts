@@ -53,7 +53,7 @@ export default function HomePage({
         <nav className="hidden lg:flex space-x-8 text-white/90 font-light text-sm tracking-wide">
           <Link to="/hotels" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('hotels')}</Link>
           <Link to="/tours" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('tours')}</Link>
-          <Link to="/yachts" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">YATLAR</Link>
+          <Link to="/yachts" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('yachts')}</Link>
           <Link to="/experiences" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('experiences')}</Link>
           <Link to="/favorites" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('favorites')}</Link>
         </nav>
@@ -63,7 +63,7 @@ export default function HomePage({
           <Link to="/favorites">
             <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors text-sm">
               <Heart className="w-4 h-4" />
-              <span className="hidden sm:inline uppercase tracking-wide">Favoriler</span>
+              <span className="hidden sm:inline uppercase tracking-wide">{t('favorites')}</span>
             </button>
           </Link>
 
@@ -260,18 +260,18 @@ export default function HomePage({
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
-                  LÜKS OTELLER
+                  {t('luxuryHotelsTitle')}
                 </h3>
                 <p className="text-white/70 font-light leading-relaxed mb-6">
-                  Dünyanın en prestijli otellerinde konaklayın. Her detayda mükemmellik arayanlar için tasarlandı.
+                  {t('luxuryHotelsDesc')}
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
-                    Keşfet →
+                    {t('discoverArrow')}
                   </span>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-white/60 text-sm">Premium</span>
+                    <span className="text-white/60 text-sm">{t('premium')}</span>
                   </div>
                 </div>
               </div>
@@ -289,18 +289,18 @@ export default function HomePage({
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
-                  TURLAR
+                  {t('toursTitle')}
                 </h3>
                 <p className="text-white/70 font-light leading-relaxed mb-6">
-                  Unutulmaz tur deneyimleri. Dünyanın en güzel yerlerini keşfedin ve anılar biriktirin.
+                  {t('toursDesc')}
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
-                    Keşfet →
+                    {t('discoverArrow')}
                   </span>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-white/60 text-sm">Adventure</span>
+                    <span className="text-white/60 text-sm">{t('adventureTag')}</span>
                   </div>
                 </div>
               </div>
@@ -318,18 +318,18 @@ export default function HomePage({
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
-                  YAT DENEYİMLERİ
+                  {t('yachtExperiencesTitle')}
                 </h3>
                 <p className="text-white/70 font-light leading-relaxed mb-6">
-                  Dünyanın en güzel koylarında lüks yatlarla seyahat edin. Denizde unutulmaz anlar.
+                  {t('yachtExperiencesDesc')}
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
-                    Keşfet →
+                    {t('discoverArrow')}
                   </span>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-white/60 text-sm">Luxury</span>
+                    <span className="text-white/60 text-sm">{t('luxuryTag')}</span>
                   </div>
                 </div>
               </div>
@@ -355,29 +355,28 @@ export default function HomePage({
                 <span className="text-2xl font-light text-white tracking-wider">{t('brand')}</span>
               </div>
               <p className="text-white/60 font-light leading-relaxed max-w-md">
-                Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler sunuyoruz. 
-                Her detayda mükemmellik arayanlar için tasarlandı.
+                {t('footerDesc')}
               </p>
             </div>
 
             {/* Hızlı linkler */}
             <div>
-              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">Hizmetler</h3>
+              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">{t('services')}</h3>
               <ul className="space-y-3">
                 <li><Link to="/hotels" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('luxuryHotels')}</Link></li>
-                <li><Link to="/tours" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Turlar</Link></li>
-                <li><Link to="/experiences" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Deneyimler</Link></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Jet</a></li>              </ul>
+                <li><Link to="/tours" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('specialTours')}</Link></li>
+                <li><Link to="/experiences" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('experiencesTag')}</Link></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('privateJet')}</a></li>              </ul>
             </div>
 
             {/* İletişim */}
             <div>
-              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">iletişim</h3>
+              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">{t('contactTag')}</h3>
               <ul className="space-y-3">
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">+90 533 602 07 04</a></li>
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">mirayaymete@gmail.com</a></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">7/24 Destek</a></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Rezervasyon</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('support247')}</a></li>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('reservationTag')}</a></li>
               </ul>
             </div>
           </div>
@@ -385,12 +384,12 @@ export default function HomePage({
           {/* Alt çizgi */}
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/40 font-light text-sm">
-              © 2024 {t('brand')}. Tüm hakları saklıdır.
+              © 2024 {t('brand')}. {t('allRightsReserved')}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Gizlilik Politikası</a>
-              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Kullanım Şartları</a>
-              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Çerez Politikası</a>
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">{t('privacyPolicy')}</a>
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Terms of Use</a>
+              <a href="#" className="text-white/40 hover:text-yellow-400 transition-colors text-sm font-light">Cookie Policy</a>
             </div>
           </div>
         </div>

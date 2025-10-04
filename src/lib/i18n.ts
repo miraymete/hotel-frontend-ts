@@ -6,6 +6,7 @@ export const translations = {
     brand: 'HotelBooking',
     hotels: 'Oteller',
     tours: 'Turlar',
+    yachts: 'Yatlar',
     experiences: 'Deneyimler',
     favorites: 'Favoriler',
     contact: 'İletişim',
@@ -172,6 +173,30 @@ export const translations = {
     point: 'NOKTA',
     homeSubtitle: 'Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın.',
     
+    // home cards tr
+    luxuryHotelsTitle: 'LÜKS OTELLER',
+    luxuryHotelsDesc: 'Dünyanın en prestijli otellerinde konaklayın. Her detayda mükemmellik arayanlar için tasarlandı.',
+    toursTitle: 'TURLAR',
+    toursDesc: 'Unutulmaz tur deneyimleri. Dünyanın en güzel yerlerini keşfedin ve anılar biriktirin.',
+    yachtExperiencesTitle: 'YAT DENEYİMLERİ',
+    yachtExperiencesDesc: 'Dünyanın en güzel koylarında lüks yatlarla seyahat edin. Denizde unutulmaz anlar.',
+    discoverArrow: 'Keşfet →',
+    premium: 'Premium',
+    adventureTag: 'Adventure',
+    luxuryTag: 'Luxury',
+    
+    // footer tr
+    footerDesc: 'Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler sunuyoruz. Her detayda mükemmellik arayanlar için tasarlandı.',
+    services: 'Hizmetler',
+    specialTours: 'Özel Turlar',
+    experiencesTag: 'Deneyimler',
+    privateJet: 'Özel Jet',
+    contactTag: 'İletişim',
+    support247: '7/24 Destek',
+    reservationTag: 'Rezervasyon',
+    allRightsReserved: 'Tüm hakları saklıdır.',
+    privacyPolicy: 'Gizlilik Politikası',
+    
     // errors
     invalidEmail: 'Geçersiz e-posta',
     passwordTooShort: 'Şifre en az 6 karakter, 1 büyük harf ve 1 sayı içermeli',
@@ -188,6 +213,7 @@ export const translations = {
     brand: 'HotelBooking',
     hotels: 'Hotels',
     tours: 'Tours',
+    yachts: 'Yachts',
     experiences: 'Experiences',
     favorites: 'Favorites',
     contact: 'Contact',
@@ -353,6 +379,30 @@ export const translations = {
     meetAt: 'MEET',
     point: 'PRIVILEGES',
     homeSubtitle: 'Experience unforgettable moments in the world\'s most prestigious destinations.',
+    
+    // home cards en
+    luxuryHotelsTitle: 'LUXURY HOTELS',
+    luxuryHotelsDesc: 'Stay at the world\'s most prestigious hotels. Designed for those seeking perfection in every detail.',
+    toursTitle: 'TOURS',
+    toursDesc: 'Unforgettable tour experiences. Discover the world\'s most beautiful places and collect memories.',
+    yachtExperiencesTitle: 'YACHT EXPERIENCES',
+    yachtExperiencesDesc: 'Travel with luxury yachts in the world\'s most beautiful bays. Unforgettable moments at sea.',
+    discoverArrow: 'Discover →',
+    premium: 'Premium',
+    adventureTag: 'Adventure',
+    luxuryTag: 'Luxury',
+    
+    // footer en
+    footerDesc: 'We offer unforgettable experiences in the world\'s most prestigious destinations. Designed for those seeking excellence in every detail.',
+    services: 'Services',
+    specialTours: 'Special Tours',
+    experiencesTag: 'Experiences',
+    privateJet: 'Private Jet',
+    contactTag: 'Contact',
+    support247: '7/24 Support',
+    reservationTag: 'Reservation',
+    allRightsReserved: 'All rights reserved.',
+    privacyPolicy: 'Privacy Policy',
     
     // errors
     invalidEmail: 'Invalid email',
