@@ -174,7 +174,7 @@ export default function HomePage({
 
           {/* Alt başlık */}
           <p className="text-xl md:text-2xl font-light text-white/80 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
-            Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın
+            Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın.
           </p>
 
           {/* Arama çubuğu */}
