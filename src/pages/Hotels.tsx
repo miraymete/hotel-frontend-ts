@@ -4,6 +4,7 @@ import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
 
 export default function HotelsPage() {
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [activeFilter, setActiveFilter] = useState<string>("Tümü");
 
   const toggleFavorite = (hotelId: string) => {
     setFavorites(prev => 
@@ -13,6 +14,8 @@ export default function HotelsPage() {
     );
   };
 
+  const filters = ["Tümü", "Resort", "Lüks", "Butik", "İş"];
+
   const hotels = [
     {
       id: "1",
@@ -21,6 +24,7 @@ export default function HotelsPage() {
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       location: "Antalya, Türkiye",
       tags: ["Resort", "Spa"],
+      category: "Resort",
       rating: 4.8,
       reviews: 1247,
       isRecommended: true
@@ -32,6 +36,7 @@ export default function HotelsPage() {
       image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       location: "Bodrum, Türkiye",
       tags: ["Lüks", "Marina"],
+      category: "Lüks",
       rating: 4.9,
       reviews: 892,
       isRecommended: true
@@ -43,6 +48,7 @@ export default function HotelsPage() {
       image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       location: "Kapadokya, Türkiye",
       tags: ["Romantik", "Butik"],
+      category: "Butik",
       rating: 4.7,
       reviews: 634,
       isRecommended: false
@@ -54,11 +60,89 @@ export default function HotelsPage() {
       image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       location: "İstanbul, Türkiye",
       tags: ["İş", "Şehir"],
+      category: "İş",
       rating: 4.5,
       reviews: 2156,
       isRecommended: false
+    },
+    {
+      id: "5",
+      name: "Beach Paradise Resort",
+      description: "Plaj kenarında all-inclusive resort, çocuk kulübü ve su sporları.",
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Çeşme, Türkiye",
+      tags: ["Resort", "All-Inclusive"],
+      category: "Resort",
+      rating: 4.6,
+      reviews: 1876,
+      isRecommended: true
+    },
+    {
+      id: "6",
+      name: "Royal Luxury Palace",
+      description: "Osmanlı mimarisinde lüks saray oteli, özel butler hizmeti ve spa.",
+      image: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "İstanbul, Türkiye",
+      tags: ["Lüks", "Tarihi"],
+      category: "Lüks",
+      rating: 4.9,
+      reviews: 1123,
+      isRecommended: true
+    },
+    {
+      id: "7",
+      name: "Historic Boutique Inn",
+      description: "Tarihi binada restore edilmiş butik otel, antika mobilyalar ve özel atmosfer.",
+      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Safranbolu, Türkiye",
+      tags: ["Butik", "Tarihi"],
+      category: "Butik",
+      rating: 4.8,
+      reviews: 445,
+      isRecommended: false
+    },
+    {
+      id: "8",
+      name: "Corporate Plaza Hotel",
+      description: "İş merkezinde modern otel, 24 saat oda servisi ve toplantı salonları.",
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Ankara, Türkiye",
+      tags: ["İş", "Modern"],
+      category: "İş",
+      rating: 4.4,
+      reviews: 987,
+      isRecommended: false
+    },
+    {
+      id: "9",
+      name: "Tropical Resort & Casino",
+      description: "Tropikal bahçeler içinde casino'lu resort, eğlence ve dinlence bir arada.",
+      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Alanya, Türkiye",
+      tags: ["Resort", "Casino"],
+      category: "Resort",
+      rating: 4.3,
+      reviews: 2341,
+      isRecommended: false
+    },
+    {
+      id: "10",
+      name: "Diamond Luxury Collection",
+      description: "Elmas standartlarında lüks otel, şampanya servisi ve özel concierge.",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "İzmir, Türkiye",
+      tags: ["Lüks", "VIP"],
+      category: "Lüks",
+      rating: 4.9,
+      reviews: 567,
+      isRecommended: true
     }
   ];
+
+  // Filtreleme mantığı
+  const filteredHotels = activeFilter === "Tümü" 
+    ? hotels 
+    : hotels.filter(hotel => hotel.category === activeFilter);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -95,27 +179,25 @@ export default function HotelsPage() {
         {/* Filters */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
-            <button className="px-4 py-2 bg-yellow-600 text-white rounded-full text-sm font-medium">
-              Tümü
-            </button>
-            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
-              Resort
-            </button>
-            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
-              Lüks
-            </button>
-            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
-              Butik
-            </button>
-            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
-              İş
-            </button>
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeFilter === filter
+                    ? "bg-yellow-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Hotels Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {hotels.map((hotel) => (
+          {filteredHotels.map((hotel) => (
             <div key={hotel.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
               {/* Image */}
               <div className="relative">
