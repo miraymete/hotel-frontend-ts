@@ -196,7 +196,7 @@ export default function HomePage({
         <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-gray-800">
           <div className="max-w-6xl mx-auto px-6 py-6">
             <div className="flex justify-center space-x-12">
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+              <Link to="/hotels" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
                 <div className="w-8 h-8 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
                     <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
@@ -205,7 +205,7 @@ export default function HomePage({
                   </svg>
                 </div>
                 <span className="text-xs uppercase tracking-wider font-light">TÜM OTELLER</span>
-              </div>
+              </Link>
               
               <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
                 <div className="w-8 h-8 flex items-center justify-center">

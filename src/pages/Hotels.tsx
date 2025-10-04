@@ -1,367 +1,194 @@
-/**
- * oteller sayfası - otel arama ve listeleme
- * 
- * bu sayfa kullanıcıların otel araması yapabileceği sayfadır
- * - gelişmiş arama filtreleri (konum, tarih, misafir sayısı)
- * - fiyat, yıldız, otel türü ve özellik filtreleri
- * - popüler destinasyonlar listesi
- * - responsive tasarım
- */
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { MapPin, Star, Heart, Calendar, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
 
 export default function HotelsPage() {
-  // arama formu state'leri
-  const [location, setLocation] = useState("");        // konum
-  const [checkIn, setCheckIn] = useState("");          // giriş tarihi
-  const [checkOut, setCheckOut] = useState("");        // çıkış tarihi
-  const [rooms, setRooms] = useState("1");             // oda sayısı
-  const [adults, setAdults] = useState("2");           // yetişkin sayısı
-  const [children, setChildren] = useState("0");       // çocuk sayısı
-  
-  // filtre state'leri
-  const [priceRange, setPriceRange] = useState("all");     // fiyat aralığı
-  const [starRating, setStarRating] = useState("all");     // yıldız sayısı
-  const [hotelType, setHotelType] = useState("all");       // otel türü
-  const [amenities, setAmenities] = useState("all");       // otel özellikleri
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-  // popüler destinasyonlar verisi
-  const popularDestinations = [
+  const toggleFavorite = (hotelId: string) => {
+    setFavorites(prev => 
+      prev.includes(hotelId) 
+        ? prev.filter(id => id !== hotelId)
+        : [...prev, hotelId]
+    );
+  };
+
+  const hotels = [
     {
-      id: 1,
-      name: "Paris, Fransa",
-      image: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      price: "TL 7.030",
+      id: "1",
+      name: "Grand Palace Resort & Spa",
+      description: "Lüks deneyim ve muhteşem spa hizmetleri ile unutulmaz bir tatil.",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Antalya, Türkiye",
+      tags: ["Resort", "Spa"],
       rating: 4.8,
-      reviews: "12.5K",
-      popular: true
+      reviews: 1247,
+      isRecommended: true
     },
     {
-      id: 2,
-      name: "İstanbul, Türkiye",
-      image: "https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      price: "TL 2.876",
+      id: "2", 
+      name: "Marina Luxury Suites",
+      description: "Deniz manzaralı lüks suitler ve özel marina erişimi ile eşsiz konaklama.",
+      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Bodrum, Türkiye",
+      tags: ["Lüks", "Marina"],
       rating: 4.9,
-      reviews: "8.9K",
-      popular: true
+      reviews: 892,
+      isRecommended: true
     },
     {
-      id: 3,
-      name: "Málaga, İspanya",
-      image: "https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      price: "TL 7.873",
+      id: "3",
+      name: "Mountain View Boutique Hotel",
+      description: "Dağ manzaralı butik otel, romantik atmosfer ve kişiselleştirilmiş hizmet.",
+      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "Kapadokya, Türkiye",
+      tags: ["Romantik", "Butik"],
       rating: 4.7,
-      reviews: "6.2K",
-      popular: true
+      reviews: 634,
+      isRecommended: false
     },
     {
-      id: 4,
-      name: "Bodrum, Türkiye",
-      image: "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      price: "TL 3.245",
-      rating: 4.8,
-      reviews: "15.3K",
-      popular: true
-    },
-    {
-      id: 5,
-      name: "Antalya, Türkiye",
-      image: "https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      price: "TL 2.156",
-      rating: 4.6,
-      reviews: "18.7K",
-      popular: true
+      id: "4",
+      name: "Urban Business Center",
+      description: "Şehir merkezinde modern iş oteli, toplantı salonları ve ücretsiz Wi-Fi.",
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      location: "İstanbul, Türkiye",
+      tags: ["İş", "Şehir"],
+      rating: 4.5,
+      reviews: 2156,
+      isRecommended: false
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-[#f1f5f9]">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link to="/" className="text-2xl font-bold text-[#3620D9] hover:text-[#4230FF] transition-colors">HotelBooking</Link>
-            
-            {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link 
-                to="/hotels" 
-                className="text-gray-700 hover:text-[#3620D9] font-medium transition-colors"
-              >
-                Oteller
-              </Link>
-              <Link 
-                to="/tours" 
-                className="text-gray-700 hover:text-[#3620D9] font-medium transition-colors"
-              >
-                Turlar
-              </Link>
-              <Link 
-                to="/experiences" 
-                className="text-gray-700 hover:text-[#3620D9] font-medium transition-colors"
-              >
-                Deneyimler
-              </Link>
-              <Link 
-                to="/favorites" 
-                className="text-gray-700 hover:text-[#3620D9] font-medium transition-colors"
-              >
-                Favoriler
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-gray-700 hover:text-[#3620D9] font-medium transition-colors"
-              >
-                İletişim
-              </Link>
-            </nav>
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < Math.floor(rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
 
-            <Button 
-              variant="outline" 
-              onClick={() => window.history.back()}
-              className="text-[#3620D9] border-[#3620D9] hover:bg-[#3620D9] hover:text-white"
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors"
             >
-              ← Geri Dön
-            </Button>
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-medium">Ana Sayfa</span>
+            </Link>
+            <h1 className="text-2xl font-light text-gray-900">Lüks Oteller</h1>
+            <div className="w-20"></div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            HotelBooking'de aradığınız oteli bulun!
-          </h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Uygun fiyatlı otellerden lüks odalara kadar her şey burada
-          </p>
-
-          {/* Search Bar */}
-          <div className="flex flex-col lg:flex-row gap-4 p-4 bg-yellow-50 border-2 border-yellow-400 rounded-xl mb-6">
-            {/* Destination */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
-                <MapPin className="w-5 h-5 text-gray-500" />
-                <input
-                  type="text"
-                  placeholder="Nereye gidiyorsunuz?"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="flex-1 outline-none text-gray-700 placeholder-gray-500"
-                />
-              </div>
-            </div>
-
-            {/* Check-in Date */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
-                <Calendar className="w-5 h-5 text-gray-500" />
-                <input
-                  type="date"
-                  value={checkIn}
-                  onChange={(e) => setCheckIn(e.target.value)}
-                  className="flex-1 outline-none text-gray-700"
-                />
-              </div>
-            </div>
-
-            {/* Check-out Date */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
-                <Calendar className="w-5 h-5 text-gray-500" />
-                <input
-                  type="date"
-                  value={checkOut}
-                  onChange={(e) => setCheckOut(e.target.value)}
-                  className="flex-1 outline-none text-gray-700"
-                />
-              </div>
-            </div>
-
-            {/* Rooms & Guests */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
-                <Users className="w-5 h-5 text-gray-500" />
-                <div className="flex-1 flex gap-2">
-                  <select
-                    value={rooms}
-                    onChange={(e) => setRooms(e.target.value)}
-                    className="flex-1 outline-none text-gray-700"
-                  >
-                    <option value="1">1 Oda</option>
-                    <option value="2">2 Oda</option>
-                    <option value="3">3 Oda</option>
-                    <option value="4">4 Oda</option>
-                  </select>
-                  <select
-                    value={adults}
-                    onChange={(e) => setAdults(e.target.value)}
-                    className="flex-1 outline-none text-gray-700"
-                  >
-                    <option value="1">1 Yetişkin</option>
-                    <option value="2">2 Yetişkin</option>
-                    <option value="3">3 Yetişkin</option>
-                    <option value="4">4 Yetişkin</option>
-                  </select>
-                  <select
-                    value={children}
-                    onChange={(e) => setChildren(e.target.value)}
-                    className="flex-1 outline-none text-gray-700"
-                  >
-                    <option value="0">0 Çocuk</option>
-                    <option value="1">1 Çocuk</option>
-                    <option value="2">2 Çocuk</option>
-                    <option value="3">3 Çocuk</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Search Button */}
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold">
-              Ara
-            </Button>
-          </div>
-
-          {/* Filtering Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Price Range */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Fiyat Aralığı</label>
-              <select 
-                value={priceRange}
-                onChange={(e) => setPriceRange(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3620D9] focus:border-[#3620D9]"
-              >
-                <option value="all">Tüm Fiyatlar</option>
-                <option value="0-500">0 - 500 TL</option>
-                <option value="500-1000">500 - 1000 TL</option>
-                <option value="1000-2000">1000 - 2000 TL</option>
-                <option value="2000+">2000+ TL</option>
-              </select>
-            </div>
-
-            {/* Star Rating */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Yıldız Sayısı</label>
-              <select 
-                value={starRating}
-                onChange={(e) => setStarRating(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3620D9] focus:border-[#3620D9]"
-              >
-                <option value="all">Tüm Yıldızlar</option>
-                <option value="5">5 Yıldız</option>
-                <option value="4">4 Yıldız</option>
-                <option value="3">3 Yıldız</option>
-                <option value="2">2 Yıldız</option>
-                <option value="1">1 Yıldız</option>
-              </select>
-            </div>
-
-            {/* Property Type */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Otel Türü</label>
-              <select 
-                value={hotelType}
-                onChange={(e) => setHotelType(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3620D9] focus:border-[#3620D9]"
-              >
-                <option value="all">Tüm Türler</option>
-                <option value="hotel">Otel</option>
-                <option value="resort">Resort</option>
-                <option value="pansiyon">Pansiyon</option>
-                <option value="villa">Villa</option>
-                <option value="apart">Apart</option>
-              </select>
-            </div>
-
-            {/* Amenities */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Özellikler</label>
-              <select 
-                value={amenities}
-                onChange={(e) => setAmenities(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3620D9] focus:border-[#3620D9]"
-              >
-                <option value="all">Tüm Özellikler</option>
-                <option value="wifi">WiFi</option>
-                <option value="pool">Havuz</option>
-                <option value="spa">Spa</option>
-                <option value="restaurant">Restoran</option>
-                <option value="fitness">Fitness</option>
-              </select>
-            </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Filters */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            <button className="px-4 py-2 bg-yellow-600 text-white rounded-full text-sm font-medium">
+              Tümü
+            </button>
+            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+              Resort
+            </button>
+            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+              Lüks
+            </button>
+            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+              Butik
+            </button>
+            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+              İş
+            </button>
           </div>
         </div>
 
-        {/* Popular Destinations */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                Popüler otel destinasyonları
-              </h2>
-              <p className="text-gray-600 mt-1">
-                Diğer gezginler arasında şu anda popüler olan seyahat noktalarını keşfedin
-              </p>
-            </div>
-            <Button variant="outline" className="border-[#3620D9] text-[#3620D9] hover:bg-[#3620D9] hover:text-white">
-              <MapPin className="w-4 h-4 mr-2" />
-              Tümünü Gör
-            </Button>
-          </div>
-
-          {/* Destination Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {popularDestinations.map((destination) => (
-              <div key={destination.id} className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-xl mb-3">
-                  <img
-                    src={destination.image}
-                    alt={destination.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        {/* Hotels Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {hotels.map((hotel) => (
+            <div key={hotel.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              {/* Image */}
+              <div className="relative">
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                  className="w-full h-48 object-cover"
+                />
+                {hotel.isRecommended && (
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                      Önerilen
+                    </span>
+                  </div>
+                )}
+                <button
+                  onClick={() => toggleFavorite(hotel.id)}
+                  className="absolute top-3 left-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
+                >
+                  <Heart
+                    className={`w-5 h-5 ${
+                      favorites.includes(hotel.id)
+                        ? "text-red-500 fill-current"
+                        : "text-gray-600"
+                    }`}
                   />
-                  <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <Heart className="w-4 h-4 text-[#3620D9]" />
-                  </button>
-                  {destination.popular && (
-                    <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-current" />
-                      Popüler
-                    </div>
-                  )}
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {hotel.name}
+                </h3>
+                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                  {hotel.description}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {hotel.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-gray-900 group-hover:text-[#3620D9] transition-colors">
-                    {destination.name}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    3 yıldızlı bir otel için gecelik ortalama fiyat: {destination.price}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                        <span className="text-sm font-medium text-gray-900">{destination.rating}</span>
-                      </div>
-                      <span className="text-sm text-gray-500">({destination.reviews} değerlendirme)</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-green-600 text-sm font-medium">
-                      <MapPin className="w-3 h-3" />
-                      Popüler
-                    </div>
+
+                {/* Rating */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex">{renderStars(hotel.rating)}</div>
+                    <span className="text-sm text-gray-600">
+                      ({hotel.reviews})
+                    </span>
+                  </div>
+                  <div className="flex items-center text-gray-600 text-sm">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    {hotel.location}
                   </div>
                 </div>
+
+                {/* Learn More Button */}
+                <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                  Detayları Görüntüle
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
