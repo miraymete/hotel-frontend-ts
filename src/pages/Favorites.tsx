@@ -10,10 +10,12 @@
 import { Heart, Star, MapPin, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function FavoritesPage() {
   // context'ten favori yönetimi fonksiyonları
   const { favorites, removeFromFavorites } = useFavorites();
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -21,14 +23,14 @@ export default function FavoritesPage() {
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link 
-              to="/" 
-              className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium">Ana Sayfa</span>
-            </Link>
-            <h1 className="text-2xl font-light text-gray-900">Favorilerim</h1>
+                   <Link 
+                     to="/" 
+                     className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors"
+                   >
+                     <ArrowLeft className="w-5 h-5" />
+                     <span className="font-medium">{t('homePage')}</span>
+                   </Link>
+                   <h1 className="text-2xl font-light text-gray-900">{t('myFavorites')}</h1>
             <div className="w-20"></div>
           </div>
         </div>
@@ -43,31 +45,31 @@ export default function FavoritesPage() {
               <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
                 <Heart className="w-12 h-12 text-gray-400" />
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                Henüz favorilere eklediğiniz bir öge yok
-              </h2>
-              <p className="text-gray-600 mb-8">
-                Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yat'ları favorilerinize ekleyin
-              </p>
-              <Link to="/hotels">
-                <button className="bg-yellow-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-yellow-700 transition-colors">
-                  Keşfetmeye Başla
-                </button>
-              </Link>
+                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                       {t('noFavoritesYet')}
+                     </h2>
+                     <p className="text-gray-600 mb-8">
+                       {t('continueExploring')}
+                     </p>
+                     <Link to="/hotels">
+                       <button className="bg-yellow-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-yellow-700 transition-colors">
+                         {t('startDiscovering')}
+                       </button>
+                     </Link>
             </div>
           </div>
         ) : (
           /* favori oteller listesi */
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
-              <div>
-                <h2 className="text-2xl font-semibold text-gray-900">
-                  Favorileriniz
-                </h2>
-                <p className="text-gray-600 mt-1">
-                  {favorites.length} öğe favorilerinizde
-                </p>
-              </div>
+                     <div>
+                       <h2 className="text-2xl font-semibold text-gray-900">
+                         {t('favorites')}
+                       </h2>
+                       <p className="text-gray-600 mt-1">
+                         {favorites.length} {t('itemsInFavorites')}
+                       </p>
+                     </div>
             </div>
 
             {/* favori oteller grid'i */}
@@ -129,10 +131,10 @@ export default function FavoritesPage() {
                       </div>
                     </div>
 
-                    {/* Learn More Button */}
-                    <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
-                      Detayları Görüntüle
-                    </button>
+                           {/* Learn More Button */}
+                           <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                             {t('details')}
+                           </button>
                   </div>
                 </div>
               ))}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Hotel {
   id: string;
@@ -22,6 +23,7 @@ export default function HotelsPage() {
   const [activeFilter, setActiveFilter] = useState<string>("Tümü");
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { formatPrice } = useCurrency();
+  const { t } = useLanguage();
 
   const toggleFavorite = (hotel: Hotel) => {
     if (isFavorite(hotel.id)) {
@@ -188,20 +190,20 @@ export default function HotelsPage() {
       <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-              <Link 
-              to="/" 
-              className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium">Ana Sayfa</span>
-            </Link>
-            <h1 className="text-2xl font-light text-white">Lüks Oteller</h1>
-            <Link to="/favorites">
-              <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors">
-                <Heart className="w-5 h-5" />
-                <span className="font-medium">Favoriler</span>
-              </button>
-            </Link>
+                 <Link 
+                   to="/" 
+                   className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors"
+                 >
+                   <ArrowLeft className="w-5 h-5" />
+                   <span className="font-medium">{t('homePage')}</span>
+                 </Link>
+                 <h1 className="text-2xl font-light text-white">{t('luxuryHotels')}</h1>
+                 <Link to="/favorites">
+                   <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors">
+                     <Heart className="w-5 h-5" />
+                     <span className="font-medium">{t('favorites')}</span>
+                   </button>
+                 </Link>
           </div>
         </div>
       </header>
@@ -239,11 +241,11 @@ export default function HotelsPage() {
                   className="w-full h-48 object-cover"
                 />
                 {hotel.isRecommended && (
-                  <div className="absolute top-3 right-3">
-                    <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-medium">
-                      Önerilen
-                    </span>
-            </div>
+                       <div className="absolute top-3 right-3">
+                         <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                           {t('recommended')}
+                         </span>
+                       </div>
                 )}
                 <button
                   onClick={() => toggleFavorite(hotel)}
@@ -300,7 +302,7 @@ export default function HotelsPage() {
                     {formatPrice(hotel.price)}
                   </div>
                   <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
-                    Rezervasyon
+                    {t('reservation')}
                   </button>
                 </div>
                 </div>

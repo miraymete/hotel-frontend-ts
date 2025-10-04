@@ -58,6 +58,20 @@ export const translations = {
     excellent: 'Fevkalade',
     reviews: 'değerlendirme',
     
+    // pages tr
+    homePage: 'Ana Sayfa',
+    luxuryHotels: 'Lüks Oteller',
+    yachtExperiences: 'Yat Deneyimleri',
+    myFavorites: 'Favorilerim',
+    all: 'Tümü',
+    recommended: 'Önerilen',
+    details: 'Detayları Görüntüle',
+    reservation: 'Rezervasyon',
+    startDiscovering: 'Keşfetmeye Başla',
+    noFavoritesYet: 'Henüz favorilere eklediğiniz bir öğe yok',
+    continueExploring: 'Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yat\'ları favorilerinize ekleyin',
+    itemsInFavorites: 'öğe favorilerinizde',
+    
     // errors
     invalidEmail: 'Geçersiz e-posta',
     passwordTooShort: 'Şifre en az 6 karakter, 1 büyük harf ve 1 sayı içermeli',
@@ -125,6 +139,20 @@ export const translations = {
     discover: 'Start Discovering!',
     excellent: 'Excellent',
     reviews: 'reviews',
+    
+    // pages en
+    homePage: 'Home',
+    luxuryHotels: 'Luxury Hotels',
+    yachtExperiences: 'Yacht Experiences',
+    myFavorites: 'My Favorites',
+    all: 'All',
+    recommended: 'Recommended',
+    details: 'View Details',
+    reservation: 'Reservation',
+    startDiscovering: 'Start Discovering',
+    noFavoritesYet: 'You haven\'t added any items to your favorites yet',
+    continueExploring: 'Continue exploring and add hotels, tours and yachts you like to your favorites',
+    itemsInFavorites: 'items in your favorites',
     
     // errors
     invalidEmail: 'Invalid email',
