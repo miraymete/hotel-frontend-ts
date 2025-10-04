@@ -45,6 +45,50 @@ export default function ToursPage() {
     { key: "history", label: t('history') }
   ];
 
+  // Türkçe metinleri İngilizce'ye çeviren fonksiyon
+  const translateText = (text: string) => {
+    const translations: { [key: string]: string } = {
+      // Şehirler
+      'Kapadokya, Türkiye': `${t('cappadocia')}, ${t('turkey')}`,
+      'Pamukkale, Türkiye': `${t('pamukkale')}, ${t('turkey')}`,
+      'Bursa, Türkiye': `${t('bursa')}, ${t('turkey')}`,
+      'Antalya, Türkiye': `${t('antalya')}, ${t('turkey')}`,
+      'Artvin, Türkiye': `${t('artvin')}, ${t('turkey')}`,
+      'Fethiye, Türkiye': `${t('fethiye')}, ${t('turkey')}`,
+      'İstanbul, Türkiye': `${t('istanbul')}, ${t('turkey')}`,
+      'Ankara, Türkiye': `${t('ankara')}, ${t('turkey')}`,
+      'Efes, Türkiye': `${t('efes')}, ${t('turkey')}`,
+      'Çanakkale, Türkiye': `${t('canakkale')}, ${t('turkey')}`,
+      
+      // Kategoriler
+      'Doğa': t('nature'),
+      'Macera': t('adventure'),
+      'Şehir': t('city'),
+      'Tarih': t('history'),
+      
+      // Süre ve kişi
+      'saat': t('hours'),
+      'kişi': t('people'),
+      '/gün': t('perDay'),
+      
+      // İsimler ve açıklamalar
+      'Kapadokya Balon Turu': t('balloonTour'),
+      'Pamukkale Doğa Turu': t('natureTour'),
+      'Uludağ Dağ Turu': t('mountainTour'),
+      'Antalya Jeep Safari': t('safariTour'),
+      'Rafting Macera Turu': t('raftingTour'),
+      'Fethiye Paragliding': t('paraglidingTour'),
+      'İstanbul Boğaz Turu': t('bosphorusTour'),
+      'İstanbul Tarihi Yarımada': t('historicalTour'),
+      'Ankara Modern Tur': t('modernTour'),
+      'Efes Antik Kenti': t('ephesusTour'),
+      'Çanakkale Gelibolu': t('gallipoliTour'),
+      'Pamukkale Hierapolis': t('hierapolisTour'),
+    };
+    
+    return translations[text] || text;
+  };
+
   const tours: Tour[] = [
     // Doğa Turları
     {
@@ -52,7 +96,7 @@ export default function ToursPage() {
       name: "Kapadokya Balon Turu",
       description: "Gün doğumunda Kapadokya'nın büyüleyici manzarasını balonla keşfedin. Unutulmaz bir deneyim.",
       image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      location: "Kapadokya, Türkiye",
+      location: `${t('cappadocia')}, ${t('turkey')}`,
       tags: ["Doğa", "Macera"],
       category: "Doğa",
       rating: 4.9,
@@ -336,12 +380,12 @@ export default function ToursPage() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  {tour.name}
-                </h3>
-                <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                  {tour.description}
-                </p>
+                     <h3 className="text-xl font-semibold text-white mb-2">
+                       {translateText(tour.name)}
+                     </h3>
+                     <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                       {translateText(tour.description)}
+                     </p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -350,7 +394,7 @@ export default function ToursPage() {
                       key={tag}
                       className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30"
                     >
-                      {tag}
+                      {translateText(tag)}
                     </span>
                   ))}
                 </div>
@@ -359,11 +403,11 @@ export default function ToursPage() {
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />
-                    <span>{tour.duration.replace('saat', t('hours'))}</span>
+                    <span>{translateText(tour.duration)}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
-                    <span>{tour.groupSize.replace('kişi', t('people'))}</span>
+                    <span>{translateText(tour.groupSize)}</span>
                   </div>
                 </div>
 
@@ -384,7 +428,7 @@ export default function ToursPage() {
                 {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {tour.price.replace('/gün', t('perDay'))}
+                    {translateText(tour.price)}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

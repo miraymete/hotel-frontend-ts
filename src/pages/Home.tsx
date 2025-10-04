@@ -253,7 +253,7 @@ export default function HomePage({
               <div className="relative h-80 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                  alt="Lüks Otel"
+                  alt="Luxury Hotel"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
@@ -311,7 +311,7 @@ export default function HomePage({
               <div className="relative h-80 overflow-hidden">
                 <img
                   src="https://media.tacdn.com/media/attractions-splice-spp-674x446/10/5a/d4/bf.jpg"
-                  alt="Lüks Yat"
+                  alt="Luxury Yacht"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
@@ -364,7 +364,7 @@ export default function HomePage({
             <div>
               <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">Hizmetler</h3>
               <ul className="space-y-3">
-                <li><Link to="/hotels" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Lüks Oteller</Link></li>
+                <li><Link to="/hotels" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('luxuryHotels')}</Link></li>
                 <li><Link to="/tours" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Turlar</Link></li>
                 <li><Link to="/experiences" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Deneyimler</Link></li>
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Jet</a></li>              </ul>

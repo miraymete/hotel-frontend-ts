@@ -44,6 +44,64 @@ export default function YachtsPage() {
     { key: "boat", label: t('boat') }
   ];
 
+  // Türkçe metinleri İngilizce'ye çeviren fonksiyon
+  const translateText = (text: string) => {
+    const translations: { [key: string]: string } = {
+      // Şehirler
+      'Antalya, Türkiye': `${t('antalya')}, ${t('turkey')}`,
+      'Bodrum, Türkiye': `${t('bodrum')}, ${t('turkey')}`,
+      'Marmaris, Türkiye': `${t('marmaris')}, ${t('turkey')}`,
+      'Gökova, Türkiye': `${t('gokova')}, ${t('turkey')}`,
+      'Fethiye, Türkiye': `${t('fethiye')}, ${t('turkey')}`,
+      'Çeşme, Türkiye': `${t('cesme')}, ${t('turkey')}`,
+      'Kaş, Türkiye': `${t('kas')}, ${t('turkey')}`,
+      'Kalkan, Türkiye': `${t('kalkan')}, ${t('turkey')}`,
+      'Datça, Türkiye': `${t('datca')}, ${t('turkey')}`,
+      'Alanya, Türkiye': `${t('alanya')}, ${t('turkey')}`,
+      'Kuşadası, Türkiye': `${t('kusadasi')}, ${t('turkey')}`,
+      
+      // Kategoriler
+      'Lüks': t('luxury'),
+      'Klasik': t('classic'),
+      'Katamaran': t('catamaran'),
+      'Tekne': t('boat'),
+      
+      // Tags
+      'Flybridge': 'Flybridge',
+      'Sport': 'Sport',
+      'Modern': 'Modern',
+      'İngiliz': 'British',
+      'Geleneksel': 'Traditional',
+      'Ahşap': 'Wooden',
+      'Yelkenli': 'Sailboat',
+      'Stabil': 'Stable',
+      'Fransız': 'French',
+      'Güvenli': 'Safe',
+      'Konforlu': 'Comfortable',
+      'Hızlı': 'Fast',
+      
+      // Açıklamalar
+      'Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.': t('yachtLuxuryDesc'),
+      'Modern tasarımı ve güçlü performansı ile denizde fark yaratan yat.': t('yachtSportDesc'),
+      'İngiliz tarzı lüks ve zarafet ile denizde konfor.': t('yachtEnglishDesc'),
+      'Geleneksel Türk gületi ile nostaljik deniz yolculuğu.': t('yachtClassicDesc'),
+      'Ahşap işçiliği ve klasik tasarım ile özel deneyim.': t('yachtWoodDesc'),
+      'Yelkenli tekne ile doğal rüzgar gücü.': t('yachtSailDesc'),
+      'Katamaran\'ın stabilitesi ile konforlu seyahat.': t('yachtCatamaranDesc'),
+      'Fransız tasarımı ve lüks iç mekanlar.': t('yachtFrenchDesc'),
+      'Modern teknoloji ile donatılmış konforlu katamaran.': t('yachtModernDesc'),
+      'Güvenli ve konforlu tekne ile deniz keyfi.': t('yachtSafeDesc'),
+      'Konforlu iç mekanlar ile keyifli seyahat.': t('yachtComfortDesc'),
+      'Hızlı ve modern tekne ile dinamik deneyim.': t('yachtFastDesc'),
+      
+      // Süre ve kişi
+      'kişi': t('people'),
+      '/gün': t('perDay'),
+    };
+    
+    return translations[text] || text;
+  };
+
   const yachts = [
     // Lüks Yatlar
     {
@@ -335,12 +393,12 @@ export default function YachtsPage() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  {yacht.name}
-                </h3>
-                <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                  {yacht.description}
-                </p>
+                     <h3 className="text-xl font-semibold text-white mb-2">
+                       {translateText(yacht.name)}
+                     </h3>
+                     <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                       {translateText(yacht.description)}
+                     </p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -349,7 +407,7 @@ export default function YachtsPage() {
                       key={tag}
                       className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30"
                     >
-                      {tag}
+                      {translateText(tag)}
                     </span>
                   ))}
                 </div>
@@ -358,7 +416,7 @@ export default function YachtsPage() {
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
-                    <span>{yacht.capacity.replace('kişi', t('people'))}</span>
+                    <span>{translateText(yacht.capacity)}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4" />
@@ -383,7 +441,7 @@ export default function YachtsPage() {
                 {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {yacht.price.replace('/gün', t('perDay'))}
+                    {translateText(yacht.price)}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}

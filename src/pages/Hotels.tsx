@@ -41,6 +41,53 @@ export default function HotelsPage() {
     { key: "business", label: t('business') }
   ];
 
+  // Türkçe metinleri İngilizce'ye çeviren fonksiyon
+  const translateText = (text: string) => {
+    const translations: { [key: string]: string } = {
+      // Şehirler
+      'Antalya, Türkiye': `${t('antalya')}, ${t('turkey')}`,
+      'Bodrum, Türkiye': `${t('bodrum')}, ${t('turkey')}`,
+      'Kapadokya, Türkiye': `${t('cappadocia')}, ${t('turkey')}`,
+      'İstanbul, Türkiye': `${t('istanbul')}, ${t('turkey')}`,
+      'Çeşme, Türkiye': `${t('cesme')}, ${t('turkey')}`,
+      'Safranbolu, Türkiye': `${t('safranbolu')}, ${t('turkey')}`,
+      'Ankara, Türkiye': `${t('ankara')}, ${t('turkey')}`,
+      'Alanya, Türkiye': `${t('alanya')}, ${t('turkey')}`,
+      'İzmir, Türkiye': `${t('izmir')}, ${t('turkey')}`,
+      
+      // Kategoriler
+      'Resort': t('resort'),
+      'Lüks': t('luxury'),
+      'Butik': t('boutique'),
+      'İş': t('business'),
+      
+      // Tags
+      'Spa': 'Spa',
+      'Marina': 'Marina',
+      'Romantik': 'Romantic',
+      'Şehir': t('city'),
+      'All-Inclusive': 'All-Inclusive',
+      'Tarihi': 'Historical',
+      'Modern': 'Modern',
+      'Casino': 'Casino',
+      'VIP': 'VIP',
+      
+      // Açıklamalar
+      'Lüks deneyim ve muhteşem spa hizmetleri ile unutulmaz bir tatil.': t('palaceDesc'),
+      'Deniz manzaralı lüks suitler ve özel marina erişimi ile eşsiz konaklama.': t('marinaDesc'),
+      'Dağ manzaralı butik otel, romantik atmosfer ve kişiselleştirilmiş hizmet.': t('mountainDescHotel'),
+      'Şehir merkezinde modern iş oteli, toplantı salonları ve ücretsiz Wi-Fi.': t('businessDesc'),
+      'Plaj kenarında all-inclusive resort, çocuk kulübü ve su sporları.': t('beachDesc'),
+      'Osmanlı mimarisinde lüks saray oteli, özel butler hizmeti ve spa.': t('royalDesc'),
+      'Tarihi binada restore edilmiş butik otel, antika mobilyalar ve özel atmosfer.': t('historicDesc'),
+      'İş merkezinde modern otel, 24 saat oda servisi ve toplantı salonları.': t('corporateDesc'),
+      'Tropikal bahçeler içinde casino\'lu resort, eğlence ve dinlence bir arada.': t('tropicalDesc'),
+      'Elmas standartlarında lüks otel, şampanya servisi ve özel concierge.': t('diamondDesc'),
+    };
+    
+    return translations[text] || text;
+  };
+
   const hotels: Hotel[] = [
     {
       id: "1",
@@ -277,12 +324,12 @@ export default function HotelsPage() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  {hotel.name}
-                </h3>
-                <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                  {hotel.description}
-                </p>
+                     <h3 className="text-xl font-semibold text-white mb-2">
+                       {translateText(hotel.name)}
+                     </h3>
+                     <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                       {translateText(hotel.description)}
+                     </p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -291,7 +338,7 @@ export default function HotelsPage() {
                       key={tag}
                       className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30"
                     >
-                      {tag}
+                      {translateText(tag)}
                     </span>
                   ))}
                 </div>
@@ -306,8 +353,8 @@ export default function HotelsPage() {
                       </div>
                       <div className="flex items-center text-white/60 text-sm">
                         <MapPin className="w-4 h-4 mr-1" />
-                        {hotel.location}
-                  </div>
+                        {translateText(hotel.location)}
+                      </div>
                 </div>
 
                 {/* Price and Button */}
