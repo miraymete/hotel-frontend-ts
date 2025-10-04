@@ -274,7 +274,7 @@ export default function HomePage({
           {/* Keşfetme kartları */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Kart 1 - Lüks Oteller */}
-            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+            <Link to="/hotels" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -282,18 +282,6 @@ export default function HomePage({
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-6 right-6">
-                  <button
-                    onClick={(e) => handleHeartClick(discoveryHotels[0], e)}
-                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
-                      isFavorite(discoveryHotels[0].id) 
-                        ? 'bg-red-500/90 text-white' 
-                        : 'bg-white/20 text-white hover:bg-white/30'
-                    }`}
-                  >
-                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[0].id) ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
@@ -312,7 +300,7 @@ export default function HomePage({
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Kart 2 - Özel Villalar */}
             <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
