@@ -55,7 +55,6 @@ export default function HomePage({
           <Link to="/tours" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('tours')}</Link>
           <Link to="/yachts" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('yachts')}</Link>
           <Link to="/experiences" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('experiences')}</Link>
-          <Link to="/favorites" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('favorites')}</Link>
         </nav>
 
         <div className="flex items-center space-x-6">
