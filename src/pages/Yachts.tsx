@@ -72,13 +72,13 @@ export default function YachtsPage() {
       'Modern': 'Modern',
       'İngiliz': 'British',
       'Geleneksel': 'Traditional',
-      'Ahşap': 'Wooden',
-      'Yelkenli': 'Sailboat',
-      'Stabil': 'Stable',
-      'Fransız': 'French',
-      'Güvenli': 'Safe',
-      'Konforlu': 'Comfortable',
-      'Hızlı': 'Fast',
+      'Ahşap': t('wooden'),
+      'Yelkenli': t('sailboat'),
+      'Stabil': t('stable'),
+      'Fransız': t('french'),
+      'Güvenli': t('safe'),
+      'Konforlu': t('comfortable'),
+      'Hızlı': t('fast'),
       
       // Açıklamalar
       'Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.': t('yachtLuxuryDesc'),
@@ -93,6 +93,18 @@ export default function YachtsPage() {
       'Güvenli ve konforlu tekne ile deniz keyfi.': t('yachtSafeDesc'),
       'Konforlu iç mekanlar ile keyifli seyahat.': t('yachtComfortDesc'),
       'Hızlı ve modern tekne ile dinamik deneyim.': t('yachtFastDesc'),
+      
+      // additional yacht descriptions
+      'Ahşap gövdesi ile doğal güzellik sunan klasik gulet.': t('woodenGuletDesc'),
+      'Yelkenli klasik yat ile rüzgarın gücünü hissedin.': t('traditionalSailingDesc'),
+      'Geniş ve stabil katamaran ile konforlu deniz yolculuğu.': t('lagoonCatamaranDesc'),
+      'Fransız kalitesi katamaran ile lüks deniz deneyimi.': t('fountainePajotDesc'),
+      'Modern tasarım katamaran ile denizde rahatlık.': t('baliCatamaranDesc'),
+      'Güvenilir ve dayanıklı tekne ile denizde güvenli yolculuk.': t('bostonWhalerDesc'),
+      'Konforlu ve şık tekne ile denizde keyifli vakit geçirin.': t('seaRayDesc'),
+      'Hızlı ve çevik tekne ile denizde özgürlüğü yaşayın.': t('regalExpressDesc'),
+      
+      // additional tags (removed duplicates)
       
       // Süre ve kişi
       'kişi': t('people'),

@@ -65,6 +65,13 @@ export default function ToursPage() {
       'Macera': t('adventure'),
       'Şehir': t('city'),
       'Tarih': t('history'),
+      'Termal': 'Thermal',
+      'Dağ': t('mountain'),
+      'Su Sporları': t('waterSports'),
+      'Havacılık': t('aviation'),
+      'Deniz': 'Sea',
+      'Kültür': 'Culture',
+      'Antik': 'Ancient',
       
       // Süre ve kişi
       'saat': t('hours'),
@@ -96,6 +103,13 @@ export default function ToursPage() {
       'Tarihin en önemli savaşlarından birinin izlerini takip edin.': t('gallipoliDesc'),
       'Pamukkale Hierapolis': t('hierapolisTour'),
       'Antik şehir kalıntıları ve doğal travertenler.': t('hierapolisDesc'),
+      
+      // additional descriptions
+      'Uludağ\'ın muhteşem manzarasını teleferik ve yürüyüş ile keşfedin.': t('uludagMountainDesc'),
+      'Taurus Dağları\'nın doğal güzelliklerini jeep ile keşfedin. Adrenalin dolu bir macera.': t('taurusMountainsDesc'),
+      'Babadağ\'dan uçarak Fethiye\'nin muhteşem manzarasını havadan keşfedin.': t('paraglidingExperienceDesc'),
+      
+      // additional tags (removed duplicates)
     };
     
     return translations[text] || text;
@@ -308,20 +322,20 @@ export default function ToursPage() {
       <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-                 <Link 
+              <Link 
                    to="/" 
                    className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors"
-                 >
+              >
                    <ArrowLeft className="w-5 h-5" />
                    <span className="font-medium">{t('homePage')}</span>
-                 </Link>
+              </Link>
                  <h1 className="text-2xl font-light text-white">{t('tours')}</h1>
                  <Link to="/favorites">
                    <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors">
                      <Heart className="w-5 h-5" />
                      <span className="font-medium">{t('favorites')}</span>
                    </button>
-                 </Link>
+              </Link>
           </div>
         </div>
       </header>
@@ -364,9 +378,9 @@ export default function ToursPage() {
             <div key={tour.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
               {/* Image */}
               <div className="relative">
-                <img
-                  src={tour.image}
-                  alt={tour.name}
+                  <img
+                    src={tour.image}
+                    alt={tour.name}
                   className="w-full h-48 object-cover"
                 />
                 {tour.isRecommended && (
@@ -387,8 +401,8 @@ export default function ToursPage() {
                         : "text-gray-600"
                     }`}
                   />
-                </button>
-              </div>
+                  </button>
+                  </div>
 
               {/* Content */}
               <div className="p-6">
@@ -410,7 +424,7 @@ export default function ToursPage() {
                     </span>
                   ))}
                 </div>
-
+                
                 {/* Tour Details */}
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
@@ -420,8 +434,8 @@ export default function ToursPage() {
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
                     <span>{translateText(tour.groupSize)}</span>
-                  </div>
-                </div>
+          </div>
+        </div>
 
                 {/* Rating and Location */}
                 <div className="flex items-center justify-between mb-4">
@@ -430,25 +444,25 @@ export default function ToursPage() {
                         <span className="text-sm text-white/60">
                           ({tour.reviews})
                         </span>
-                      </div>
+            </div>
                       <div className="flex items-center text-white/60 text-sm">
                         <MapPin className="w-4 h-4 mr-1" />
                         {tour.location}
                   </div>
                 </div>
-
+                
                 {/* Price and Button */}
-                <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
                     {translateText(tour.price)}
                   </div>
                        <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                          {t('reservation')}
                        </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </main>
     </div>

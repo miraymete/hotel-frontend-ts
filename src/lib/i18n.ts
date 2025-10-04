@@ -140,6 +140,21 @@ export const translations = {
     hierapolisTour: 'Pamukkale Hierapolis',
     hierapolisDesc: 'Antik şehir kalıntıları ve doğal travertenler.',
     
+    // additional tour descriptions tr
+    uludagMountainDesc: 'Uludağ\'ın muhteşem manzarasını teleferik ve yürüyüş ile keşfedin.',
+    taurusMountainsDesc: 'Taurus Dağları\'nın doğal güzelliklerini jeep ile keşfedin. Adrenalin dolu bir macera.',
+    paraglidingExperienceDesc: 'Babadağ\'dan uçarak Fethiye\'nin muhteşem manzarasını havadan keşfedin.',
+    
+    // additional yacht descriptions tr
+    woodenGuletDesc: 'Ahşap gövdesi ile doğal güzellik sunan klasik gulet.',
+    traditionalSailingDesc: 'Yelkenli klasik yat ile rüzgarın gücünü hissedin.',
+    lagoonCatamaranDesc: 'Geniş ve stabil katamaran ile konforlu deniz yolculuğu.',
+    fountainePajotDesc: 'Fransız kalitesi katamaran ile lüks deniz deneyimi.',
+    baliCatamaranDesc: 'Modern tasarım katamaran ile denizde rahatlık.',
+    bostonWhalerDesc: 'Güvenilir ve dayanıklı tekne ile denizde güvenli yolculuk.',
+    seaRayDesc: 'Konforlu ve şık tekne ile denizde keyifli vakit geçirin.',
+    regalExpressDesc: 'Hızlı ve çevik tekne ile denizde özgürlüğü yaşayın.',
+    
     // yacht descriptions tr
     yachtLuxuryDesc: 'Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.',
     yachtSportDesc: 'Modern tasarımı ve güçlü performansı ile denizde fark yaratan yat.',
@@ -153,6 +168,18 @@ export const translations = {
     yachtSafeDesc: 'Güvenli ve konforlu tekne ile deniz keyfi.',
     yachtComfortDesc: 'Konforlu iç mekanlar ile keyifli seyahat.',
     yachtFastDesc: 'Hızlı ve modern tekne ile dinamik deneyim.',
+    
+    // additional tags tr
+    mountain: 'Dağ',
+    waterSports: 'Su Sporları',
+    aviation: 'Havacılık',
+    wooden: 'Ahşap',
+    sailboat: 'Yelkenli',
+    stable: 'Stabil',
+    french: 'Fransız',
+    safe: 'Güvenli',
+    comfortable: 'Konforlu',
+    fast: 'Hızlı',
     
     // hotel descriptions tr
     palaceDesc: 'Lüks deneyim ve muhteşem spa hizmetleri ile unutulmaz bir tatil.',
@@ -347,6 +374,21 @@ export const translations = {
     hierapolisTour: 'Pamukkale Hierapolis',
     hierapolisDesc: 'Ancient city ruins and natural travertines.',
     
+    // additional tour descriptions en
+    uludagMountainDesc: 'Explore Uludağ\'s magnificent scenery with a cable car and hiking.',
+    taurusMountainsDesc: 'Explore the natural beauties of the Taurus Mountains by jeep. An adventure full of adrenaline.',
+    paraglidingExperienceDesc: 'Explore Fethiye\'s magnificent scenery from the air by flying from Babadağ.',
+    
+    // additional yacht descriptions en
+    woodenGuletDesc: 'A classic gulet offering natural beauty with its wooden hull.',
+    traditionalSailingDesc: 'Feel the power of the wind with a classic sailing yacht.',
+    lagoonCatamaranDesc: 'Comfortable sea journey with a spacious and stable catamaran.',
+    fountainePajotDesc: 'Luxury sea experience with a French quality catamaran.',
+    baliCatamaranDesc: 'Comfort at sea with a modern design catamaran.',
+    bostonWhalerDesc: 'Safe journey at sea with a reliable and durable boat.',
+    seaRayDesc: 'Spend pleasant time at sea with a comfortable and stylish boat.',
+    regalExpressDesc: 'Experience freedom at sea with a fast and agile boat.',
+    
     // yacht descriptions en
     yachtLuxuryDesc: 'Experience unforgettable moments at sea with this yacht where luxury and comfort meet.',
     yachtSportDesc: 'A yacht that makes a difference at sea with its modern design and powerful performance.',
@@ -360,6 +402,18 @@ export const translations = {
     yachtSafeDesc: 'Sea fun with safe and comfortable boat.',
     yachtComfortDesc: 'Pleasant travel with comfortable interiors.',
     yachtFastDesc: 'Dynamic experience with fast and modern boat.',
+    
+    // additional tags en
+    mountain: 'Mountain',
+    waterSports: 'Water Sports',
+    aviation: 'Aviation',
+    wooden: 'Wooden',
+    sailboat: 'Sailboat',
+    stable: 'Stable',
+    french: 'French',
+    safe: 'Safe',
+    comfortable: 'Comfortable',
+    fast: 'Fast',
     
     // hotel descriptions en
     palaceDesc: 'Unforgettable holiday with luxury experience and magnificent spa services.',
