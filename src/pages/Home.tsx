@@ -9,10 +9,9 @@
  * - keşfetme kartları (favori ekleme özelliği ile)
  */
 import { Button } from "@/components/ui/button";
-import { Search, Globe, Heart } from "lucide-react";
+import { Search, Globe } from "lucide-react";
 import type { PublicUser } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useFavorites } from "@/contexts/FavoritesContext";
 import { Link } from "react-router-dom";
 
 // ana sayfa bileşeninin prop'ları
@@ -29,45 +28,8 @@ export default function HomePage({
 }: Props) {
   // context'lerden gelen fonksiyonlar
   const { t } = useLanguage();                    // çeviri fonksiyonu
-  const { addToFavorites, isFavorite } = useFavorites(); // favori yönetimi
   
-  // keşfetme kartları için örnek otel verileri
-  const discoveryHotels = [
-    {
-      id: "yildiz-izleme",
-      name: "Yıldız İzleme Oteli",
-      image: "https://images.pexels.com/photos/1257860/pexels-photo-1257860.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      location: "Utah, ABD",
-      price: "TL 1.200",
-      rating: 4.8,
-      reviews: "156"
-    },
-    {
-      id: "kultur-sanat",
-      name: "Kültür Sanat Oteli",
-      image: "https://i0.wp.com/www.medievalbrick.com/wp-content/uploads/2022/03/8.jpg?w=640&ssl=1",
-      location: "Paris, Fransa",
-      price: "TL 2.500",
-      rating: 4.9,
-      reviews: "234"
-    },
-    {
-      id: "gurme-rotalar",
-      name: "Gurme Rotalar Oteli",
-      image: "https://i1.wp.com/www.cooking-sun.com/wp-content/uploads/2018/07/eating-sushi.jpg?w=1280&ssl=1",
-      location: "Tokyo, Japonya",
-      price: "TL 3.200",
-      rating: 4.7,
-      reviews: "189"
-    }
-  ];
 
-  // kalp butonuna tıklandığında favorilere ekleme fonksiyonu
-  const handleHeartClick = (hotel: typeof discoveryHotels[0], e: React.MouseEvent) => {
-    e.preventDefault();      // link'in varsayılan davranışını engelle
-    e.stopPropagation();    // event bubbling'i durdur
-    addToFavorites(hotel);  // oteli favorilere ekle
-  };
 
   return (
     <div className="min-h-screen bg-black">
