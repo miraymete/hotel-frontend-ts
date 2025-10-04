@@ -183,7 +183,12 @@ export default function HotelsPage() {
               <span className="font-medium">Ana Sayfa</span>
             </Link>
             <h1 className="text-2xl font-light text-gray-900">Lüks Oteller</h1>
-            <div className="w-20"></div>
+            <Link to="/favorites">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
+                <Heart className="w-5 h-5" />
+                <span className="font-medium">Favoriler</span>
+              </button>
+            </Link>
           </div>
         </div>
       </header>
