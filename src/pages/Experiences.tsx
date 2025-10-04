@@ -176,7 +176,7 @@ export default function ExperiencesPage() {
       location: hotel.location,
       price: hotel.price,
       rating: hotel.rating,
-      reviews: hotel.reviews.toString()
+      reviews: hotel.reviews
     });
   };
 
