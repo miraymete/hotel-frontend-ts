@@ -249,7 +249,7 @@ export default function HomePage({
           </p>
 
           {/* Arama çubuğu */}
-          <div className="max-w-2xl mx-auto relative z-[99]">
+          <div className="max-w-2xl mx-auto relative z-[9998]">
             <div className="relative" ref={searchRef}>
               <form onSubmit={handleSearchSubmit}>
                 <input
@@ -272,7 +272,7 @@ export default function HomePage({
               
               {/* Arama önerileri */}
               {showSuggestions && filteredCities.length > 0 && (
-                <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border border-gray-200 max-h-80 overflow-y-auto z-[100] shadow-2xl">
+                <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border border-gray-200 max-h-80 overflow-y-auto z-[9999] shadow-2xl">
                   {filteredCities.map((city, index) => (
                     <div
                       key={index}
