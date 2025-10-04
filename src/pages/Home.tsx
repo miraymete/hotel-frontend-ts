@@ -9,11 +9,12 @@
  * - keşfetme kartları (favori ekleme özelliği ile)
  */
 import { Button } from "@/components/ui/button";
-import { Search, Globe, Heart } from "lucide-react";
+import { Search, Globe, Heart, MapPin } from "lucide-react";
 import type { PublicUser } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 // ana sayfa bileşeninin prop'ları
 type Props = {
@@ -31,7 +32,103 @@ export default function HomePage({
   const { t, language } = useLanguage();          // çeviri fonksiyonu ve dil
   const { currency } = useCurrency();             // para birimi
   
+  // Arama state'leri
+  const [searchValue, setSearchValue] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filteredCities, setFilteredCities] = useState<string[]>([]);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Dünya geneli popüler şehirler listesi
+  const popularCities = [
+    // Türkiye
+    "İstanbul, Türkiye", "Antalya, Türkiye", "Kapadokya, Türkiye", "Bodrum, Türkiye", 
+    "Marmaris, Türkiye", "Çeşme, Türkiye", "Pamukkale, Türkiye", "Fethiye, Türkiye",
+    "Alanya, Türkiye", "Kuşadası, Türkiye", "Kaş, Türkiye", "Kalkan, Türkiye",
+    
+    // Avrupa
+    "Paris, Fransa", "Londra, İngiltere", "Roma, İtalya", "Barcelona, İspanya",
+    "Amsterdam, Hollanda", "Berlin, Almanya", "Viyana, Avusturya", "Prag, Çek Cumhuriyeti",
+    "Budapest, Macaristan", "Santorini, Yunanistan", "Mykonos, Yunanistan", "Atina, Yunanistan",
+    "Zürih, İsviçre", "İnterlaken, İsviçre", "Zermatt, İsviçre", "Salzburg, Avusturya",
+    
+    // Asya
+    "Tokyo, Japonya", "Kyoto, Japonya", "Seoul, Güney Kore", "Bangkok, Tayland",
+    "Singapur, Singapur", "Hong Kong, Çin", "Dubai, BAE", "Abu Dhabi, BAE",
+    "Bali, Endonezya", "Phuket, Tayland", "Kuala Lumpur, Malezya", "Ho Chi Minh, Vietnam",
+    
+    // Amerika
+    "New York, ABD", "Los Angeles, ABD", "Miami, ABD", "Las Vegas, ABD",
+    "San Francisco, ABD", "Toronto, Kanada", "Vancouver, Kanada", "Rio de Janeiro, Brezilya",
+    "Buenos Aires, Arjantin", "Lima, Peru", "Mexico City, Meksika", "Cancun, Meksika",
+    
+    // Afrika & Okyanusya
+    "Cape Town, Güney Afrika", "Marrakech, Fas", "Cairo, Mısır", "Sydney, Avustralya",
+    "Melbourne, Avustralya", "Auckland, Yeni Zelanda", "Queenstown, Yeni Zelanda"
+  ];
+
+  // Arama fonksiyonları
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    
+    if (value.length > 0) {
+      const filtered = popularCities.filter(city => 
+        city.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCities(filtered.slice(0, 10)); // İlk 10 öneri
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+      setFilteredCities([]);
+    }
+  };
+
+  const handleInputFocus = () => {
+    if (searchValue.length > 0) {
+      setShowSuggestions(true);
+    } else {
+      // Tüm popüler şehirleri göster
+      setFilteredCities(popularCities.slice(0, 15));
+      setShowSuggestions(true);
+    }
+  };
+
+  const handleInputBlur = () => {
+    // Biraz gecikme ile kapat ki tıklama işlemi tamamlansın
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 200);
+  };
+
+  const handleCitySelect = (city: string) => {
+    setSearchValue(city);
+    setShowSuggestions(false);
+    // Burada arama işlemi yapılabilir
+    console.log("Selected city:", city);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      // Arama işlemi
+      console.log("Searching for:", searchValue);
+    }
+  };
+
+  // Dışarı tıklandığında önerileri kapat
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-black">
@@ -153,15 +250,43 @@ export default function HomePage({
 
           {/* Arama çubuğu */}
           <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={t('searchDestination')}
-                className="w-full bg-white/95 text-black placeholder-gray-500 px-8 py-4 text-lg rounded-none border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-3 hover:bg-yellow-400 hover:text-black transition-colors">
-                <Search className="w-6 h-6" />
-              </button>
+            <div className="relative" ref={searchRef}>
+              <form onSubmit={handleSearchSubmit}>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder={t('searchDestination')}
+                  value={searchValue}
+                  onChange={handleSearchChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  className="w-full bg-white/95 text-black placeholder-gray-500 px-8 py-4 text-lg rounded-none border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                />
+                <button 
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-3 hover:bg-yellow-400 hover:text-black transition-colors"
+                >
+                  <Search className="w-6 h-6" />
+                </button>
+              </form>
+              
+              {/* Arama önerileri */}
+              {showSuggestions && filteredCities.length > 0 && (
+                <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border border-gray-200 max-h-80 overflow-y-auto z-50 shadow-2xl">
+                  {filteredCities.map((city, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleCitySelect(city)}
+                      className="px-6 py-4 hover:bg-yellow-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <MapPin className="w-5 h-5 text-gray-400" />
+                        <span className="text-gray-800 font-medium">{city}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
