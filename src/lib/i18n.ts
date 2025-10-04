@@ -199,6 +199,7 @@ export const translations = {
     meetAt: 'BULUŞTUĞU',
     point: 'NOKTA',
     homeSubtitle: 'Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın.',
+    searchDestination: 'Destinasyonunuzu bulun',
     
     // home cards tr
     luxuryHotelsTitle: 'LÜKS OTELLER',
@@ -433,6 +434,7 @@ export const translations = {
     meetAt: 'MEET',
     point: 'PRIVILEGES',
     homeSubtitle: 'Experience unforgettable moments in the world\'s most prestigious destinations.',
+    searchDestination: 'Find your destination',
     
     // home cards en
     luxuryHotelsTitle: 'LUXURY HOTELS',

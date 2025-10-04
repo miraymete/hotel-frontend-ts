@@ -142,14 +142,14 @@ export default function HomePage({
 
           {/* Ana başlık - Ultra lüks tipografi */}
           <h1 className="text-6xl md:text-8xl font-extralight tracking-[0.1em] mb-8 leading-[0.9]">
-            <span className="block text-white/95">YENİ KEŞİFLERİN</span>
-            <span className="block text-yellow-400/90 font-thin tracking-[0.15em]">AYRICALIKLARLA</span>
-            <span className="block text-white/95">BULUŞTUĞU NOKTA</span>
+            <span className="block text-white/95">{t('newDiscoveries')}</span>
+            <span className="block text-yellow-400/90 font-thin tracking-[0.15em]">{t('privileges')}</span>
+            <span className="block text-white/95">{t('meetAt')} {t('point')}</span>
           </h1>
 
           {/* Alt başlık */}
           <p className="text-xl md:text-2xl font-light text-white/80 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
-            Dünyanın en prestijli destinasyonlarında unutulmaz deneyimler yaşayın.
+            {t('homeSubtitle')}
           </p>
 
           {/* Arama çubuğu */}
@@ -157,7 +157,7 @@ export default function HomePage({
             <div className="relative">
               <input
                 type="text"
-                placeholder="Destinasyonunuzu bulun"
+                placeholder={t('searchDestination')}
                 className="w-full bg-white/95 text-black placeholder-gray-500 px-8 py-4 text-lg rounded-none border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
               <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-3 hover:bg-yellow-400 hover:text-black transition-colors">
