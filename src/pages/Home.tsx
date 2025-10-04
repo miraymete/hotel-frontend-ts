@@ -167,69 +167,6 @@ export default function HomePage({
           </div>
         </div>
 
-        {/* Alt navigasyon - Four Seasons tarzı */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-gray-800">
-          <div className="max-w-6xl mx-auto px-6 py-6">
-            <div className="flex justify-center space-x-12">
-              <Link to="/hotels" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                    <path d="M2 17L12 22L22 17"/>
-                    <path d="M2 12L12 17L22 12"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">TÜM OTELLER</span>
-              </Link>
-              
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">KONUTLAR</span>
-              </div>
-              
-              <Link to="/tours" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">TURLAR</span>
-              </Link>
-              
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M8.1 13.34L2 9.27L13.36 1.47L21.39 6.2L8.1 13.34Z"/>
-                    <path d="M22 21L2 21L2 19L22 19L22 21Z"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">YİYECEK</span>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">ÖZEL JET</span>
-              </div>
-              
-              <Link to="/yachts" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                    <path d="M20 21C20 19.62 19.38 19 18 19H6C4.62 19 4 19.62 4 21V22H6V21H18V22H20V21M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H5C3.89 1 3 1.89 3 3V7C3 8.11 3.89 9 5 9V19C5 20.11 5.89 21 7 21H17C18.11 21 19 20.11 19 19V9H21M17 9H7V3H12V8H17V9Z"/>
-                  </svg>
-                </div>
-                <span className="text-xs uppercase tracking-wider font-light">YATLAR</span>
-              </Link>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Keşfetme Bölümü - Lüks konsept */}
