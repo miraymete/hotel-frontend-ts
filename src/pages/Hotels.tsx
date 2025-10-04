@@ -170,21 +170,21 @@ export default function HotelsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
               <Link 
               to="/" 
-              className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 transition-colors"
+              className="flex items-center space-x-2 text-white/80 hover:text-yellow-400 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Ana Sayfa</span>
             </Link>
-            <h1 className="text-2xl font-light text-gray-900">Lüks Oteller</h1>
+            <h1 className="text-2xl font-light text-white">Lüks Oteller</h1>
             <Link to="/favorites">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
+              <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors">
                 <Heart className="w-5 h-5" />
                 <span className="font-medium">Favoriler</span>
               </button>
@@ -205,7 +205,7 @@ export default function HotelsPage() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   activeFilter === filter
                     ? "bg-yellow-600 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
                 }`}
               >
                 {filter}
@@ -217,7 +217,7 @@ export default function HotelsPage() {
         {/* Hotels Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {filteredHotels.map((hotel) => (
-            <div key={hotel.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div key={hotel.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
               {/* Image */}
               <div className="relative">
                 <img
@@ -248,10 +248,10 @@ export default function HotelsPage() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   {hotel.name}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                <p className="text-white/70 text-sm mb-4 leading-relaxed">
                   {hotel.description}
                 </p>
 
@@ -260,7 +260,7 @@ export default function HotelsPage() {
                   {hotel.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
+                      className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30"
                     >
                       {tag}
                     </span>
@@ -271,13 +271,13 @@ export default function HotelsPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <div className="flex">{renderStars(hotel.rating)}</div>
-                    <span className="text-sm text-gray-600">
-                      ({hotel.reviews})
-                    </span>
+                        <span className="text-sm text-white/60">
+                          ({hotel.reviews})
+                        </span>
                       </div>
-                  <div className="flex items-center text-gray-600 text-sm">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {hotel.location}
+                      <div className="flex items-center text-white/60 text-sm">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {hotel.location}
                   </div>
                 </div>
 
