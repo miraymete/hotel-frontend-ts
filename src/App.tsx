@@ -14,6 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "@/pages/Home";
 import HotelsPage from "@/pages/Hotels";
 import ToursPage from "@/pages/Tours";
+import YachtsPage from "@/pages/Yachts";
 import FavoritesPage from "@/pages/Favorites";
 import ExperiencesPage from "@/pages/Experiences";
 import LoginPage from "@/pages/LoginPage";
@@ -59,6 +60,7 @@ export default function App() {
         {/* diğer sayfalar - modal fonksiyonlarına ihtiyaç duymazlar */}
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/tours" element={<ToursPage />} />
+        <Route path="/yachts" element={<YachtsPage />} />
         <Route path="/experiences" element={<ExperiencesPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/login" element={<LoginPage />} />

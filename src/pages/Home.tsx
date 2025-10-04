@@ -244,14 +244,14 @@ export default function HomePage({
                 <span className="text-xs uppercase tracking-wider font-light">ÖZEL JET</span>
               </div>
               
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+              <Link to="/yachts" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
                 <div className="w-8 h-8 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
                     <path d="M20 21C20 19.62 19.38 19 18 19H6C4.62 19 4 19.62 4 21V22H6V21H18V22H20V21M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H5C3.89 1 3 1.89 3 3V7C3 8.11 3.89 9 5 9V19C5 20.11 5.89 21 7 21H17C18.11 21 19 20.11 19 19V9H21M17 9H7V3H12V8H17V9Z"/>
                   </svg>
                 </div>
                 <span className="text-xs uppercase tracking-wider font-light">YATLAR</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -306,7 +306,7 @@ export default function HomePage({
             <Link to="/tours" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src="https://media.tacdn.com/media/attractions-splice-spp-674x446/10/5a/d4/bf.jpg"
+                  src="https://www.tailormadeafrica.com/wp-content/uploads/s2-1-1200x675.jpg"
                   alt="Turlar"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
@@ -332,26 +332,14 @@ export default function HomePage({
             </Link>
 
             {/* Kart 3 - Yat Deneyimleri */}
-            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+            <Link to="/yachts" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src="https://media.tacdn.com/media/attractions-splice-spp-674x446/10/5a/d4/bf.jpg"
                   alt="Lüks Yat"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-6 right-6">
-                  <button
-                    onClick={(e) => handleHeartClick(discoveryHotels[2], e)}
-                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
-                      isFavorite(discoveryHotels[2].id) 
-                        ? 'bg-red-500/90 text-white' 
-                        : 'bg-white/20 text-white hover:bg-white/30'
-                    }`}
-                  >
-                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[2].id) ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
@@ -370,7 +358,7 @@ export default function HomePage({
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
