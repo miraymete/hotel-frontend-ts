@@ -2,9 +2,11 @@ import { useState, useEffect, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "@/lib/auth";
 import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,36 +18,36 @@ export default function LoginPage() {
   const travelSlides = [
     {
       id: 1,
-      title: "Santorini'de Unutulmaz Gün Batımı",
-      subtitle: "Yunan Adaları",
-      description: "Beyaz evler ve mavi kubbeler arasında romantik bir tatil",
+      title: t('santoriniTitle'),
+      subtitle: t('santoriniSubtitle'),
+      description: t('santoriniDesc'),
       price: "€299",
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Waves className="w-6 h-6" />
     },
     {
       id: 2,
-      title: "Alp Dağlarında Macera",
-      subtitle: "İsviçre",
-      description: "Karlı zirveler ve kristal berraklığında göller",
+      title: t('alpsTitle'),
+      subtitle: t('alpsSubtitle'),
+      description: t('alpsDesc'),
       price: "€599",
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Mountain className="w-6 h-6" />
     },
     {
       id: 3,
-      title: "Bali'de Tropikal Cennet",
-      subtitle: "Endonezya",
-      description: "Yeşil çeltik tarlaları ve egzotik plajlar",
+      title: t('baliTitle'),
+      subtitle: t('baliSubtitle'),
+      description: t('baliDesc'),
       price: "€399",
       image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/f8/1c/13/padma-resort-ubud.jpg?w=1200&h=-1&s=1",
       icon: <Globe className="w-6 h-6" />
     },
     {
       id: 4,
-      title: "Paris'te Aşk Şehri",
-      subtitle: "Fransa",
-      description: "Eyfel Kulesi ve Seine Nehri kıyısında romantizm",
+      title: t('parisTitle'),
+      subtitle: t('parisSubtitle'),
+      description: t('parisDesc'),
       price: "€449",
       image: "https://www.olielo.com/wp-content/uploads/2013/12/Shangri-La-Paris-hotel-Eiffel-Tower.jpg",
       icon: <Star className="w-6 h-6" />
@@ -123,7 +125,7 @@ export default function LoginPage() {
                 </div>
                 <div>
                   <h1 className="text-4xl font-bold mb-2">Hotel Booking</h1>
-                  <p className="text-blue-200">Dünyayı Keşfedin</p>
+                  <p className="text-blue-200">{t('exploreWorldLogin')}</p>
                 </div>
               </div>
               
@@ -137,11 +139,11 @@ export default function LoginPage() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-200 text-sm">Başlangıç fiyatı</p>
+                  <p className="text-blue-200 text-sm">{t('startingPriceLogin')}</p>
                   <p className="text-3xl font-bold">{travelSlides[currentSlide].price}</p>
                 </div>
                 <button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-full transition-all duration-300 flex items-center">
-                  Keşfet <ArrowRight className="ml-2 w-5 h-5" />
+                  {t('discoverLogin')} <ArrowRight className="ml-2 w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -167,8 +169,8 @@ export default function LoginPage() {
             {/* Glassmorphism Login Form */}
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-white mb-2">Hoş Geldiniz</h2>
-                <p className="text-blue-100">Hesabınıza giriş yapın</p>
+                <h2 className="text-3xl font-bold text-white mb-2">{t('welcomeBack')}</h2>
+                <p className="text-blue-100">{t('loginToAccount')}</p>
               </div>
 
               {error && (
@@ -180,13 +182,13 @@ export default function LoginPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    E-posta Adresiniz
+                    {t('emailAddress')}
                   </label>
                   <input
                     type="email"
                     required
                     className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                    placeholder="ornek@email.com"
+                    placeholder={t('emailPlaceholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -194,14 +196,14 @@ export default function LoginPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    Şifreniz
+                    {t('passwordLogin')}
                   </label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       required
                       className="w-full px-4 py-3 pr-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                      placeholder="••••••••"
+                      placeholder={t('passwordPlaceholder')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -218,10 +220,10 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between">
                   <label className="flex items-center">
                     <input type="checkbox" className="rounded border-white/30 text-white bg-white/10 focus:ring-white/50" />
-                    <span className="ml-2 text-sm text-white/80">Beni hatırla</span>
+                    <span className="ml-2 text-sm text-white/80">{t('rememberMe')}</span>
                   </label>
                   <Link to="/forgot-password" className="text-sm text-white/80 hover:text-white transition-colors">
-                    Şifremi unuttum
+                    {t('forgotPasswordLogin')}
                   </Link>
                 </div>
 
@@ -230,15 +232,15 @@ export default function LoginPage() {
                   disabled={loading}
                   className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-medium hover:bg-white/90 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
+                  {loading ? t('loggingInLogin') : t('loginButtonLogin')}
                 </button>
               </form>
 
               <div className="mt-8 text-center">
                 <p className="text-white/80">
-                  Hesabınız yok mu?{" "}
+                  {t('noAccountLogin')}{" "}
                   <Link to="/register" className="text-white hover:text-white/80 font-medium transition-colors">
-                    Kayıt olun
+                    {t('registerLinkLogin')}
                   </Link>
                 </p>
               </div>
@@ -267,7 +269,7 @@ export default function LoginPage() {
         {/* Mobile Form */}
         <div className="px-6 py-8 bg-white/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Giriş Yapın</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('loginPageTitle')}</h2>
 
             {error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">

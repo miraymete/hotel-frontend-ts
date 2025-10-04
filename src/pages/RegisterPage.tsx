@@ -2,9 +2,11 @@ import { useState, useEffect, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/lib/auth";
 import { Eye, EyeOff, Plane, Star, ArrowRight, Globe, Mountain, Waves } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,36 +24,36 @@ export default function RegisterPage() {
   const travelSlides = [
     {
       id: 1,
-      title: "Santorini'de Unutulmaz Gün Batımı",
-      subtitle: "Yunan Adaları",
-      description: "Beyaz evler ve mavi kubbeler arasında romantik bir tatil",
+      title: t('santoriniTitle'),
+      subtitle: t('santoriniSubtitle'),
+      description: t('santoriniDesc'),
       price: "€299",
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Waves className="w-6 h-6" />
     },
     {
       id: 2,
-      title: "Alp Dağlarında Macera",
-      subtitle: "İsviçre",
-      description: "Karlı zirveler ve kristal berraklığında göller",
+      title: t('alpsTitle'),
+      subtitle: t('alpsSubtitle'),
+      description: t('alpsDesc'),
       price: "€599",
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Mountain className="w-6 h-6" />
     },
     {
       id: 3,
-      title: "Bali'de Tropikal Cennet",
-      subtitle: "Endonezya",
-      description: "Yeşil çeltik tarlaları ve egzotik plajlar",
+      title: t('baliTitle'),
+      subtitle: t('baliSubtitle'),
+      description: t('baliDesc'),
       price: "€399",
       image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/f8/1c/13/padma-resort-ubud.jpg?w=1200&h=-1&s=1",
       icon: <Globe className="w-6 h-6" />
     },
     {
       id: 4,
-      title: "Paris'te Aşk Şehri",
-      subtitle: "Fransa",
-      description: "Eyfel Kulesi ve Seine Nehri kıyısında romantizm",
+      title: t('parisTitle'),
+      subtitle: t('parisSubtitle'),
+      description: t('parisDesc'),
       price: "€449",
       image: "https://www.olielo.com/wp-content/uploads/2013/12/Shangri-La-Paris-hotel-Eiffel-Tower.jpg",
       icon: <Star className="w-6 h-6" />
@@ -148,7 +150,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <h1 className="text-4xl font-bold mb-2">Hotel Booking</h1>
-                  <p className="text-blue-200">Seyahat Deneyiminize Başlayın</p>
+                  <p className="text-blue-200">{t('joinUs')}</p>
                 </div>
               </div>
               
@@ -162,11 +164,11 @@ export default function RegisterPage() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-200 text-sm">Başlangıç fiyatı</p>
+                  <p className="text-blue-200 text-sm">{t('startingPriceLogin')}</p>
                   <p className="text-3xl font-bold">{travelSlides[currentSlide].price}</p>
                 </div>
                 <button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-full transition-all duration-300 flex items-center">
-                  Keşfet <ArrowRight className="ml-2 w-5 h-5" />
+                  {t('discoverLogin')} <ArrowRight className="ml-2 w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -192,8 +194,8 @@ export default function RegisterPage() {
             {/* Glassmorphism Register Form */}
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-white mb-2">Hesap Oluşturun</h2>
-                <p className="text-blue-100">Seyahat deneyiminize başlayın</p>
+                <h2 className="text-3xl font-bold text-white mb-2">{t('createAccount')}</h2>
+                <p className="text-blue-100">{t('joinUs')}</p>
               </div>
 
               {error && (
@@ -205,14 +207,14 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    Adınız
+                    {t('fullName')}
                   </label>
                   <input
                     type="text"
                     name="name"
                     required
                     className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                    placeholder="Adınız Soyadınız"
+                    placeholder={t('fullNamePlaceholder')}
                     value={formData.name}
                     onChange={handleInputChange}
                   />
@@ -220,14 +222,14 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    E-posta Adresiniz
+                    {t('emailAddress')}
                   </label>
                   <input
                     type="email"
                     name="email"
                     required
                     className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                    placeholder="ornek@email.com"
+                    placeholder={t('emailPlaceholder')}
                     value={formData.email}
                     onChange={handleInputChange}
                   />
@@ -235,7 +237,7 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    Şifreniz
+                    {t('passwordLogin')}
                   </label>
                   <div className="relative">
                     <input
@@ -243,7 +245,7 @@ export default function RegisterPage() {
                       name="password"
                       required
                       className="w-full px-4 py-3 pr-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                      placeholder="••••••••"
+                      placeholder={t('passwordPlaceholder')}
                       value={formData.password}
                       onChange={handleInputChange}
                     />
@@ -259,7 +261,7 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-white/90 mb-2">
-                    Şifre Tekrarı
+                    {t('confirmPasswordRegister')}
                   </label>
                   <div className="relative">
                     <input
@@ -267,7 +269,7 @@ export default function RegisterPage() {
                       name="confirmPassword"
                       required
                       className="w-full px-4 py-3 pr-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
-                      placeholder="••••••••"
+                      placeholder={t('confirmPasswordPlaceholder')}
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
                     />
@@ -290,15 +292,7 @@ export default function RegisterPage() {
                     className="mt-1 rounded border-white/30 text-white bg-white/10 focus:ring-white/50"
                   />
                   <label htmlFor="terms" className="text-sm text-white/80">
-                    Kayıt olarak{" "}
-                    <Link to="/terms" className="text-white hover:text-white/80 underline">
-                      Kullanım Şartları
-                    </Link>{" "}
-                    ve{" "}
-                    <Link to="/privacy" className="text-white hover:text-white/80 underline">
-                      Gizlilik Politikası
-                    </Link>{" "}
-                    'nı kabul ediyorum
+                    {t('agreeTermsRegister')}
                   </label>
                 </div>
 
@@ -307,15 +301,15 @@ export default function RegisterPage() {
                   disabled={loading}
                   className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-medium hover:bg-white/90 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? "Kayıt oluşturuluyor..." : "Kayıt Ol"}
+                  {loading ? t('creatingAccountRegister') : t('registerButtonRegister')}
                 </button>
               </form>
 
               <div className="mt-8 text-center">
                 <p className="text-white/80">
-                  Zaten hesabınız var mı?{" "}
+                  {t('haveAccountRegister')}{" "}
                   <Link to="/login" className="text-white hover:text-white/80 font-medium transition-colors">
-                    Giriş yapın
+                    {t('loginLinkRegister')}
                   </Link>
                 </p>
               </div>
@@ -344,7 +338,7 @@ export default function RegisterPage() {
         {/* Mobile Form */}
         <div className="px-6 py-8 bg-white/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Kayıt Olun</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('registerPageTitle')}</h2>
 
             {error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
