@@ -428,14 +428,12 @@ export default function HomePage({
                 <li><Link to="/hotels" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Lüks Oteller</Link></li>
                 <li><Link to="/tours" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Turlar</Link></li>
                 <li><Link to="/experiences" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Deneyimler</Link></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Jet</a></li>
-                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Yat Kiralama</a></li>
-              </ul>
+                <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">Özel Jet</a></li>              </ul>
             </div>
 
             {/* İletişim */}
             <div>
-              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">İletişim</h3>
+              <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">iletişim</h3>
               <ul className="space-y-3">
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">+90 533 602 07 04</a></li>
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">mirayaymete@gmail.com</a></li>
