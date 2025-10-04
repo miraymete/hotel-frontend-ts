@@ -3,11 +3,27 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Star, MapPin, Heart, Clock, Users } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 
+interface Tour {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  location: string;
+  tags: string[];
+  category: string;
+  rating: number;
+  reviews: number;
+  duration: string;
+  groupSize: string;
+  price: string;
+  isRecommended: boolean;
+}
+
 export default function ToursPage() {
   const [activeFilter, setActiveFilter] = useState<string>("Tümü");
-  const { favorites, addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
-  const toggleFavorite = (tour: any) => {
+  const toggleFavorite = (tour: Tour) => {
     if (isFavorite(tour.id)) {
       removeFromFavorites(tour.id);
     } else {
@@ -19,7 +35,7 @@ export default function ToursPage() {
     setActiveFilter(filter);
   };
 
-  const tours = [
+  const tours: Tour[] = [
     // Doğa Turları
     {
       id: "1",
