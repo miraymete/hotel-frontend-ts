@@ -216,14 +216,14 @@ export default function HomePage({
                 <span className="text-xs uppercase tracking-wider font-light">KONUTLAR</span>
               </div>
               
-              <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
+              <Link to="/tours" className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
                 <div className="w-8 h-8 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
                     <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
                   </svg>
                 </div>
-                <span className="text-xs uppercase tracking-wider font-light">VİLLALAR</span>
-              </div>
+                <span className="text-xs uppercase tracking-wider font-light">TURLAR</span>
+              </Link>
               
               <div className="flex flex-col items-center space-y-2 text-white/80 hover:text-yellow-400 transition-colors cursor-pointer">
                 <div className="w-8 h-8 flex items-center justify-center">
@@ -302,34 +302,22 @@ export default function HomePage({
               </div>
             </Link>
 
-            {/* Kart 2 - Özel Villalar */}
-            <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
+            {/* Kart 2 - Turlar */}
+            <Link to="/tours" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                  alt="Özel Villa"
+                  src="https://media.tacdn.com/media/attractions-splice-spp-674x446/10/5a/d4/bf.jpg"
+                  alt="Turlar"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-6 right-6">
-                  <button
-                    onClick={(e) => handleHeartClick(discoveryHotels[1], e)}
-                    className={`p-3 rounded-full backdrop-blur-sm transition-all duration-200 ${
-                      isFavorite(discoveryHotels[1].id) 
-                        ? 'bg-red-500/90 text-white' 
-                        : 'bg-white/20 text-white hover:bg-white/30'
-                    }`}
-                  >
-                    <Heart className={`w-5 h-5 ${isFavorite(discoveryHotels[1].id) ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-light text-white mb-4 tracking-wide">
-                  ÖZEL VİLLALAR
+                  TURLAR
                 </h3>
                 <p className="text-white/70 font-light leading-relaxed mb-6">
-                  Tamamen özel villalarda konaklayın. Sadece sizin için tasarlanmış lüks deneyimler.
+                  Unutulmaz tur deneyimleri. Dünyanın en güzel yerlerini keşfedin ve anılar biriktirin.
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-yellow-400 font-light text-sm tracking-wider uppercase">
@@ -337,11 +325,11 @@ export default function HomePage({
                   </span>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-white/60 text-sm">Exclusive</span>
+                    <span className="text-white/60 text-sm">Adventure</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Kart 3 - Yat Deneyimleri */}
             <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
