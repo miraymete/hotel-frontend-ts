@@ -92,6 +92,7 @@ export const translations = {
     reservation: 'Rezervasyon',
     startDiscovering: 'Keşfetmeye Başla',
     noFavoritesYet: 'Henüz favorilere eklediğiniz bir öğe yok',
+    startAddingFavorites: 'Favori eklemeye başla',
     continueExploring: 'Keşfetmeye devam edin ve beğendiğiniz oteller, turlar ve yat\'ları favorilerinize ekleyin',
     itemsInFavorites: 'öğe favorilerinizde',
     
@@ -399,6 +400,7 @@ export const translations = {
     reservation: 'Reservation',
     startDiscovering: 'Start Discovering',
     noFavoritesYet: 'You haven\'t added any items to your favorites yet',
+    startAddingFavorites: 'Start Adding Favorites',
     continueExploring: 'Continue exploring and add hotels, tours and yachts you like to your favorites',
     itemsInFavorites: 'items in your favorites',
     

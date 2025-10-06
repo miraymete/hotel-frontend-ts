@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
-  User, 
   Mail, 
   Calendar, 
   MapPin, 
@@ -42,36 +41,21 @@ export default function AccountPage({ user, onLogout }: Props) {
   }
 
   // Mock veriler - gerçek uygulamada API'den gelecek
-  const mockReservations = [
-    {
-      id: 1,
-      type: "Hotel",
-      name: "Grand Resort Antalya",
-      location: "Antalya, Türkiye",
-      checkIn: "2024-10-15",
-      checkOut: "2024-10-20",
-      status: "confirmed",
-      price: "₺2,500"
-    },
-    {
-      id: 2,
-      type: "Tour",
-      name: "Kapadokya Balon Turu",
-      location: "Nevşehir, Türkiye",
-      date: "2024-10-25",
-      status: "confirmed",
-      price: "₺1,200"
-    },
-    {
-      id: 3,
-      type: "Yacht",
-      name: "Bodrum Yacht Charter",
-      location: "Bodrum, Türkiye",
-      date: "2024-11-05",
-      status: "pending",
-      price: "₺5,000"
-    }
-  ];
+  // Şu anda boş bırakıyoruz, dinamik içerik için
+  interface Reservation {
+    id: number;
+    type: string;
+    name: string;
+    location: string;
+    checkIn?: string;
+    checkOut?: string;
+    date?: string;
+    status: string;
+    price: string;
+  }
+  
+  const mockReservations: Reservation[] = [];
+  const mockFavorites = 0; // Gerçek uygulamada API'den gelecek
 
   const handleLogout = () => {
     onLogout();
@@ -79,7 +63,7 @@ export default function AccountPage({ user, onLogout }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-gray-950">
       {/* Header */}
       <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-black/95 backdrop-blur-md border-b border-gray-800">
         <Link to="/" className="flex items-center space-x-3 text-white hover:text-yellow-400 transition-colors">
@@ -127,7 +111,7 @@ export default function AccountPage({ user, onLogout }: Props) {
           {/* Sol Kolon - Profil Bilgileri */}
           <div className="lg:col-span-1 space-y-6">
             {/* Profil Kartı */}
-            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader className="text-center pb-4">
                 <div className="flex justify-center mb-4">
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400 font-medium text-2xl">
@@ -152,12 +136,13 @@ export default function AccountPage({ user, onLogout }: Props) {
                   <span className="text-sm">{user.email}</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/90">
-                  <User className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm">{t('standardMember')}</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/90">
                   <Heart className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm">12 {t('favorites')}</span>
+                  <span className="text-sm">
+                    {mockFavorites === 0 
+                      ? t('noFavoritesYet') 
+                      : `${mockFavorites} ${t('favorites')}`
+                    }
+                  </span>
                 </div>
                 <Button 
                   variant="outline" 
@@ -171,7 +156,7 @@ export default function AccountPage({ user, onLogout }: Props) {
             </Card>
 
             {/* Hızlı İşlemler */}
-            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white text-lg font-light">
                   {t('quickActions')}
@@ -183,7 +168,7 @@ export default function AccountPage({ user, onLogout }: Props) {
                   className="w-full justify-start text-white/90 hover:text-yellow-400 hover:bg-yellow-400/10"
                 >
                   <Heart className="w-4 h-4 mr-3" />
-                  {t('myFavorites')}
+                  {mockFavorites === 0 ? t('startAddingFavorites') : t('myFavorites')}
                 </Button>
                 <Button 
                   variant="ghost" 
@@ -214,7 +199,7 @@ export default function AccountPage({ user, onLogout }: Props) {
 
           {/* Sağ Kolon - Rezervasyon Geçmişi */}
           <div className="lg:col-span-2 space-y-6">
-            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white text-xl font-light">
                   {t('reservationHistory')}
@@ -224,66 +209,66 @@ export default function AccountPage({ user, onLogout }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {mockReservations.map((reservation) => (
-                    <div 
-                      key={reservation.id}
-                      className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-gray-800/50 hover:border-yellow-400/30 transition-colors"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-400/20">
-                          {reservation.type === 'Hotel' && <MapPin className="w-6 h-6 text-yellow-400" />}
-                          {reservation.type === 'Tour' && <Star className="w-6 h-6 text-yellow-400" />}
-                          {reservation.type === 'Yacht' && <Calendar className="w-6 h-6 text-yellow-400" />}
-                        </div>
-                        <div>
-                          <h3 className="text-white font-medium">{reservation.name}</h3>
-                          <p className="text-white/70 text-sm">{reservation.location}</p>
-                          <div className="flex items-center gap-4 mt-1">
-                            <span className="text-white/60 text-xs">
-                              {reservation.checkIn && reservation.checkOut 
-                                ? `${reservation.checkIn} - ${reservation.checkOut}`
-                                : reservation.date
-                              }
-                            </span>
-                            <Badge 
-                              variant={reservation.status === 'confirmed' ? 'default' : 'secondary'}
-                              className={`text-xs ${
-                                reservation.status === 'confirmed' 
-                                  ? 'bg-green-500/20 text-green-400 border-green-400/30' 
-                                  : 'bg-yellow-500/20 text-yellow-400 border-yellow-400/30'
-                              }`}
-                            >
-                              {reservation.status === 'confirmed' ? t('confirmed') : t('pending')}
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-white font-medium">{reservation.price}</p>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="mt-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
-                        >
-                          {t('viewDetails')}
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                {mockReservations.length === 0 && (
+                {mockReservations.length === 0 ? (
                   <div className="text-center py-12">
-                    <Calendar className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                    <p className="text-white/70 text-lg">{t('noReservations')}</p>
-                    <p className="text-white/50 text-sm mt-2">{t('noReservationsDescription')}</p>
+                    <Calendar className="w-16 h-16 text-yellow-400/30 mx-auto mb-4" />
+                    <p className="text-white/70 text-lg mb-2">{t('noReservations')}</p>
+                    <p className="text-white/50 text-sm mb-6">{t('noReservationsDescription')}</p>
                     <Button 
-                      className="mt-4 bg-yellow-400 text-black hover:bg-yellow-300"
+                      className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2"
                       onClick={() => navigate('/')}
                     >
                       {t('startExploring')}
                     </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {mockReservations.map((reservation) => (
+                      <div 
+                        key={reservation.id}
+                        className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-yellow-400/30 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-400/20">
+                            {reservation.type === 'Hotel' && <MapPin className="w-6 h-6 text-yellow-400" />}
+                            {reservation.type === 'Tour' && <Star className="w-6 h-6 text-yellow-400" />}
+                            {reservation.type === 'Yacht' && <Calendar className="w-6 h-6 text-yellow-400" />}
+                          </div>
+                          <div>
+                            <h3 className="text-white font-medium">{reservation.name}</h3>
+                            <p className="text-white/70 text-sm">{reservation.location}</p>
+                            <div className="flex items-center gap-4 mt-1">
+                              <span className="text-white/60 text-xs">
+                                {reservation.checkIn && reservation.checkOut 
+                                  ? `${reservation.checkIn} - ${reservation.checkOut}`
+                                  : reservation.date
+                                }
+                              </span>
+                              <Badge 
+                                variant={reservation.status === 'confirmed' ? 'default' : 'secondary'}
+                                className={`text-xs ${
+                                  reservation.status === 'confirmed' 
+                                    ? 'bg-green-500/20 text-green-400 border-green-400/30' 
+                                    : 'bg-yellow-500/20 text-yellow-400 border-yellow-400/30'
+                                }`}
+                              >
+                                {reservation.status === 'confirmed' ? t('confirmed') : t('pending')}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-medium">{reservation.price}</p>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="mt-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                          >
+                            {t('viewDetails')}
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </CardContent>
@@ -291,21 +276,21 @@ export default function AccountPage({ user, onLogout }: Props) {
 
             {/* İstatistikler */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-6 text-center">
-                  <div className="text-2xl font-light text-yellow-400 mb-2">12</div>
+                  <div className="text-2xl font-light text-yellow-400 mb-2">{mockReservations.length}</div>
                   <div className="text-white/70 text-sm">{t('totalBookings')}</div>
                 </CardContent>
               </Card>
-              <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-6 text-center">
-                  <div className="text-2xl font-light text-yellow-400 mb-2">8</div>
+                  <div className="text-2xl font-light text-yellow-400 mb-2">{mockFavorites}</div>
                   <div className="text-white/70 text-sm">{t('favoritePlaces')}</div>
                 </CardContent>
               </Card>
-              <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-6 text-center">
-                  <div className="text-2xl font-light text-yellow-400 mb-2">₺45,200</div>
+                  <div className="text-2xl font-light text-yellow-400 mb-2">₺0</div>
                   <div className="text-white/70 text-sm">{t('totalSpent')}</div>
                 </CardContent>
               </Card>
