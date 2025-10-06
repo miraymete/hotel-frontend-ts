@@ -6,7 +6,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import LanguageModal from "@/components/LanguageModal";
 
-export default function RegisterPage() {
+type Props = {
+  onRegisterSuccess?: () => void;
+};
+
+export default function RegisterPage({ onRegisterSuccess }: Props) {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { formatPrice } = useCurrency();
@@ -112,6 +116,12 @@ export default function RegisterPage() {
     try {
       await register(formData.name, formData.email, formData.password);
       setLoading(false);
+      
+      // Kullanıcı durumunu güncelle
+      if (onRegisterSuccess) {
+        onRegisterSuccess();
+      }
+      
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
       setLoading(false);

@@ -6,7 +6,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import LanguageModal from "@/components/LanguageModal";
 
-export default function LoginPage() {
+type Props = {
+  onLoginSuccess?: () => void;
+};
+
+export default function LoginPage({ onLoginSuccess }: Props) {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { formatPrice } = useCurrency();
@@ -87,6 +91,12 @@ export default function LoginPage() {
       
       await login(email, password);
       setLoading(false);
+      
+      // Kullanıcı durumunu güncelle
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
+      
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err: unknown) {
       setLoading(false);

@@ -40,6 +40,11 @@ export default function App() {
   // kullanıcı oturum durumu - localStorage'dan mevcut kullanıcıyı al
   const [user, setUser] = useState<PublicUser | null>(getCurrentUser());
 
+  // kullanıcı durumunu güncellemek için callback
+  const updateUserState = () => {
+    setUser(getCurrentUser());
+  };
+
   return (
     // favoriler context'ini tüm uygulamaya sağla
     <FavoritesProvider>
@@ -66,8 +71,8 @@ export default function App() {
         <Route path="/yachts" element={<YachtsPage />} />
         <Route path="/experiences" element={<ExperiencesPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage onLoginSuccess={updateUserState} />} />
+        <Route path="/register" element={<RegisterPage onRegisterSuccess={updateUserState} />} />
         <Route 
           path="/account" 
           element={
