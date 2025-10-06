@@ -134,15 +134,8 @@ export default function HomePage({
     <div className="min-h-screen bg-black">
       {/* üst menü - lüks koyu tema */}
       <header className="sticky top-0 z-[60] flex justify-between items-center px-8 py-4 bg-black/95 backdrop-blur-md border-b border-gray-800">
-        {/* Logo - Four Seasons tarzı ağaç ikonu */}
+        {/* Logo - Sadece metin */}
         <Link to="/" className="flex items-center space-x-3 text-white hover:text-yellow-400 transition-colors">
-          <div className="w-8 h-8 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-              <path d="M12 2L8 8H16L12 2Z"/>
-              <path d="M8 8L4 14H20L16 8H8Z"/>
-              <path d="M4 14L2 20H22L20 14H4Z"/>
-            </svg>
-          </div>
           <span className="text-xl font-light tracking-wider">{t('brand')}</span>
         </Link>
 
@@ -225,16 +218,7 @@ export default function HomePage({
 
         {/* Ana içerik */}
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-6">
-          {/* Logo */}
-          <div className="mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-12 h-12 fill-current text-yellow-400">
-                <path d="M12 2L8 8H16L12 2Z"/>
-                <path d="M8 8L4 14H20L16 8H8Z"/>
-                <path d="M4 14L2 20H22L20 14H4Z"/>
-              </svg>
-            </div>
-          </div>
+          {/* Logo - Kaldırıldı */}
 
           {/* Ana başlık - Ultra lüks tipografi */}
           <h1 className="text-6xl md:text-8xl font-extralight tracking-[0.1em] mb-8 leading-[0.9]">
@@ -406,13 +390,6 @@ export default function HomePage({
             {/* Logo ve açıklama */}
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current text-yellow-400">
-                    <path d="M12 2L8 8H16L12 2Z"/>
-                    <path d="M8 8L4 14H20L16 8H8Z"/>
-                    <path d="M4 14L2 20H22L20 14H4Z"/>
-                  </svg>
-                </div>
                 <span className="text-2xl font-light text-white tracking-wider">{t('brand')}</span>
               </div>
               <p className="text-white/60 font-light leading-relaxed max-w-md">

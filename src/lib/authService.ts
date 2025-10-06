@@ -1,23 +1,37 @@
 import api from './api';
 
-// login isteği için gerekli alanlar
+// login isteği için gerekli alanlar (username veya email ile login)
 export interface LoginRequest {
-  username: string;
+  username: string; // Bu alan username veya email olabilir
   password: string;
 }
 
 // register isteği için gerekli alanlar
 export interface RegisterRequest {
   username: string;
+  email: string;
   password: string;
   role?: string; // Optional role alanı
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  dateOfBirth?: string;
 }
 
-// kullanıcı bilgileri
+// kullanıcı bilgileri (genişletilmiş)
 export interface User {
   id: number;
   username: string;
+  email: string;
   role: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  dateOfBirth?: string;
+  profileImageUrl?: string;
+  createdAt?: string;
+  isActive?: boolean;
+  emailVerified?: boolean;
 }
 
 // backendden dönen auth cevabı token ve user içerir
