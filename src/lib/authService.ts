@@ -6,26 +6,23 @@ export interface LoginRequest {
   password: string;
 }
 
-// register isteği için gerekli alanlar
+// register isteği için gerekli alanlar (backend ile uyumlu)
 export interface RegisterRequest {
-  username: string;
+  fullName: string; // Backend'de username yerine fullName kullanılıyor
   email: string;
   password: string;
   role?: string; // Optional role alanı
-  firstName?: string;
-  lastName?: string;
   phoneNumber?: string;
   dateOfBirth?: string;
 }
 
-// kullanıcı bilgileri (genişletilmiş)
+// kullanıcı bilgileri (genişletilmiş - backend ile uyumlu)
 export interface User {
   id: number;
   username: string;
   email: string;
   role: string;
-  firstName?: string;
-  lastName?: string;
+  fullName?: string; // Backend'de fullName kullanılıyor
   phoneNumber?: string;
   dateOfBirth?: string;
   profileImageUrl?: string;

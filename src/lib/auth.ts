@@ -1,5 +1,5 @@
 // auth yüksek seviye fonksiyonlar backend servislerine delegasyon yapar
-import { login as backendLogin, register as backendRegister, logout as backendLogout, getCurrentUser as backendGetCurrentUser, User } from './authService';
+import { login as backendLogin, register as backendRegister, logout as backendLogout, getCurrentUser as backendGetCurrentUser } from './authService';
 
 export type PublicUser = { id: string; name: string; email: string };
 
@@ -19,8 +19,8 @@ export const getCurrentUser = (): PublicUser | null => {
   
   return {
     id: backendUser.id.toString(),
-    name: backendUser.username,
-    email: backendUser.username // Backend'de email yerine username kullanılıyor
+    name: backendUser.fullName || backendUser.username, // fullName varsa onu kullan, yoksa username
+    email: backendUser.email // Backend'de artık email alanı var
   };
 };
 
@@ -38,7 +38,8 @@ export async function register(
 
   try {
     const response = await backendRegister({
-      username: email, // Backend'de username olarak email kullanıyoruz
+      fullName: name, // Backend'de fullName kullanıyoruz
+      email: email,
       password: password,
       role: "USER" // Default role ekle
     });
@@ -48,8 +49,9 @@ export async function register(
       name: name || "Misafir",
       email: email
     };
-  } catch (error: any) {
-    throw new Error(error.message || "Kayıt başarısız");
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Kayıt başarısız";
+    throw new Error(errorMessage);
   }
 }
 
@@ -70,11 +72,12 @@ export async function login(
 
     return {
       id: response.user.id.toString(),
-      name: response.user.username,
-      email: email
+      name: response.user.fullName || response.user.username, // fullName varsa onu kullan, yoksa username
+      email: response.user.email // Backend'den gelen email
     };
-  } catch (error: any) {
-    throw new Error(error.message || "E-posta veya şifre hatalı");
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "E-posta veya şifre hatalı";
+    throw new Error(errorMessage);
   }
 }
 
