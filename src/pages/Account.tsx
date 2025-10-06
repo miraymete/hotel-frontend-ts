@@ -7,6 +7,7 @@
  * - Hesap ayarları
  * - Çıkış yapma
  */
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +20,9 @@ import {
   ArrowLeft,
   Edit,
   Heart,
-  Star
+  Star,
+  X,
+  Save
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -33,6 +36,11 @@ type Props = {
 export default function AccountPage({ user, onLogout }: Props) {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  
+  // Edit profile state
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editedName, setEditedName] = useState(user?.name || '');
+  const [editedEmail, setEditedEmail] = useState(user?.email || '');
 
   // Eğer kullanıcı giriş yapmamışsa login sayfasına yönlendir
   if (!user) {
@@ -41,7 +49,6 @@ export default function AccountPage({ user, onLogout }: Props) {
   }
 
   // Mock veriler - gerçek uygulamada API'den gelecek
-  // Şu anda boş bırakıyoruz, dinamik içerik için
   interface Reservation {
     id: number;
     type: string;
@@ -60,6 +67,39 @@ export default function AccountPage({ user, onLogout }: Props) {
   const handleLogout = () => {
     onLogout();
     navigate('/');
+  };
+
+  const handleEditProfile = () => {
+    setIsEditingProfile(true);
+    setEditedName(user.name);
+    setEditedEmail(user.email);
+  };
+
+  const handleSaveProfile = () => {
+    // Burada API çağrısı yapılacak
+    console.log('Saving profile:', { name: editedName, email: editedEmail });
+    setIsEditingProfile(false);
+    // Gerçek uygulamada user state'i güncellenecek
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingProfile(false);
+    setEditedName(user.name);
+    setEditedEmail(user.email);
+  };
+
+  const handleFavoritesClick = () => {
+    navigate('/favorites');
+  };
+
+  const handleReviewsClick = () => {
+    // Reviews sayfasına yönlendir (henüz yok)
+    console.log('Reviews clicked');
+  };
+
+  const handleSettingsClick = () => {
+    // Settings sayfasına yönlendir (henüz yok)
+    console.log('Settings clicked');
   };
 
   return (
@@ -127,31 +167,76 @@ export default function AccountPage({ user, onLogout }: Props) {
                   {user.name}
                 </CardTitle>
                 <CardDescription className="text-white/70">
-                  {t('memberSince')} 2024
+                  {t('memberSince')} 2025
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-3 text-white/90">
-                  <Mail className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm">{user.email}</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/90">
-                  <Heart className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm">
-                    {mockFavorites === 0 
-                      ? t('noFavoritesYet') 
-                      : `${mockFavorites} ${t('favorites')}`
-                    }
-                  </span>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full mt-4 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  {t('editProfile')}
-                </Button>
+                {!isEditingProfile ? (
+                  <>
+                    <div className="flex items-center gap-3 text-white/90">
+                      <Mail className="w-4 h-4 text-yellow-400" />
+                      <span className="text-sm">{user.email}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-white/90">
+                      <Heart className="w-4 h-4 text-yellow-400" />
+                      <span className="text-sm">
+                        {mockFavorites === 0 
+                          ? t('noFavoritesYet') 
+                          : `${mockFavorites} ${t('favorites')}`
+                        }
+                      </span>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleEditProfile}
+                      className="w-full mt-4 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      {t('editProfile')}
+                    </Button>
+                  </>
+                ) : (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm text-yellow-400 mb-2">{t('fullNameLabel')}</label>
+                      <input
+                        type="text"
+                        value={editedName}
+                        onChange={(e) => setEditedName(e.target.value)}
+                        className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-yellow-400 focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-yellow-400 mb-2">{t('emailLabel')}</label>
+                      <input
+                        type="email"
+                        value={editedEmail}
+                        onChange={(e) => setEditedEmail(e.target.value)}
+                        className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-yellow-400 focus:outline-none"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <Button 
+                        size="sm" 
+                        onClick={handleSaveProfile}
+                        className="flex-1 bg-yellow-400 text-black hover:bg-yellow-300"
+                      >
+                        <Save className="w-4 h-4 mr-2" />
+{t('save')}
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={handleCancelEdit}
+                        className="flex-1 border-gray-600 text-white hover:bg-gray-800"
+                      >
+                        <X className="w-4 h-4 mr-2" />
+{t('cancel')}
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -165,6 +250,7 @@ export default function AccountPage({ user, onLogout }: Props) {
               <CardContent className="space-y-3">
                 <Button 
                   variant="ghost" 
+                  onClick={handleFavoritesClick}
                   className="w-full justify-start text-white/90 hover:text-yellow-400 hover:bg-yellow-400/10"
                 >
                   <Heart className="w-4 h-4 mr-3" />
@@ -172,6 +258,7 @@ export default function AccountPage({ user, onLogout }: Props) {
                 </Button>
                 <Button 
                   variant="ghost" 
+                  onClick={handleReviewsClick}
                   className="w-full justify-start text-white/90 hover:text-yellow-400 hover:bg-yellow-400/10"
                 >
                   <Star className="w-4 h-4 mr-3" />
@@ -179,6 +266,7 @@ export default function AccountPage({ user, onLogout }: Props) {
                 </Button>
                 <Button 
                   variant="ghost" 
+                  onClick={handleSettingsClick}
                   className="w-full justify-start text-white/90 hover:text-yellow-400 hover:bg-yellow-400/10"
                 >
                   <Settings className="w-4 h-4 mr-3" />
@@ -214,12 +302,12 @@ export default function AccountPage({ user, onLogout }: Props) {
                     <Calendar className="w-16 h-16 text-yellow-400/30 mx-auto mb-4" />
                     <p className="text-white/70 text-lg mb-2">{t('noReservations')}</p>
                     <p className="text-white/50 text-sm mb-6">{t('noReservationsDescription')}</p>
-                    <Button 
-                      className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2"
-                      onClick={() => navigate('/')}
-                    >
-                      {t('startExploring')}
-                    </Button>
+                        <Button 
+                          className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2"
+                          onClick={() => navigate('/hotels')}
+                        >
+                          {t('startExploring')}
+                        </Button>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -259,13 +347,14 @@ export default function AccountPage({ user, onLogout }: Props) {
                         </div>
                         <div className="text-right">
                           <p className="text-white font-medium">{reservation.price}</p>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="mt-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
-                          >
-                            {t('viewDetails')}
-                          </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => console.log('View details for:', reservation.name)}
+                          className="mt-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                        >
+                          {t('viewDetails')}
+                        </Button>
                         </div>
                       </div>
                     ))}

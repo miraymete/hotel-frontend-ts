@@ -36,6 +36,9 @@ export const translations = {
     totalBookings: 'Toplam Rezervasyon',
     favoritePlaces: 'Favori Mekan',
     totalSpent: 'Toplam Harcama',
+    save: 'Kaydet',
+    fullNameLabel: 'İsim Soyisim',
+    emailLabel: 'E-posta',
     
     // arama 
     searchHoliday: 'Tatil Ara',
@@ -344,6 +347,9 @@ export const translations = {
     totalBookings: 'Total Bookings',
     favoritePlaces: 'Favorite Places',
     totalSpent: 'Total Spent',
+    save: 'Save',
+    fullNameLabel: 'Full Name',
+    emailLabel: 'Email',
     
     // search
     searchHoliday: 'Search Holiday',
