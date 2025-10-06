@@ -182,17 +182,22 @@ export default function HomePage({
             </>
           ) : (
             <div className="flex items-center gap-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400 font-medium text-sm">
-                {user.name
-                  .split(" ")
-                  .map((s) => s[0])
-                  .slice(0, 2)
-                  .join("")
-                  .toUpperCase()}
-              </div>
-              <span className="hidden md:inline text-sm text-white/90 font-light">
-                {t('hello')}, <span className="text-yellow-400">{user.name}</span>
-              </span>
+              <Link 
+                to="/account" 
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400 font-medium text-sm cursor-pointer hover:bg-yellow-400/30 transition-colors">
+                  {user.name
+                    .split(" ")
+                    .map((s) => s[0])
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase()}
+                </div>
+                <span className="hidden md:inline text-sm text-white/90 font-light">
+                  {t('hello')}, <span className="text-yellow-400">{user.name}</span>
+                </span>
+              </Link>
               <Button variant="ghost" onClick={onLogout} className="text-white/80 hover:text-white hover:bg-white/10 border-0">
                 {t('logout')}
               </Button>

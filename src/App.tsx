@@ -19,6 +19,7 @@ import FavoritesPage from "@/pages/Favorites";
 import ExperiencesPage from "@/pages/Experiences";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import AccountPage from "@/pages/Account";
 
 // modal bileşenleri
 import LoginModal from "@/components/LoginModal";
@@ -67,6 +68,18 @@ export default function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route 
+          path="/account" 
+          element={
+            <AccountPage
+              user={user}
+              onLogout={() => {
+                logout();
+                setUser(null);
+              }}
+            />
+          } 
+        />
       </Routes>
 
       {/* modal bileşenleri - en üstte render edilir, tüm sayfalarda kullanılabilir */}
