@@ -1,4 +1,7 @@
 import api from './api';
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:6060';
 
 // login isteği için gerekli alanlar (username veya email ile login)
 export interface LoginRequest {
@@ -119,5 +122,28 @@ export const getCurrentUser = (): User | null => {
 export const isAuthenticated = (): boolean => {
   // token var mı kontrol et
   return !!localStorage.getItem('token');
+};
+
+// kullanıcı hesap bilgilerini getir
+export const getAccountInfo = async (): Promise<User> => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No authentication token found');
+  }
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/auth/account`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Failed to get account info:', error);
+    throw error;
+  }
 };
 
