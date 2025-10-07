@@ -17,11 +17,28 @@ export interface BookingItem {
   description?: string;
 }
 
+interface BookingData {
+  notes: string;
+  guestCount?: number;
+  participantCount?: number;
+  checkInDate?: string;
+  checkOutDate?: string;
+  tourDate?: string;
+  bookingDate?: string;
+  startTime?: string;
+  roomId?: number;
+  totalPrice?: number;
+  currency?: string;
+  hotelId?: number;
+  tourId?: number;
+  yachtId?: number;
+}
+
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   item: BookingItem;
-  onBookingSubmit: (bookingData: any) => void;
+  onBookingSubmit: (bookingData: BookingData) => void;
 }
 
 export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }: BookingModalProps) {
@@ -41,20 +58,20 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
   
   // Mock rooms for hotels
   const mockRooms = [
-    { id: 1, name: 'Standart Oda', price: item.basePrice, maxOccupancy: 2 },
-    { id: 2, name: 'Deluxe Oda', price: item.basePrice * 1.5, maxOccupancy: 2 },
-    { id: 3, name: 'Suite', price: item.basePrice * 2, maxOccupancy: 4 },
+    { id: 1, name: t('standardRoom'), price: item.basePrice, maxOccupancy: 2 },
+    { id: 2, name: t('deluxeRoom'), price: item.basePrice * 1.5, maxOccupancy: 2 },
+    { id: 3, name: t('suite'), price: item.basePrice * 2, maxOccupancy: 4 },
   ];
 
   const handleSubmit = () => {
-    let bookingData: any = {
+    let bookingData: BookingData = {
       notes,
     };
 
     switch (item.type) {
-      case 'hotel':
+      case 'hotel': {
         if (!startDate || !endDate || !selectedRoom) {
-          alert('Lütfen tüm alanları doldurun');
+          alert(t('selectAllFields'));
           return;
         }
         const room = mockRooms.find(r => r.id === selectedRoom);
@@ -70,10 +87,11 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
           currency: item.currency,
         };
         break;
+        }
         
-      case 'tour':
+      case 'tour': {
         if (!tourDate || participantCount < 1) {
-          alert('Lütfen tüm alanları doldurun');
+          alert(t('selectAllFields'));
           return;
         }
         bookingData = {
@@ -85,10 +103,11 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
           currency: item.currency,
         };
         break;
+        }
         
-      case 'yacht':
+      case 'yacht': {
         if (!yachtDate || guestCount < 1) {
-          alert('Lütfen tüm alanları doldurun');
+          alert(t('selectAllFields'));
           return;
         }
         bookingData = {
@@ -101,6 +120,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
           currency: item.currency,
         };
         break;
+        }
     }
 
     onBookingSubmit(bookingData);
@@ -163,7 +183,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-yellow-400" />
-                        Tarih Seçimi
+                        {t('dateSelection')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -180,7 +200,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                   {/* Room Selection */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">Oda Seçimi</CardTitle>
+                      <CardTitle className="text-white text-lg">{t('roomSelection')}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {mockRooms.map((room) => (
@@ -196,11 +216,11 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                           <div className="flex justify-between items-center">
                             <div>
                               <h4 className="text-white font-medium">{room.name}</h4>
-                              <p className="text-gray-400 text-sm">Max {room.maxOccupancy} kişi</p>
+                              <p className="text-gray-400 text-sm">{t('maxPeople').replace('{count}', room.maxOccupancy.toString())}</p>
                             </div>
                             <div className="text-right">
                               <p className="text-yellow-400 font-medium">
-                                {formatPrice(room.price)} / gece
+                                {formatPrice(room.price)} {t('perNight')}
                               </p>
                             </div>
                           </div>
@@ -214,7 +234,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-yellow-400" />
-                        Misafir Sayısı
+                        {t('guestCount')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -253,7 +273,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-yellow-400" />
-                        Tur Tarihi
+                        {t('tourDate')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -270,7 +290,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-yellow-400" />
-                        Katılımcı Sayısı
+                        {t('participantCount')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -309,7 +329,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-yellow-400" />
-                        Yat Tarihi
+                        {t('yachtDate')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -324,7 +344,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                   {/* Time Selection */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">Saat Seçimi</CardTitle>
+                      <CardTitle className="text-white text-lg">{t('timeSelection')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <select
@@ -349,7 +369,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
                         <Users className="w-5 h-5 text-yellow-400" />
-                        Misafir Sayısı
+                        {t('guestCount')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -384,13 +404,13 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
               {/* Notes */}
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Özel İstekler</CardTitle>
+                  <CardTitle className="text-white text-lg">{t('specialRequests')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Özel isteklerinizi buraya yazabilirsiniz..."
+                    placeholder={t('bookingNotes')}
                     className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none resize-none"
                     rows={3}
                   />
@@ -404,7 +424,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                 <CardHeader>
                   <CardTitle className="text-white text-lg flex items-center gap-2">
                     <CreditCard className="w-5 h-5 text-yellow-400" />
-                    Rezervasyon Özeti
+                    {t('bookingSummary')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -448,7 +468,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                   <hr className="border-gray-700" />
                   
                   <div className="flex justify-between text-lg font-medium">
-                    <span className="text-white">Toplam</span>
+                    <span className="text-white">{t('totalPrice')}</span>
                     <span className="text-yellow-400">{formatPrice(calculateTotalPrice())}</span>
                   </div>
                   
@@ -456,7 +476,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     onClick={handleSubmit}
                     className="w-full bg-yellow-400 text-black hover:bg-yellow-300 font-medium py-3"
                   >
-                    Rezervasyonu Tamamla
+                    {t('makeReservation')}
                   </Button>
                 </CardContent>
               </Card>

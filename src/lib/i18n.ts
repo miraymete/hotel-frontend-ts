@@ -311,6 +311,28 @@ export const translations = {
     haveAccountRegister: 'Zaten hesabınız var mı?',
     loginLinkRegister: 'Giriş yapın',
     registerPageTitle: 'Kayıt Olun',
+    
+    // booking modal tr
+    dateSelection: 'Tarih Seçimi',
+    roomSelection: 'Oda Seçimi',
+    guestCount: 'Misafir Sayısı',
+    tourDate: 'Tur Tarihi',
+    participantCount: 'Katılımcı Sayısı',
+    yachtDate: 'Yat Tarihi',
+    timeSelection: 'Saat Seçimi',
+    specialRequests: 'Özel İstekler',
+    bookingSummary: 'Rezervasyon Özeti',
+    totalPrice: 'Toplam Fiyat',
+    perNight: '/gece',
+    perPerson: '/kişi',
+    maxPeople: 'Max {count} kişi',
+    selectAllFields: 'Lütfen tüm alanları doldurun',
+    makeReservation: 'Rezervasyon Yap',
+    bookingSuccess: 'Rezervasyonunuz başarıyla oluşturuldu!',
+    standardRoom: 'Standart Oda',
+    deluxeRoom: 'Deluxe Oda',
+    suite: 'Suite',
+    bookingNotes: 'Özel isteklerinizi buraya yazabilirsiniz...',
   },
   en: {
     // header
@@ -622,6 +644,28 @@ export const translations = {
     haveAccountRegister: 'Already have an account?',
     loginLinkRegister: 'Sign in',
     registerPageTitle: 'Sign Up',
+    
+    // booking modal en
+    dateSelection: 'Date Selection',
+    roomSelection: 'Room Selection',
+    guestCount: 'Guest Count',
+    tourDate: 'Tour Date',
+    participantCount: 'Participant Count',
+    yachtDate: 'Yacht Date',
+    timeSelection: 'Time Selection',
+    specialRequests: 'Special Requests',
+    bookingSummary: 'Booking Summary',
+    totalPrice: 'Total Price',
+    perNight: '/night',
+    perPerson: '/person',
+    maxPeople: 'Max {count} people',
+    selectAllFields: 'Please fill in all fields',
+    makeReservation: 'Make Reservation',
+    bookingSuccess: 'Your reservation has been successfully created!',
+    standardRoom: 'Standard Room',
+    deluxeRoom: 'Deluxe Room',
+    suite: 'Suite',
+    bookingNotes: 'Write your special requests here...',
   }
 };
 
