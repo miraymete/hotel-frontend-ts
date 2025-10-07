@@ -1,3 +1,8 @@
+/*
+  dil ve para birimi modal
+  kullanıcıya uygulama dili ve para birimini seçtir
+ context değerlerini güncelle
+*/
 import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency, Currency } from "@/contexts/CurrencyContext";
@@ -10,13 +15,14 @@ interface LanguageModalProps {
 }
 
 export default function LanguageModal({ open, setOpen }: LanguageModalProps) {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const { currency, setCurrency } = useCurrency();
   const [selectedLang, setSelectedLang] = useState<Language>(language);
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(currency);
 
   if (!open) return null;
 
+  // seçimleri uygula ve modalı kapat
   const handleApply = () => {
     setLanguage(selectedLang);
     setCurrency(selectedCurrency);
@@ -26,7 +32,7 @@ export default function LanguageModal({ open, setOpen }: LanguageModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[70]">
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8 rounded-2xl w-96 shadow-2xl border border-gray-700/50 z-[80]">
-        {/* Header */}
+        {/* başlık */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-light text-white flex items-center space-x-2">
             <Globe className="w-6 h-6 text-yellow-400" />
@@ -40,7 +46,7 @@ export default function LanguageModal({ open, setOpen }: LanguageModalProps) {
           </button>
         </div>
 
-        {/* Language Selection */}
+        {/* dil seçimi */}
         <div className="mb-6">
           <label className="mb-3 text-sm font-medium text-white/80 flex items-center space-x-2">
             <Globe className="w-4 h-4 text-yellow-400" />
@@ -76,7 +82,7 @@ export default function LanguageModal({ open, setOpen }: LanguageModalProps) {
           </div>
         </div>
 
-        {/* Currency Selection */}
+        {/* para birimi seçimi */}
         <div className="mb-8">
           <label className="mb-3 text-sm font-medium text-white/80 flex items-center space-x-2">
             <DollarSign className="w-4 h-4 text-yellow-400" />
@@ -140,7 +146,7 @@ export default function LanguageModal({ open, setOpen }: LanguageModalProps) {
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* işlem butonları */}
         <div className="flex justify-end space-x-3">
           <button
             onClick={() => setOpen(false)}

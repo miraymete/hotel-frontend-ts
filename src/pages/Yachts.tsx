@@ -5,7 +5,7 @@ import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useAuth } from "@/lib/auth";
-import BookingModal, { BookingItem } from "@/components/BookingModal";
+import BookingModal, { BookingItem, BookingData } from "@/components/BookingModal";
 import { Button } from "@/components/ui/button";
 
 interface Yacht {
@@ -31,7 +31,6 @@ export default function YachtsPage() {
   const { formatPrice } = useCurrency();
   const { isAuthenticated } = useAuth();
   
-  // Booking modal state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedYacht, setSelectedYacht] = useState<BookingItem | null>(null);
 
@@ -64,12 +63,11 @@ export default function YachtsPage() {
     setBookingModalOpen(true);
   };
 
-  const handleBookingSubmit = async (bookingData: any) => {
+  const handleBookingSubmit = async (bookingData: BookingData) => {
     try {
-      // Burada API çağrısı yapılacak
+      // yine api çağrısı
       console.log('Yacht booking data:', bookingData);
       
-      // Mock success
       alert('Yat rezervasyonu başarıyla oluşturuldu!');
       setBookingModalOpen(false);
     } catch (error) {
@@ -90,10 +88,9 @@ export default function YachtsPage() {
     { key: "boat", label: t('boat') }
   ];
 
-  // Türkçe metinleri İngilizce'ye çeviren fonksiyon
+  //tr ing
   const translateText = (text: string) => {
     const translations: { [key: string]: string } = {
-      // Şehirler
       'Antalya, Türkiye': `${t('antalya')}, ${t('turkey')}`,
       'Bodrum, Türkiye': `${t('bodrum')}, ${t('turkey')}`,
       'Marmaris, Türkiye': `${t('marmaris')}, ${t('turkey')}`,
@@ -106,13 +103,11 @@ export default function YachtsPage() {
       'Alanya, Türkiye': `${t('alanya')}, ${t('turkey')}`,
       'Kuşadası, Türkiye': `${t('kusadasi')}, ${t('turkey')}`,
       
-      // Kategoriler
       'Lüks': t('luxury'),
       'Klasik': t('classic'),
       'Katamaran': t('catamaran'),
       'Tekne': t('boat'),
       
-      // Tags
       'Flybridge': 'Flybridge',
       'Sport': 'Sport',
       'Modern': 'Modern',
@@ -126,7 +121,7 @@ export default function YachtsPage() {
       'Konforlu': t('comfortable'),
       'Hızlı': t('fast'),
       
-      // Açıklamalar
+      // açıklamalar
       'Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.': t('yachtLuxuryDesc'),
       'Modern tasarımı ve güçlü performansı ile denizde fark yaratan yat.': t('yachtSportDesc'),
       'İngiliz kalitesi ve zarafeti ile denizde lüks deneyim sunan yat.': t('yachtEnglishDesc'),
@@ -140,7 +135,6 @@ export default function YachtsPage() {
       'Konforlu iç mekanlar ile keyifli seyahat.': t('yachtComfortDesc'),
       'Hızlı ve modern tekne ile dinamik deneyim.': t('yachtFastDesc'),
       
-      // additional yacht descriptions
       'Ahşap gövdesi ile doğal güzellik sunan klasik gulet.': t('woodenGuletDesc'),
       'Yelkenli klasik yat ile rüzgarın gücünü hissedin.': t('traditionalSailingDesc'),
       'Geniş ve stabil katamaran ile konforlu deniz yolculuğu.': t('lagoonCatamaranDesc'),
@@ -150,9 +144,8 @@ export default function YachtsPage() {
       'Konforlu ve şık tekne ile denizde keyifli vakit geçirin.': t('seaRayDesc'),
       'Hızlı ve çevik tekne ile denizde özgürlüğü yaşayın.': t('regalExpressDesc'),
       
-      // additional tags (removed duplicates)
       
-      // Süre ve kişi
+      // süre ve kişi
       'kişi': t('people'),
       '/gün': t('perDay'),
     };
@@ -161,12 +154,12 @@ export default function YachtsPage() {
   };
 
   const yachts = [
-    // Lüks Yatlar
+    // lüks yatlar
     {
       id: "1",
       name: "Azimut 78 Fly",
       description: "Lüks ve konforun buluştuğu bu yat ile denizde unutulmaz anlar yaşayın.",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://abc-yacht.com/wp-content/uploads/2023/08/2023-AZIMUT-78_3.jpg",
       location: "Antalya, Türkiye",
       tags: ["Lüks", "Flybridge"],
       category: "Lüks",
@@ -174,14 +167,14 @@ export default function YachtsPage() {
       reviews: 1247,
       capacity: "12 kişi",
       length: "24m",
-      price: 120000, // 2500 EUR * 48 TL
+      price: 120000, 
       isRecommended: true
     },
     {
       id: "2",
       name: "Sunseeker 68 Sport Yacht",
       description: "Modern tasarımı ve güçlü performansı ile denizde fark yaratan yat.",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.rightboat.com/boat_images/image_26396912/91b7fc0345b34c3abd5020365c5f37bc43cb080f04c14567b87f9f6ae0d345aa.webp",
       location: "Bodrum, Türkiye",
       tags: ["Sport", "Modern"],
       category: "Lüks",
@@ -189,14 +182,14 @@ export default function YachtsPage() {
       reviews: 892,
       capacity: "10 kişi",
       length: "21m",
-      price: 105600, // 2200 EUR * 48 TL
+      price: 105600, 
       isRecommended: true
     },
     {
       id: "3",
       name: "Princess V78",
       description: "İngiliz kalitesi ve zarafeti ile denizde lüks deneyim sunan yat.",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://clearwatermarine.eu/wp-content/uploads/2021/04/v78-exterior-foredeck.jpg",
       location: "Marmaris, Türkiye",
       tags: ["Lüks", "İngiliz"],
       category: "Lüks",
@@ -204,16 +197,16 @@ export default function YachtsPage() {
       reviews: 634,
       capacity: "8 kişi",
       length: "24m",
-      price: 134400, // 2800 EUR * 48 TL
+      price: 134400, 
       isRecommended: false
     },
 
-    // Klasik Yatlar
+    // klasik
     {
       id: "4",
       name: "Gület Klasik",
       description: "Geleneksel Türk yatçılığının en güzel örneklerinden biri.",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cdn.guletbookers.org/wp-content/uploads/2023/03/gulet-yacht-tutta-1-1024x640.jpeg",
       location: "Gökova, Türkiye",
       tags: ["Klasik", "Geleneksel"],
       category: "Klasik",
@@ -221,14 +214,14 @@ export default function YachtsPage() {
       reviews: 423,
       capacity: "16 kişi",
       length: "18m",
-      price: 38400, // 800 EUR * 48 TL
+      price: 38400, 
       isRecommended: false
     },
     {
       id: "5",
       name: "Wooden Gulet",
       description: "Ahşap gövdesi ile doğal güzellik sunan klasik gulet.",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.goldenyachting.com/templates/goldenyachting/uploads/2019/11/18/goldenyachting_gulet-wood-(14)-jpg-r6R.jpg",
       location: "Fethiye, Türkiye",
       tags: ["Ahşap", "Klasik"],
       category: "Klasik",
@@ -236,14 +229,14 @@ export default function YachtsPage() {
       reviews: 756,
       capacity: "14 kişi",
       length: "16m",
-      price: 31200, // 650 EUR * 48 TL
+      price: 31200, 
       isRecommended: false
     },
     {
       id: "6",
       name: "Traditional Sailing Yacht",
       description: "Yelkenli klasik yat ile rüzgarın gücünü hissedin.",
-      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.classicboat.co.uk/wp-content/uploads/C74A0382-1024x683.jpg",
       location: "Çeşme, Türkiye",
       tags: ["Yelkenli", "Klasik"],
       category: "Klasik",
@@ -251,16 +244,16 @@ export default function YachtsPage() {
       reviews: 345,
       capacity: "12 kişi",
       length: "14m",
-      price: 24000, // 500 EUR * 48 TL
+      price: 24000, 
       isRecommended: false
     },
 
-    // Katamaran
+    // katamaran
     {
       id: "7",
       name: "Lagoon 450 Catamaran",
       description: "Geniş ve stabil katamaran ile konforlu deniz yolculuğu.",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://luxurycatamarans.com/wp-content/uploads/2020/03/lagoon-450-F-2019.jpg",
       location: "Kaş, Türkiye",
       tags: ["Katamaran", "Stabil"],
       category: "Katamaran",
@@ -268,14 +261,14 @@ export default function YachtsPage() {
       reviews: 567,
       capacity: "12 kişi",
       length: "14m",
-      price: 57600, // 1200 EUR * 48 TL
+      price: 57600, 
       isRecommended: true
     },
     {
       id: "8",
       name: "Fountaine Pajot 44",
       description: "Fransız kalitesi katamaran ile lüks deniz deneyimi.",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.poseidoncharters.com/fleet/fountaine-pajot-helia-44/Fountaine-Pajot-Helia-44-01.jpg",
       location: "Kalkan, Türkiye",
       tags: ["Katamaran", "Fransız"],
       category: "Katamaran",
@@ -283,14 +276,14 @@ export default function YachtsPage() {
       reviews: 234,
       capacity: "10 kişi",
       length: "13m",
-      price: 52800, // 1100 EUR * 48 TL
+      price: 52800, 
       isRecommended: false
     },
     {
       id: "9",
       name: "Bali 4.1 Catamaran",
       description: "Modern tasarım katamaran ile denizde rahatlık.",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://sailingblue.gr/wp-content/uploads/2020/04/BALI4.1_h-1024x512-1.jpg",
       location: "Datça, Türkiye",
       tags: ["Katamaran", "Modern"],
       category: "Katamaran",
@@ -298,16 +291,16 @@ export default function YachtsPage() {
       reviews: 178,
       capacity: "8 kişi",
       length: "12m",
-      price: 45600, // 950 EUR * 48 TL
+      price: 45600, 
       isRecommended: false
     },
 
-    // Tekne
+    // tekne
     {
       id: "10",
       name: "Boston Whaler 315",
       description: "Güvenilir ve dayanıklı tekne ile denizde güvenli yolculuk.",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.wcyachts.com/wp-content/uploads/2023/09/Boston-Whaler-315-Conquest-for-sale-74.jpg",
       location: "Alanya, Türkiye",
       tags: ["Tekne", "Güvenli"],
       category: "Tekne",
@@ -315,14 +308,14 @@ export default function YachtsPage() {
       reviews: 445,
       capacity: "6 kişi",
       length: "9m",
-      price: 14400, // 300 EUR * 48 TL
+      price: 14400, 
       isRecommended: false
     },
     {
       id: "11",
       name: "Sea Ray 370 Sundancer",
       description: "Konforlu ve şık tekne ile denizde keyifli vakit geçirin.",
-      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.boatsgroup.com/images/1/40/44/2024-sea-ray-370-sundancer-outboard-power-9794044-978622973-0-200520251115-8.png",
       location: "Kuşadası, Türkiye",
       tags: ["Tekne", "Konforlu"],
       category: "Tekne",
@@ -330,14 +323,14 @@ export default function YachtsPage() {
       reviews: 312,
       capacity: "8 kişi",
       length: "11m",
-      price: 19200, // 400 EUR * 48 TL
+      price: 19200, 
       isRecommended: false
     },
     {
       id: "12",
       name: "Regal 28 Express",
       description: "Hızlı ve çevik tekne ile denizde özgürlüğü yaşayın.",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://itboat.com/uploads/9973/e14a100582b4.jpg",
       location: "Çeşme, Türkiye",
       tags: ["Tekne", "Hızlı"],
       category: "Tekne",
@@ -345,7 +338,7 @@ export default function YachtsPage() {
       reviews: 267,
       capacity: "6 kişi",
       length: "8m",
-      price: 12000, // 250 EUR * 48 TL
+      price: 12000, 
       isRecommended: false
     }
   ];
@@ -361,9 +354,10 @@ export default function YachtsPage() {
     ));
   };
 
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Header */}
+      {/* header */}
       <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -385,9 +379,7 @@ export default function YachtsPage() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
             {filters.map((filter) => (
@@ -406,7 +398,6 @@ export default function YachtsPage() {
           </div>
         </div>
 
-        {/* Yachts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {yachts
             .filter(yacht => {
@@ -421,7 +412,6 @@ export default function YachtsPage() {
             })
             .map((yacht) => (
             <div key={yacht.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
-              {/* Image */}
               <div className="relative">
                 <img
                   src={yacht.image}
@@ -449,7 +439,6 @@ export default function YachtsPage() {
                 </button>
               </div>
 
-              {/* Content */}
               <div className="p-6">
                      <h3 className="text-xl font-semibold text-white mb-2">
                        {translateText(yacht.name)}
@@ -458,7 +447,6 @@ export default function YachtsPage() {
                        {translateText(yacht.description)}
                      </p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {yacht.tags.map((tag) => (
                     <span
@@ -470,7 +458,6 @@ export default function YachtsPage() {
                   ))}
                 </div>
 
-                {/* Yacht Details */}
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
@@ -482,7 +469,6 @@ export default function YachtsPage() {
                   </div>
                 </div>
 
-                {/* Rating and Location */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <div className="flex">{renderStars(yacht.rating)}</div>
@@ -490,13 +476,14 @@ export default function YachtsPage() {
                           ({yacht.reviews})
                         </span>
                       </div>
+
+
                       <div className="flex items-center text-white/60 text-sm">
                         <MapPin className="w-4 h-4 mr-1" />
                         {yacht.location}
                   </div>
                 </div>
 
-                {/* Price and Button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
                     {formatPrice(yacht.price)}/gün
@@ -515,7 +502,6 @@ export default function YachtsPage() {
         </div>
       </main>
 
-      {/* Booking Modal */}
       {selectedYacht && (
         <BookingModal
           isOpen={bookingModalOpen}

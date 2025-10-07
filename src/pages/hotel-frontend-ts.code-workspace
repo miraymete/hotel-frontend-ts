@@ -1,10 +1,15 @@
 {
     "folders": [
 		{
+			"name": "hotel-frontend-ts",
 			"path": "../.."
 		},
 		{
+			"name": "jwtsecurity",
 			"path": "../../../java/jwtsecurity"
 		}
-	]
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
 }

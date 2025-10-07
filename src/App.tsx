@@ -1,12 +1,8 @@
-/**
- * ana uygulama bileşeni - hotelbooking
- * 
- * bu dosya uygulamanın ana yapısını oluşturur
- * - sayfa routing'ini yönetir
- * - modal'ları kontrol eder
- * - kullanıcı oturum durumunu takip eder
- * - favoriler context'ini sağlar
- */
+/*
+ ana uygulama bileşeni
+ sayfa routing modal kontrolü ve oturum durumu buradan yönetilir
+ favoriler ve para birimi context sağlanır
+*/
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -32,12 +28,12 @@ import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { getCurrentUser, logout, type PublicUser } from "@/lib/auth";
 
 export default function App() {
-  // modal durumlarını yöneten state'ler
-  const [openLang, setOpenLang] = useState(false);      // dil seçim modal'ı
-  const [loginOpen, setLoginOpen] = useState(false);    // giriş modal'ı
-  const [registerOpen, setRegisterOpen] = useState(false); // kayıt modal'ı
+  // modal durumları
+  const [openLang, setOpenLang] = useState(false);      // dil seçim modalı
+  const [loginOpen, setLoginOpen] = useState(false);    // giriş modalı
+  const [registerOpen, setRegisterOpen] = useState(false); // kayıt modalı
 
-  // kullanıcı oturum durumu - localStorage'dan mevcut kullanıcıyı al
+  // mevcut kullanıcıyı localStorage'dan al
   const [user, setUser] = useState<PublicUser | null>(getCurrentUser());
 
   // kullanıcı durumunu güncellemek için callback
@@ -46,12 +42,12 @@ export default function App() {
   };
 
   return (
-    // favoriler context'ini tüm uygulamaya sağla
+    // favoriler ve para birimi context sağla
     <FavoritesProvider>
       <CurrencyProvider>
-      {/* sayfa routing'i - react router ile sayfa yönlendirmeleri */}
+      {/* sayfa routing react router ile */}
       <Routes>
-        {/* ana sayfa - kullanıcı bilgileri ve modal açma fonksiyonları prop olarak geçiliyor */}
+        {/* ana sayfa kullanıcı bilgileri ve modal açma fonksiyonları prop olarak geçer */}
         <Route
           path="/"
           element={
@@ -65,7 +61,7 @@ export default function App() {
             />
           }
         />
-        {/* diğer sayfalar - modal fonksiyonlarına ihtiyaç duymazlar */}
+        {/* diğer sayfalar */}
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/tours" element={<ToursPage />} />
         <Route path="/yachts" element={<YachtsPage />} />
@@ -87,16 +83,16 @@ export default function App() {
         />
       </Routes>
 
-      {/* modal bileşenleri - en üstte render edilir, tüm sayfalarda kullanılabilir */}
+      {/* modal bileşenleri en üste render edilir tüm sayfalarda kullanılır */}
       <LoginModal
         open={loginOpen}
         setOpen={setLoginOpen}
-        onSuccess={(u) => setUser(u)}  // başarılı giriş sonrası kullanıcı state'ini güncelle
+        onSuccess={(u) => setUser(u)}  // başarılı giriş sonrası kullanıcı state güncelle
       />
       <RegisterModal
         open={registerOpen}
         setOpen={setRegisterOpen}
-        onSuccess={(u) => setUser(u)}  // başarılı kayıt sonrası kullanıcı state'ini güncelle
+        onSuccess={(u) => setUser(u)}  // başarılı kayıt sonrası kullanıcı state güncelle
       />
       <LanguageModal 
         open={openLang} 

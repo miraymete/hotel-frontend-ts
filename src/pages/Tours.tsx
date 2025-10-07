@@ -5,7 +5,7 @@ import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useAuth } from "@/lib/auth";
-import BookingModal, { BookingItem } from "@/components/BookingModal";
+import BookingModal, { BookingItem, BookingData } from "@/components/BookingModal";
 import { Button } from "@/components/ui/button";
 
 interface Tour {
@@ -31,7 +31,6 @@ export default function ToursPage() {
   const { formatPrice } = useCurrency();
   const { isAuthenticated } = useAuth();
   
-  // Booking modal state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedTour, setSelectedTour] = useState<BookingItem | null>(null);
 
@@ -64,12 +63,12 @@ export default function ToursPage() {
     setBookingModalOpen(true);
   };
 
-  const handleBookingSubmit = async (bookingData: any) => {
+  const handleBookingSubmit = async (bookingData: BookingData) => {
     try {
-      // Burada API çağrısı yapılacak
+      // api çağrısı
       console.log('Tour booking data:', bookingData);
       
-      // Mock success
+   
       alert('Tur rezervasyonu başarıyla oluşturuldu!');
       setBookingModalOpen(false);
     } catch (error) {
@@ -90,10 +89,9 @@ export default function ToursPage() {
     { key: "history", label: t('history') }
   ];
 
-  // Türkçe metinleri İngilizce'ye çeviren fonksiyon
+  // trden ing
   const translateText = (text: string) => {
     const translations: { [key: string]: string } = {
-      // Şehirler
       'Kapadokya, Türkiye': `${t('cappadocia')}, ${t('turkey')}`,
       'Pamukkale, Türkiye': `${t('pamukkale')}, ${t('turkey')}`,
       'Bursa, Türkiye': `${t('bursa')}, ${t('turkey')}`,
@@ -105,7 +103,7 @@ export default function ToursPage() {
       'Efes, Türkiye': `${t('efes')}, ${t('turkey')}`,
       'Çanakkale, Türkiye': `${t('canakkale')}, ${t('turkey')}`,
       
-      // Kategoriler
+      
       'Doğa': t('nature'),
       'Macera': t('adventure'),
       'Şehir': t('city'),
@@ -118,12 +116,12 @@ export default function ToursPage() {
       'Kültür': 'Culture',
       'Antik': 'Ancient',
       
-      // Süre ve kişi
+     
       'saat': t('hours'),
       'kişi': t('people'),
       '/gün': t('perDay'),
       
-      // İsimler ve açıklamalar
+      
       'Kapadokya Balon Turu': t('balloonTour'),
       'Gün doğumunda Kapadokya\'nın büyüleyici manzarasını balonla keşfedin. Unutulmaz bir deneyim.': t('balloonDesc'),
       'Pamukkale Doğa Turu': t('natureTour'),
@@ -149,24 +147,22 @@ export default function ToursPage() {
       'Pamukkale Hierapolis': t('hierapolisTour'),
       'Antik şehir kalıntıları ve doğal travertenler.': t('hierapolisDesc'),
       
-      // additional descriptions
       'Uludağ\'ın muhteşem manzarasını teleferik ve yürüyüş ile keşfedin.': t('uludagMountainDesc'),
       'Taurus Dağları\'nın doğal güzelliklerini jeep ile keşfedin. Adrenalin dolu bir macera.': t('taurusMountainsDesc'),
       'Babadağ\'dan uçarak Fethiye\'nin muhteşem manzarasını havadan keşfedin.': t('paraglidingExperienceDesc'),
       
-      // additional tags (removed duplicates)
     };
     
     return translations[text] || text;
   };
 
   const tours: Tour[] = [
-    // Doğa Turları
+    // doğa
     {
       id: "1",
       name: "Kapadokya Balon Turu",
       description: "Gün doğumunda Kapadokya'nın büyüleyici manzarasını balonla keşfedin. Unutulmaz bir deneyim.",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://kapadokyadaturlar.com/wp-content/uploads/2021/06/goreme-balon-turu-850x459.jpg",
       location: `${t('cappadocia')}, ${t('turkey')}`,
       tags: ["Doğa", "Macera"],
       category: "Doğa",
@@ -174,14 +170,14 @@ export default function ToursPage() {
       reviews: 1247,
       duration: "3 saat",
       groupSize: "12 kişi",
-      price: 7200, // 150 EUR * 48 TL
+      price: 7200, 
       isRecommended: true
     },
     {
       id: "2",
       name: "Pamukkale Doğa Turu",
       description: "Beyaz travertenler ve termal suların büyüleyici dünyasını keşfedin.",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/16/4c/17/merveilleux.jpg?w=900&h=500&s=1",
       location: "Pamukkale, Türkiye",
       tags: ["Doğa", "Termal"],
       category: "Doğa",
@@ -189,14 +185,14 @@ export default function ToursPage() {
       reviews: 892,
       duration: "5 saat",
       groupSize: "15 kişi",
-      price: 3120, // 65 EUR * 48 TL
+      price: 3120,
       isRecommended: false
     },
     {
       id: "3",
-      name: "Uludağ Dağ Turu",
+      name: "Uludağ Kayak Turu",
       description: "Uludağ'ın muhteşem manzarasını teleferik ve yürüyüş ile keşfedin.",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://panel.gezinoloji.com//uploads/tour_453/orginal/photo-453-ezMUwFmTRnp3bXx.jpg",
       location: "Bursa, Türkiye",
       tags: ["Doğa", "Dağ"],
       category: "Doğa",
@@ -204,16 +200,16 @@ export default function ToursPage() {
       reviews: 634,
       duration: "7 saat",
       groupSize: "10 kişi",
-      price: 2640, // 55 EUR * 48 TL
+      price: 2640, 
       isRecommended: false
     },
 
-    // Macera Turları
+    // macera
     {
       id: "4",
       name: "Antalya Jeep Safari",
       description: "Taurus Dağları'nın doğal güzelliklerini jeep ile keşfedin. Adrenalin dolu bir macera.",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/57/7f/c7/caption.jpg?w=800&h=400&s=10",
       location: "Antalya, Türkiye",
       tags: ["Macera", "Doğa"],
       category: "Macera",
@@ -221,14 +217,14 @@ export default function ToursPage() {
       reviews: 634,
       duration: "6 saat",
       groupSize: "8 kişi",
-      price: 3600, // 75 EUR * 48 TL
+      price: 3600, 
       isRecommended: false
     },
     {
       id: "5",
       name: "Rafting Macera Turu",
       description: "Çoruh Nehri'nde adrenalin dolu rafting deneyimi. Doğanın gücünü hissedin.",
-      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.melencirafting.com/wp-content/uploads/2019/06/duzce-de-yapilacak-aktiviteler.jpg",
       location: "Artvin, Türkiye",
       tags: ["Macera", "Su Sporları"],
       category: "Macera",
@@ -236,14 +232,14 @@ export default function ToursPage() {
       reviews: 423,
       duration: "4 saat",
       groupSize: "12 kişi",
-      price: 4080, // 85 EUR * 48 TL
+      price: 4080, 
       isRecommended: true
     },
     {
       id: "6",
       name: "Paragliding Deneyimi",
       description: "Babadağ'dan uçarak Fethiye'nin muhteşem manzarasını havadan keşfedin.",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.gleitschirm-direkt.de/out/pictures/master/product/1/sky-aya2-orange-blue-red0.webp",
       location: "Fethiye, Türkiye",
       tags: ["Macera", "Havacılık"],
       category: "Macera",
@@ -251,16 +247,16 @@ export default function ToursPage() {
       reviews: 756,
       duration: "2 saat",
       groupSize: "6 kişi",
-      price: 5760, // 120 EUR * 48 TL
+      price: 5760, 
       isRecommended: true
     },
 
-    // Şehir Turları
+    // şehir
     {
       id: "7", 
       name: "İstanbul Boğaz Turu",
       description: "Avrupa ve Asya'yı ayıran boğazın eşsiz manzarasını tekneyle keşfedin.",
-      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cdn.platinumlist.net/upload/event/bosphorus_boat_cruise_istanbul_2024_may_01_istanbul_turkey_92197-full-en1714478340.jpg",
       location: "İstanbul, Türkiye",
       tags: ["Şehir", "Deniz"],
       category: "Şehir",
@@ -268,14 +264,14 @@ export default function ToursPage() {
       reviews: 892,
       duration: "2 saat",
       groupSize: "20 kişi",
-      price: 2160, // 45 EUR * 48 TL
+      price: 2160, 
       isRecommended: true
     },
     {
       id: "8",
       name: "İstanbul Tarihi Yarımada",
       description: "Sultanahmet, Ayasofya ve Topkapı Sarayı'nı rehber eşliğinde keşfedin.",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://blog.baruthotels.com/assets/imgs/upload/655f2f2acc519tarihi-yarimada-gezi-rehberi-tarihi-yarimadada-gezilecek-yerler.jpg",
       location: "İstanbul, Türkiye",
       tags: ["Şehir", "Tarih"],
       category: "Şehir",
@@ -283,14 +279,14 @@ export default function ToursPage() {
       reviews: 1234,
       duration: "6 saat",
       groupSize: "25 kişi",
-      price: 1680, // 35 EUR * 48 TL
+      price: 1680, 
       isRecommended: false
     },
     {
       id: "9",
       name: "Ankara Modern Tur",
       description: "Ankara'nın modern yüzünü ve kültürel zenginliklerini keşfedin.",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.academic-tour.com/images/tour/8772_b.jpg",
       location: "Ankara, Türkiye",
       tags: ["Şehir", "Kültür"],
       category: "Şehir",
@@ -298,16 +294,16 @@ export default function ToursPage() {
       reviews: 567,
       duration: "4 saat",
       groupSize: "18 kişi",
-      price: 1440, // 30 EUR * 48 TL
+      price: 1440,
       isRecommended: false
     },
 
-    // Tarih Turları
+    // tarih
     {
       id: "10",
       name: "Efes Antik Kenti Turu",
       description: "Antik dönemin en önemli şehirlerinden Efes'i rehber eşliğinde keşfedin.",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://www.etstur.com/letsgo/wp-content/uploads/2024/09/efes-antik-kenti-gezilecek-yerler-1-2.jpg",
       location: "Efes, Türkiye",
       tags: ["Tarih", "Kültür"],
       category: "Tarih",
@@ -315,14 +311,14 @@ export default function ToursPage() {
       reviews: 2156,
       duration: "4 saat",
       groupSize: "15 kişi",
-      price: 2880, // 60 EUR * 48 TL
+      price: 2880, 
       isRecommended: false
     },
     {
       id: "11",
       name: "Troy Antik Kenti",
       description: "Homeros'un İlyada destanına konu olan Troya'yı keşfedin.",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Hadrianic_Odeon_in_Troy_IX_%28Ilion%29%2C_Turkey.jpg/1200px-Hadrianic_Odeon_in_Troy_IX_%28Ilion%29%2C_Turkey.jpg",
       location: "Çanakkale, Türkiye",
       tags: ["Tarih", "Antik"],
       category: "Tarih",
@@ -330,14 +326,14 @@ export default function ToursPage() {
       reviews: 789,
       duration: "3 saat",
       groupSize: "20 kişi",
-      price: 1920, // 40 EUR * 48 TL
+      price: 1920,
       isRecommended: false
     },
     {
       id: "12",
       name: "Hierapolis Antik Kenti",
       description: "Antik dönemin sağlık merkezi Hierapolis'i keşfedin.",
-      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://i.neredekal.com/i/neredekal/75/1280x889/658324615360fd82460dd3c7",
       location: "Pamukkale, Türkiye",
       tags: ["Tarih", "Antik"],
       category: "Tarih",
@@ -345,7 +341,7 @@ export default function ToursPage() {
       reviews: 945,
       duration: "2 saat",
       groupSize: "12 kişi",
-      price: 1200, // 25 EUR * 48 TL
+      price: 1200, 
       isRecommended: false
     }
   ];
@@ -385,9 +381,8 @@ export default function ToursPage() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
+        {/* filtrre */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
             {filters.map((filter) => (
@@ -406,7 +401,7 @@ export default function ToursPage() {
           </div>
         </div>
 
-        {/* Tours Grid */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {tours
             .filter(tour => {
@@ -421,7 +416,6 @@ export default function ToursPage() {
             })
             .map((tour) => (
             <div key={tour.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
-              {/* Image */}
               <div className="relative">
                   <img
                     src={tour.image}
@@ -449,7 +443,6 @@ export default function ToursPage() {
                   </button>
                   </div>
 
-              {/* Content */}
               <div className="p-6">
                      <h3 className="text-xl font-semibold text-white mb-2">
                        {translateText(tour.name)}
@@ -458,7 +451,6 @@ export default function ToursPage() {
                        {translateText(tour.description)}
                      </p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {tour.tags.map((tag) => (
                     <span
@@ -470,7 +462,7 @@ export default function ToursPage() {
                   ))}
                 </div>
                 
-                {/* Tour Details */}
+                {/* tur detayss*/}
                 <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />
@@ -482,7 +474,7 @@ export default function ToursPage() {
           </div>
         </div>
 
-                {/* Rating and Location */}
+                {/* rate ve konum*/}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <div className="flex">{renderStars(tour.rating)}</div>
@@ -496,7 +488,7 @@ export default function ToursPage() {
                   </div>
                 </div>
                 
-                {/* Price and Button */}
+                {/* paraa ve buton */}
                   <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-600">
                     {formatPrice(tour.price)}
@@ -515,7 +507,6 @@ export default function ToursPage() {
         </div>
       </main>
 
-      {/* Booking Modal */}
       {selectedTour && (
         <BookingModal
           isOpen={bookingModalOpen}

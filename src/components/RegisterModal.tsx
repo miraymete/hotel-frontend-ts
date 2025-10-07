@@ -1,3 +1,8 @@
+/*
+  kayıt modal
+  ad soyad e posta telefon ve şifre ile kayıt 
+  başarı durumunda kullanıcıya bildir
+*/
 import { useState, type FormEvent } from "react";
 import { register, PublicUser, validatePasswordOrThrow } from "@/lib/auth";
 import { Eye, EyeOff } from "lucide-react";
@@ -24,6 +29,7 @@ export default function RegisterModal({ open, setOpen, onSuccess }: Props) {
 
   if (!open) return null;
 
+  // form gönderimi kayıt doğrulaması ve register çağrısı
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -44,9 +50,12 @@ export default function RegisterModal({ open, setOpen, onSuccess }: Props) {
     }
   };
 
+  // isim alanlarını ilk harf büyük diğerleri aynı bırak
+  //ÇALIŞMIYOR GALİBA KOONTROL ET
   const capitalizeFirst = (value: string) =>
     value.length === 0 ? "" : value.charAt(0).toUpperCase() + value.slice(1);
 
+  // telefon nosu girerken görüntü
   const ensureTRPrefix = (value: string) => {
     const digits = value.replace(/[^\d]/g, "");
     const withoutCountry = digits.startsWith("90") ? digits.slice(2) : digits;
@@ -58,7 +67,7 @@ export default function RegisterModal({ open, setOpen, onSuccess }: Props) {
 
   return (
     <>
-      {/* Arka plan karartma */}
+      {/* arka plan karartma */}
       <div
         className="fixed inset-0 z-[70] bg-black/50"
         role="presentation"
@@ -66,7 +75,6 @@ export default function RegisterModal({ open, setOpen, onSuccess }: Props) {
         onClick={() => setOpen(false)}
       ></div>
 
-      {/* Modal panel */}
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[80] w-[450px] rounded-xl border bg-white p-6 shadow-lg">
         <h2 className="mb-4 text-xl font-bold">{t('registerTitle')}</h2>
         
@@ -166,6 +174,7 @@ export default function RegisterModal({ open, setOpen, onSuccess }: Props) {
               </button>
             </div>
           </div>
+          
           
           <button
             type="submit"

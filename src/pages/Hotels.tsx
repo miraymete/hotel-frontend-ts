@@ -5,7 +5,7 @@ import { useFavorites } from "@/contexts/FavoritesContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/lib/auth";
-import BookingModal, { BookingItem } from "@/components/BookingModal";
+import BookingModal, { BookingItem, BookingData } from "@/components/BookingModal";
 import { Button } from "@/components/ui/button";
 
 interface Hotel {
@@ -62,7 +62,7 @@ export default function HotelsPage() {
     setBookingModalOpen(true);
   };
 
-  const handleBookingSubmit = async (bookingData: any) => {
+  const handleBookingSubmit = async (bookingData: BookingData) => {
     try {
       // Burada API çağrısı yapılacak
       console.log('Hotel booking data:', bookingData);
@@ -149,7 +149,7 @@ export default function HotelsPage() {
       id: "2", 
       name: "Marina Luxury Suites",
       description: "Deniz manzaralı lüks suitler ve özel marina erişimi ile eşsiz konaklama.",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/564876518.jpg?k=90ce52c9e440223867f84d1dea0ad2776b0fbbde28e425d5c82fb5d96b4f8757&o=&hp=1",
       location: "Bodrum, Türkiye",
       tags: ["Lüks", "Marina"],
       category: "Lüks",
@@ -162,7 +162,7 @@ export default function HotelsPage() {
       id: "3",
       name: "Mountain View Boutique Hotel",
       description: "Dağ manzaralı butik otel, romantik atmosfer ve kişiselleştirilmiş hizmet.",
-      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/713043359.jpg?k=bd4d69727d80c9c7d88600f643b829774fa58c4ad94d58bb76c83cfb6fc27bab&o=&hp=1",
       location: "Kapadokya, Türkiye",
       tags: ["Romantik", "Butik"],
       category: "Butik",
@@ -175,7 +175,7 @@ export default function HotelsPage() {
       id: "4",
       name: "Urban Business Center",
       description: "Şehir merkezinde modern iş oteli, toplantı salonları ve ücretsiz Wi-Fi.",
-      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://alutech-group.com/upload/iblock/aae/1.webp",
       location: "İstanbul, Türkiye",
       tags: ["İş", "Şehir"],
       category: "İş",
@@ -188,7 +188,7 @@ export default function HotelsPage() {
       id: "5",
       name: "Beach Paradise Resort",
       description: "Plaj kenarında all-inclusive resort, çocuk kulübü ve su sporları.",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/266488982.jpg?k=3cd6685bf34b9eaa24fb09124d4f7dfcef3372c2f49b16f29d317e83c41f4eb0&o=&hp=1",
       location: "Çeşme, Türkiye",
       tags: ["Resort", "All-Inclusive"],
       category: "Resort",
@@ -201,7 +201,7 @@ export default function HotelsPage() {
       id: "6",
       name: "Royal Luxury Palace",
       description: "Osmanlı mimarisinde lüks saray oteli, özel butler hizmeti ve spa.",
-      image: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://i.ytimg.com/vi/iLcvkunVR6Y/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAhA27KJRVhFQNAWGPHRYgWT6Hv_g",
       location: "İstanbul, Türkiye",
       tags: ["Lüks", "Tarihi"],
       category: "Lüks",
@@ -214,7 +214,7 @@ export default function HotelsPage() {
       id: "7",
       name: "Historic Boutique Inn",
       description: "Tarihi binada restore edilmiş butik otel, antika mobilyalar ve özel atmosfer.",
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/53/d8/9b/historic-boutique-hotel.jpg?w=900&h=500&s=1",
       location: "Safranbolu, Türkiye",
       tags: ["Butik", "Tarihi"],
       category: "Butik",
@@ -227,7 +227,7 @@ export default function HotelsPage() {
       id: "8",
       name: "Corporate Plaza Hotel",
       description: "İş merkezinde modern otel, 24 saat oda servisi ve toplantı salonları.",
-      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.myguide-cdn.com/seoul/companies/the-plaza-hotel-seoul/large/the-plaza-hotel-seoul-94216.jpg",
       location: "Ankara, Türkiye",
       tags: ["İş", "Modern"],
       category: "İş",
@@ -240,7 +240,7 @@ export default function HotelsPage() {
       id: "9",
       name: "Tropical Resort & Casino",
       description: "Tropikal bahçeler içinde casino'lu resort, eğlence ve dinlence bir arada.",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KC9RhrP6tbu15o0O5Df3n8ObyPW24hOOZg&s",
       location: "Alanya, Türkiye",
       tags: ["Resort", "Casino"],
       category: "Resort",
@@ -253,7 +253,7 @@ export default function HotelsPage() {
       id: "10",
       name: "Diamond Luxury Collection",
       description: "Elmas standartlarında lüks otel, şampanya servisi ve özel concierge.",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/205974284.jpg?k=466aa2fa2cc891dd7889aab034b861ae96419befe1506fc400dccfefe48065cc&o=&hp=1",
       location: "İzmir, Türkiye",
       tags: ["Lüks", "VIP"],
       category: "Lüks",
@@ -264,7 +264,7 @@ export default function HotelsPage() {
     }
   ];
 
-  // Filtreleme mantığı
+  // filtreleme mantığı
   const filteredHotels = activeFilter === "all" 
     ? hotels 
     : hotels.filter(hotel => {
@@ -290,7 +290,7 @@ export default function HotelsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Header */}
+      {/* header */}
       <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -312,9 +312,7 @@ export default function HotelsPage() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
             {filters.map((filter) => (
@@ -333,11 +331,9 @@ export default function HotelsPage() {
           </div>
         </div>
 
-        {/* Hotels Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {filteredHotels.map((hotel) => (
             <div key={hotel.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
-              {/* Image */}
               <div className="relative">
                 <img
                   src={hotel.image}
@@ -365,7 +361,6 @@ export default function HotelsPage() {
                   </button>
                     </div>
 
-              {/* Content */}
               <div className="p-6">
                      <h3 className="text-xl font-semibold text-white mb-2">
                        {translateText(hotel.name)}
@@ -374,7 +369,6 @@ export default function HotelsPage() {
                        {translateText(hotel.description)}
                      </p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {hotel.tags.map((tag) => (
                     <span
@@ -386,7 +380,7 @@ export default function HotelsPage() {
                   ))}
                 </div>
                 
-                {/* Rating */}
+                {/* rating */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <div className="flex">{renderStars(hotel.rating)}</div>
@@ -400,7 +394,7 @@ export default function HotelsPage() {
                       </div>
                 </div>
 
-                {/* Price and Button */}
+                {/* price ve button */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-yellow-400">
                     {formatPrice(hotel.price)}
@@ -419,7 +413,6 @@ export default function HotelsPage() {
         </div>
       </main>
 
-      {/* Booking Modal */}
       {selectedHotel && (
         <BookingModal
           isOpen={bookingModalOpen}

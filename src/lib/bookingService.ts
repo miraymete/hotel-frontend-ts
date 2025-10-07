@@ -1,3 +1,4 @@
+// rezervasyon istekleri için servis
 import api from './api';
 
 export interface Booking {
@@ -31,13 +32,13 @@ export interface BookingRequest {
 }
 
 export const bookingService = {
-  // Yeni rezervasyon oluştur
+  // rezervasyon oluştur
   async createBooking(request: BookingRequest): Promise<Booking> {
     const response = await api.post('/api/bookings', request);
     return response.data;
   },
 
-  // Kullanıcının rezervasyonlarını getir
+  //  rezervo 
   async getMyBookings(page = 0, size = 10): Promise<{
     content: Booking[];
     totalElements: number;
@@ -49,13 +50,13 @@ export const bookingService = {
     return response.data;
   },
 
-  // Rezervasyonu iptal et
+  // rezervo iptal
   async cancelBooking(bookingId: number): Promise<Booking> {
     const response = await api.put(`/api/bookings/${bookingId}/cancel`);
     return response.data;
   },
 
-  // Tüm rezervasyonları getir (Admin)
+
   async getAllBookings(page = 0, size = 10): Promise<{
     content: Booking[];
     totalElements: number;
@@ -67,7 +68,6 @@ export const bookingService = {
     return response.data;
   },
 
-  // Rezervasyon durumunu güncelle (Admin)
   async updateBookingStatus(bookingId: number, status: string): Promise<Booking> {
     const response = await api.put(`/api/bookings/${bookingId}/status`, { status });
     return response.data;

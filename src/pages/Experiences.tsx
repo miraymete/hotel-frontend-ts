@@ -1,7 +1,10 @@
+
+
+//BURASI HENÜZ YOK 
+
 /**
- * deneyimler sayfası - en iyi yorum alan oteller
+ * deneyimler sayfası en iyi yorum alan oteller
  * 
- * bu sayfa zaman aralığına göre en çok yorum alan otelleri gösterir
  * - son 1 hafta 1 ay 3 ay 1 sene filtresi
  * - yorum sayısı ve kalitesine göre sıralama
  * - istatistikler ve sıralama
@@ -15,31 +18,30 @@ import { useFavorites } from "@/contexts/FavoritesContext";
 
 // zamana göre yorum bilgileri
 interface Hotel {
-  id: string;                    // benzersiz otel id'si
-  name: string;                  // otel adı
-  image: string;                 // otel görseli
-  location: string;              // konum
-  price: string;                 // fiyat
-  rating: number;                // genel puan
-  reviews: number;               // toplam yorum sayısı
-  recentReviews: {               // zaman bazlı yorum sayıları
-    week: number;                // son 1 hafta
-    month: number;               // son 1 ay
-    threeMonths: number;         // son 3 ay
-    year: number;                // son 1 sene
+  id: string;                    
+  name: string;                  
+  image: string;                 
+  location: string;              
+  price: string;                 
+  rating: number;                
+  reviews: number;               
+  recentReviews: {               
+    week: number;                
+    month: number;               
+    threeMonths: number;         
+    year: number;                
   };
-  amenities: string[];           // otel özellikleri
-  description: string;           // otel açıklaması
+  amenities: string[];           
+  description: string;         
 }
 
 export default function ExperiencesPage() {
-  // context'lerden gelen fonksiyonlar
+  // contextlerden gelen fonk
   const { addToFavorites, isFavorite } = useFavorites();
   
-  // seçili zaman aralığı state'i - varsayılan olarak "son 1 ay"
+  // zaman aralığı
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'threeMonths' | 'year'>('month');
 
-  // örnek otel verileri - farklı zaman aralıklarında yorum sayıları ile
   const hotels: Hotel[] = [
     {
       id: "grand-palace-istanbul",
@@ -145,7 +147,7 @@ export default function ExperiencesPage() {
     }
   ];
 
-  // zaman filtresi seçenekleri
+  // zaman filtresi 
   const timeFilters = [
     { key: 'week', label: 'Son 1 Hafta', icon: '📅' },
     { key: 'month', label: 'Son 1 Ay', icon: '📆' },
@@ -153,19 +155,18 @@ export default function ExperiencesPage() {
     { key: 'year', label: 'Son 1 Sene', icon: '📊' }
   ] as const;
 
-  // zaman aralığına göre otelleri hem yorum sayısı hem de kaliteye göre sırala
+  // hem yorum hem kalite 
   const sortedHotels = [...hotels].sort((a, b) => {
     const aReviews = a.recentReviews[selectedPeriod];
     const bReviews = b.recentReviews[selectedPeriod];
     
-    // yorum sayısı ve puanın çarpımı ile kalite skoru hesapla
     const aScore = aReviews * a.rating;
     const bScore = bReviews * b.rating;
     
-    return bScore - aScore; // azalan sıralama (en yüksek skor önce)
+    return bScore - aScore; 
   });
 
-  // kalp butonuna tıklandığında favorilere ekleme fonksiyonu
+  // favorilere ekleme
   const handleHeartClick = (hotel: Hotel, e: React.MouseEvent) => {
     e.preventDefault();      // link'in varsayılan davranışını engelle
     e.stopPropagation();    // event bubbling'i durdur
@@ -190,7 +191,6 @@ export default function ExperiencesPage() {
               HotelBooking
             </Link>
             
-            {/* navigation menu */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link 
                 to="/hotels" 
@@ -236,9 +236,7 @@ export default function ExperiencesPage() {
         </div>
       </header>
 
-      {/* main content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header Section */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div>
@@ -250,7 +248,6 @@ export default function ExperiencesPage() {
               </p>
             </div>
             
-            {/* time filter butonları */}
             <div className="flex flex-wrap gap-3">
               {timeFilters.map((filter) => (
                 <button
@@ -270,7 +267,6 @@ export default function ExperiencesPage() {
           </div>
         </div>
 
-        {/* stats section */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
@@ -302,7 +298,6 @@ export default function ExperiencesPage() {
           </div>
         </div>
 
-        {/* hotels grid */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
@@ -329,16 +324,15 @@ export default function ExperiencesPage() {
                       isFavorite(hotel.id) ? 'text-red-500' : 'text-[#3620D9]'
                     }`}
                   >
+                    
                     <Heart className={`w-4 h-4 ${isFavorite(hotel.id) ? 'fill-current' : ''}`} />
                   </button>
                   
-                  {/* rank badge */}
                   <div className="absolute top-3 left-3 bg-[#3620D9] text-white text-sm font-bold px-3 py-1 rounded-full">
                     #{index + 1}
                   </div>
                   
-                  {/* recent reviews badge */}
-                  <div className="absolute bottom-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+ü                  <div className="absolute bottom-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
                     {hotel.recentReviews[selectedPeriod]} yeni yorum
                   </div>
                 </div>
@@ -369,6 +363,8 @@ export default function ExperiencesPage() {
                         +{hotel.amenities.length - 3}
                       </span>
                     )}
+
+
                   </div>
                   
                   <div className="flex items-center justify-between">
@@ -381,11 +377,14 @@ export default function ExperiencesPage() {
                     </div>
                     <div className="text-lg font-bold text-[#3620D9]">
                       {hotel.price}
+
                     </div>
                   </div>
                 </div>
               </div>
             ))}
+
+
           </div>
         </div>
       </div>

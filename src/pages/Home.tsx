@@ -1,12 +1,7 @@
 /**
- * ana sayfa bileşeni - hotelbooking
  * 
- * bu sayfa uygulamanın ana giriş noktasıdır ve şunları içerir
- * - üst navigasyon menüsü
- * - arama formu (otel, tur, deneyim)
- * - son dakika fırsatları
- * - son aramalar
- * - keşfetme kartları (favori ekleme özelliği ile)
+ * navigasyon menüsü
+ * arama
  */
 import { Button } from "@/components/ui/button";
 import { Search, Globe, Heart, MapPin } from "lucide-react";
@@ -16,11 +11,10 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
-// ana sayfa bileşeninin prop'ları
 type Props = {
-  user: PublicUser | null;        // giriş yapmış kullanıcı bilgisi
-  onLogout: () => void;           // çıkış yapma fonksiyonu
-  onOpenLanguage: () => void;     // dil seçim modal'ını açma fonksiyonu
+  user: PublicUser | null;        // kullanıcı bilgisi
+  onLogout: () => void;           // çıkış yapma 
+  onOpenLanguage: () => void;     // dil seçim 
 };
 
 export default function HomePage({
@@ -28,46 +22,42 @@ export default function HomePage({
   onLogout,
   onOpenLanguage,
 }: Props) {
-  // context'lerden gelen fonksiyonlar
-  const { t, language } = useLanguage();          // çeviri fonksiyonu ve dil
-  const { currency } = useCurrency();             // para birimi
+  // contextlerden gelen fonk
+  const { t, language } = useLanguage();          // çeviri ve dil
+  const { currency } = useCurrency();             // para 
   
-  // Arama state'leri
   const [searchValue, setSearchValue] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Dünya geneli popüler şehirler listesi
   const popularCities = [
-    // Türkiye
-    "İstanbul, Türkiye", "Antalya, Türkiye", "Kapadokya, Türkiye", "Bodrum, Türkiye", 
+    // tr
+    "İstanbul, Türkiye","İzmir, Türkiye", "Antalya, Türkiye", "Kapadokya, Türkiye", "Bodrum, Türkiye", 
     "Marmaris, Türkiye", "Çeşme, Türkiye", "Pamukkale, Türkiye", "Fethiye, Türkiye",
-    "Alanya, Türkiye", "Kuşadası, Türkiye", "Kaş, Türkiye", "Kalkan, Türkiye",
+    "Alanya, Türkiye", "Kuşadası, Türkiye", "Kaş, Türkiye",
     
-    // Avrupa
+    // avrupa
     "Paris, Fransa", "Londra, İngiltere", "Roma, İtalya", "Barcelona, İspanya",
     "Amsterdam, Hollanda", "Berlin, Almanya", "Viyana, Avusturya", "Prag, Çek Cumhuriyeti",
     "Budapest, Macaristan", "Santorini, Yunanistan", "Mykonos, Yunanistan", "Atina, Yunanistan",
     "Zürih, İsviçre", "İnterlaken, İsviçre", "Zermatt, İsviçre", "Salzburg, Avusturya",
     
-    // Asya
     "Tokyo, Japonya", "Kyoto, Japonya", "Seoul, Güney Kore", "Bangkok, Tayland",
     "Singapur, Singapur", "Hong Kong, Çin", "Dubai, BAE", "Abu Dhabi, BAE",
     "Bali, Endonezya", "Phuket, Tayland", "Kuala Lumpur, Malezya", "Ho Chi Minh, Vietnam",
     
-    // Amerika
     "New York, ABD", "Los Angeles, ABD", "Miami, ABD", "Las Vegas, ABD",
     "San Francisco, ABD", "Toronto, Kanada", "Vancouver, Kanada", "Rio de Janeiro, Brezilya",
     "Buenos Aires, Arjantin", "Lima, Peru", "Mexico City, Meksika", "Cancun, Meksika",
     
-    // Afrika & Okyanusya
+    // afrika
     "Cape Town, Güney Afrika", "Marrakech, Fas", "Cairo, Mısır", "Sydney, Avustralya",
     "Melbourne, Avustralya", "Auckland, Yeni Zelanda", "Queenstown, Yeni Zelanda"
   ];
 
-  // Arama fonksiyonları
+  // arama fonk
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
@@ -88,14 +78,13 @@ export default function HomePage({
     if (searchValue.length > 0) {
       setShowSuggestions(true);
     } else {
-      // Tüm popüler şehirleri göster
       setFilteredCities(popularCities.slice(0, 15));
       setShowSuggestions(true);
     }
   };
 
   const handleInputBlur = () => {
-    // Biraz gecikme ile kapat ki tıklama işlemi tamamlansın
+// işlem içn bekleme süresi
     setTimeout(() => {
       setShowSuggestions(false);
     }, 200);
@@ -104,19 +93,17 @@ export default function HomePage({
   const handleCitySelect = (city: string) => {
     setSearchValue(city);
     setShowSuggestions(false);
-    // Burada arama işlemi yapılabilir
     console.log("Selected city:", city);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchValue.trim()) {
-      // Arama işlemi
       console.log("Searching for:", searchValue);
     }
   };
 
-  // Dışarı tıklandığında önerileri kapat
+// başka bir yere tıklandığında aramaları kapatanzi
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -132,14 +119,11 @@ export default function HomePage({
 
   return (
     <div className="min-h-screen bg-black">
-      {/* üst menü - lüks koyu tema */}
       <header className="sticky top-0 z-[60] flex justify-between items-center px-8 py-4 bg-black/95 backdrop-blur-md border-b border-gray-800">
-        {/* Logo - Sadece metin */}
         <Link to="/" className="flex items-center space-x-3 text-white hover:text-yellow-400 transition-colors">
           <span className="text-xl font-light tracking-wider">{t('brand')}</span>
         </Link>
 
-        {/* orta menü - minimal ve elegant */}
         <nav className="hidden lg:flex space-x-8 text-white/90 font-light text-sm tracking-wide">
           <Link to="/hotels" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('hotels')}</Link>
           <Link to="/tours" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('tours')}</Link>
@@ -147,8 +131,8 @@ export default function HomePage({
           <Link to="/experiences" className="px-3 py-2 hover:text-yellow-400 transition-colors uppercase tracking-wider">{t('experiences')}</Link>
         </nav>
 
+
         <div className="flex items-center space-x-6">
-          {/* favoriler butonu - sağ üst */}
           <Link to="/favorites">
             <button className="flex items-center space-x-2 text-white/80 hover:text-red-400 transition-colors text-sm">
               <Heart className="w-4 h-4" />
@@ -156,7 +140,6 @@ export default function HomePage({
             </button>
           </Link>
 
-          {/* dil para - minimal */}
           <button
             onClick={onOpenLanguage}
             className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors text-sm"
@@ -181,6 +164,7 @@ export default function HomePage({
               </Link>
             </>
           ) : (
+
             <div className="flex items-center gap-4">
               <Link 
                 to="/account" 
@@ -206,9 +190,7 @@ export default function HomePage({
         </div>
       </header>
 
-      {/* Hero Section - Ultra Lüks konsept */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Arkaplan görseli - lüks yat/otel */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -216,28 +198,24 @@ export default function HomePage({
               "url('https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2017/10/six-senses-zil-payson-seychelles.jpg?fit=1300%2C731&ssl=1')",
           }}
         >
-          {/* Sophisticated gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
 
-        {/* Ana içerik */}
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-6">
-          {/* Logo - Kaldırıldı */}
 
-          {/* Ana başlık - Ultra lüks tipografi */}
           <h1 className="text-6xl md:text-8xl font-extralight tracking-[0.1em] mb-8 leading-[0.9]">
             <span className="block text-white/95">{t('newDiscoveries')}</span>
             <span className="block text-yellow-400/90 font-thin tracking-[0.15em]">{t('privileges')}</span>
             <span className="block text-white/95">{t('meetAt')} {t('point')}</span>
           </h1>
 
-          {/* Alt başlık */}
+          {/* alt başlık */}
           <p className="text-xl md:text-2xl font-light text-white/80 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
             {t('homeSubtitle')}
           </p>
 
-          {/* Arama çubuğu */}
+          {/* arama */}
           <div className="max-w-2xl mx-auto relative z-[9998]">
             <div className="relative" ref={searchRef}>
               <form onSubmit={handleSearchSubmit}>
@@ -259,7 +237,7 @@ export default function HomePage({
                 </button>
               </form>
               
-              {/* Arama önerileri */}
+              {/* öneriler */}
               {showSuggestions && filteredCities.length > 0 && (
                 <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border border-gray-200 max-h-80 overflow-y-auto z-[9999] shadow-2xl">
                   {filteredCities.map((city, index) => (
@@ -282,10 +260,9 @@ export default function HomePage({
 
       </section>
 
-      {/* Keşfetme Bölümü - Lüks konsept */}
       <section className="relative bg-black py-24">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Başlık */}
+          {/* başlık */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-wider">
               <span className="block">{t('newDiscoveries')}</span>
@@ -296,9 +273,7 @@ export default function HomePage({
             </p>
           </div>
 
-          {/* Keşfetme kartları */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Kart 1 - Lüks Oteller */}
             <Link to="/hotels" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
@@ -327,7 +302,7 @@ export default function HomePage({
               </div>
             </Link>
 
-            {/* Kart 2 - Turlar */}
+
             <Link to="/tours" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
@@ -356,7 +331,7 @@ export default function HomePage({
               </div>
             </Link>
 
-            {/* Kart 3 - Yat Deneyimleri */}
+
             <Link to="/yachts" className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/50 transition-all duration-500 hover:scale-105">
               <div className="relative h-80 overflow-hidden">
                 <img
@@ -388,11 +363,9 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* Footer - Lüks konsept */}
       <footer className="bg-black border-t border-gray-800 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-            {/* Logo ve açıklama */}
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <span className="text-2xl font-light text-white tracking-wider">{t('brand')}</span>
@@ -402,7 +375,6 @@ export default function HomePage({
               </p>
             </div>
 
-            {/* Hızlı linkler */}
             <div>
               <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">{t('services')}</h3>
               <ul className="space-y-3">
@@ -412,7 +384,6 @@ export default function HomePage({
                 <li><a href="#" className="text-white/60 hover:text-yellow-400 transition-colors font-light">{t('privateJet')}</a></li>              </ul>
             </div>
 
-            {/* İletişim */}
             <div>
               <h3 className="text-white font-light text-lg mb-6 tracking-wider uppercase">{t('contactTag')}</h3>
               <ul className="space-y-3">
@@ -424,7 +395,6 @@ export default function HomePage({
             </div>
           </div>
 
-          {/* Alt çizgi */}
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/40 font-light text-sm">
               © 2024 {t('brand')}. {t('allRightsReserved')}

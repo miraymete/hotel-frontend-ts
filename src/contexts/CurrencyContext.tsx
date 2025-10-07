@@ -38,8 +38,8 @@ export const CurrencyProvider: React.FC<Props> = ({ children }) => {
   };
 
   const formatPrice = (price: number) => {
-    // Fiyatlar TRY cinsinden geliyor, diğer para birimlerine dönüştürüyoruz
-    // 1 USD = 40 TL, 1 EUR = 48 TL
+    // fiyat tl geliyor dönüştürüyoruz
+    // 1 usd 40 ve 1 euro 48 tl olacak
     switch (currency) {
       case 'USD':
         return `$${(price / 40).toFixed(0)}`;

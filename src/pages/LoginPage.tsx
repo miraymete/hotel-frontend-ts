@@ -22,14 +22,14 @@ export default function LoginPage({ onLoginSuccess }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
 
-  // Seyahat destinasyonları ve fırsatları
+  // konum ve fırsat 
   const travelSlides = [
     {
       id: 1,
       title: t('santoriniTitle'),
       subtitle: t('santoriniSubtitle'),
       description: t('santoriniDesc'),
-      price: formatPrice(14352), // 299 EUR * 48 TL
+      price: formatPrice(14352), 
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Waves className="w-6 h-6" />
     },
@@ -38,7 +38,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
       title: t('alpsTitle'),
       subtitle: t('alpsSubtitle'),
       description: t('alpsDesc'),
-      price: formatPrice(28752), // 599 EUR * 48 TL
+      price: formatPrice(28752), 
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Mountain className="w-6 h-6" />
     },
@@ -47,7 +47,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
       title: t('baliTitle'),
       subtitle: t('baliSubtitle'),
       description: t('baliDesc'),
-      price: formatPrice(19152), // 399 EUR * 48 TL
+      price: formatPrice(19152), 
       image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/f8/1c/13/padma-resort-ubud.jpg?w=1200&h=-1&s=1",
       icon: <Globe className="w-6 h-6" />
     },
@@ -56,7 +56,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
       title: t('parisTitle'),
       subtitle: t('parisSubtitle'),
       description: t('parisDesc'),
-      price: formatPrice(21552), // 449 EUR * 48 TL
+      price: formatPrice(21552), 
       image: "https://www.olielo.com/wp-content/uploads/2013/12/Shangri-La-Paris-hotel-Eiffel-Tower.jpg",
       icon: <Star className="w-6 h-6" />
     },
@@ -65,13 +65,13 @@ export default function LoginPage({ onLoginSuccess }: Props) {
       title: t('tokyoTitle'),
       subtitle: t('tokyoSubtitle'),
       description: t('tokyoDesc'),
-      price: formatPrice(33552), // 699 EUR * 48 TL
+      price: formatPrice(33552), 
       image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Plane className="w-6 h-6" />
     }
   ];
 
-  // Otomatik kaydırma efekti
+  // otomatik foto kaydırma efekti
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % travelSlides.length);
@@ -92,12 +92,12 @@ export default function LoginPage({ onLoginSuccess }: Props) {
       await login(email, password);
       setLoading(false);
       
-      // Kullanıcı durumunu güncelle
+      // durumu güncelle
       if (onLoginSuccess) {
         onLoginSuccess();
       }
       
-      navigate("/"); // Ana sayfaya yönlendir
+      navigate("/"); // ana sayfaya yönlendirr
     } catch (err: unknown) {
       setLoading(false);
       setError(err instanceof Error ? err.message : t('loginFailed'));
@@ -106,7 +106,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Sliding Background Images */}
+
       <div className="absolute inset-0">
         {travelSlides.map((slide, index) => (
           <div
@@ -119,19 +119,16 @@ export default function LoginPage({ onLoginSuccess }: Props) {
               className="w-full h-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${slide.image})` }}
             >
-              {/* Overlay */}
+
               <div className="absolute inset-0 bg-black/40"></div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Desktop Layout */}
       <div className="hidden lg:flex min-h-screen relative z-10">
-        {/* Left Panel - Travel Content */}
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="max-w-lg text-white">
-            {/* Current Slide Content */}
             <div className="mb-8">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mr-4">
@@ -162,7 +159,6 @@ export default function LoginPage({ onLoginSuccess }: Props) {
               </div>
             </div>
 
-            {/* Slide Indicators */}
             <div className="flex space-x-2">
               {travelSlides.map((_, index) => (
                 <button
@@ -177,10 +173,9 @@ export default function LoginPage({ onLoginSuccess }: Props) {
           </div>
         </div>
 
-        {/* Right Panel - Login Form with Glassmorphism */}
+        {/* BURAYI GÖZDEN GEÇİR TEKRAR*/}
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="w-full max-w-md">
-            {/* Glassmorphism Login Form */}
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <div className="text-center mb-8">
                 <div className="flex justify-end mb-4">
@@ -230,6 +225,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
+
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -272,9 +268,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
         </div>
       </div>
 
-      {/* Mobile Layout */}
       <div className="lg:hidden min-h-screen relative z-10">
-        {/* Mobile Header with Current Slide */}
         <div className="h-80 relative">
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-8">
@@ -289,7 +283,7 @@ export default function LoginPage({ onLoginSuccess }: Props) {
           </div>
         </div>
 
-        {/* Mobile Form */}
+        {/* mobil formm*/}
         <div className="px-6 py-8 bg-white/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('loginPageTitle')}</h2>
@@ -359,7 +353,6 @@ export default function LoginPage({ onLoginSuccess }: Props) {
         </div>
       </div>
       
-      {/* Language Modal */}
       <LanguageModal 
         open={isLanguageModalOpen} 
         setOpen={setIsLanguageModalOpen} 

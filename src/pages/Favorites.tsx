@@ -13,13 +13,13 @@ import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function FavoritesPage() {
-  // context'ten favori yönetimi fonksiyonları
+  // favori yönetim
   const { favorites, removeFromFavorites } = useFavorites();
   const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Header */}
+      {/* header */}
       <header className="bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -36,10 +36,9 @@ export default function FavoritesPage() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {favorites.length === 0 ? (
-          /* boş durum - favori otel yoksa gösterilen mesaj */
+          /* favori otel yoksa  */
           <div className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 p-12 text-center">
             <div className="max-w-md mx-auto">
               <div className="w-24 h-24 mx-auto mb-6 bg-white/10 rounded-full flex items-center justify-center">
@@ -59,7 +58,7 @@ export default function FavoritesPage() {
             </div>
           </div>
         ) : (
-          /* favori oteller listesi */
+          /* favroi otel liste*/
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
                      <div>
@@ -72,18 +71,17 @@ export default function FavoritesPage() {
                      </div>
             </div>
 
-            {/* favori oteller grid'i */}
+            {/* grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
               {favorites.map((hotel) => (
                 <div key={hotel.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
-                  {/* Image */}
                   <div className="relative">
                     <img
                       src={hotel.image}
                       alt={hotel.name}
                       className="w-full h-48 object-cover"
                     />
-                    {/* favorilerden çıkarma butonu */}
+                    {/* favoriden çıkarma */}
                     <button 
                       onClick={() => removeFromFavorites(hotel.id)}
                       className="absolute top-3 left-3 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors border border-white/30"
@@ -92,7 +90,7 @@ export default function FavoritesPage() {
                     </button>
                   </div>
                   
-                  {/* Content */}
+                
                   <div className="p-6">
                     <h3 className="text-xl font-semibold text-white mb-2">
                       {hotel.name}
@@ -101,14 +99,14 @@ export default function FavoritesPage() {
                       {hotel.description || "Lüks konaklama deneyimi için mükemmel seçim."}
                     </p>
 
-                    {/* Tags */}
+                    {/* tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       <span className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30">
                         {t('favorites')}
                       </span>
                     </div>
 
-                    {/* Rating */}
+                    {/* rating */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
                         <div className="flex">
@@ -125,13 +123,14 @@ export default function FavoritesPage() {
                           ({hotel.reviews})
                         </span>
                       </div>
+
                       <div className="flex items-center text-white/60 text-sm">
                         <MapPin className="w-4 h-4 mr-1" />
                         {hotel.location}
                       </div>
                     </div>
 
-                           {/* Learn More Button */}
+                          
                            <button className="w-full bg-yellow-600 text-white py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
                              {t('details')}
                            </button>

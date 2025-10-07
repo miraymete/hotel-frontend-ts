@@ -1,3 +1,8 @@
+/*
+  rezervasyon modal
+  otel tur ve yat için ortak rezervasyon akışı
+  özet ve toplam fiyatı 
+*/
 import React, { useState } from 'react';
 import { X, Calendar, Users, MapPin, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,7 +22,7 @@ export interface BookingItem {
   description?: string;
 }
 
-interface BookingData {
+export interface BookingData {
   notes: string;
   guestCount?: number;
   participantCount?: number;
@@ -45,7 +50,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
   const { t } = useLanguage();
   const { formatPrice } = useCurrency();
   
-  // State for different booking types
+  // farklı rezervasyon tipleri için state ler
   const [guestCount, setGuestCount] = useState(1);
   const [participantCount, setParticipantCount] = useState(1);
   const [startDate, setStartDate] = useState<Date>();
@@ -56,13 +61,14 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
   const [notes, setNotes] = useState('');
   const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
   
-  // Mock rooms for hotels
+  // oteller için oda
   const mockRooms = [
     { id: 1, name: t('standardRoom'), price: item.basePrice, maxOccupancy: 2 },
     { id: 2, name: t('deluxeRoom'), price: item.basePrice * 1.5, maxOccupancy: 2 },
     { id: 3, name: t('suite'), price: item.basePrice * 2, maxOccupancy: 4 },
   ];
 
+  // rezervasyon verisi derle 
   const handleSubmit = () => {
     let bookingData: BookingData = {
       notes,
@@ -126,6 +132,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
     onBookingSubmit(bookingData);
   };
 
+  // toplam fiyat
   const calculateTotalPrice = () => {
     switch (item.type) {
       case 'hotel':
@@ -152,7 +159,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 border border-gray-800 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        {/* Header */}
+        {/* başlık */}
         <div className="flex items-center justify-between p-6 border-b border-gray-800">
           <div>
             <h2 className="text-2xl font-light text-white">{item.name}</h2>
@@ -172,13 +179,13 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
         </div>
 
         <div className="p-6 space-y-6">
-          {/* Booking Form */}
+          {/* rezervasyon formu */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column - Form */}
+            {/* sol kolon form */}
             <div className="space-y-6">
               {item.type === 'hotel' && (
                 <>
-                  {/* Date Range Picker */}
+                  {/* tarih aralığı seçimi */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -197,7 +204,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     </CardContent>
                   </Card>
 
-                  {/* Room Selection */}
+                  {/* oda seçimi */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg">{t('roomSelection')}</CardTitle>
@@ -229,7 +236,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     </CardContent>
                   </Card>
 
-                  {/* Guest Count */}
+                  {/* misafir sayısı */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -268,7 +275,8 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
 
               {item.type === 'tour' && (
                 <>
-                  {/* Tour Date */}
+                
+                 {/* tur tarihi */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -285,7 +293,8 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     </CardContent>
                   </Card>
 
-                  {/* Participant Count */}
+
+                  {/* katılımcı sayısı */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -324,7 +333,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
 
               {item.type === 'yacht' && (
                 <>
-                  {/* Yacht Date */}
+                  {/* yat tarihi */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -341,7 +350,10 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     </CardContent>
                   </Card>
 
-                  {/* Time Selection */}
+
+
+
+                  {/* saat seçimi */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg">{t('timeSelection')}</CardTitle>
@@ -364,7 +376,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                     </CardContent>
                   </Card>
 
-                  {/* Guest Count */}
+                  {/* misafir sayısı */}
                   <Card className="bg-gray-800 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-white text-lg flex items-center gap-2">
@@ -401,7 +413,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
                 </>
               )}
 
-              {/* Notes */}
+            
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
                   <CardTitle className="text-white text-lg">{t('specialRequests')}</CardTitle>
@@ -418,7 +430,7 @@ export default function BookingModal({ isOpen, onClose, item, onBookingSubmit }:
               </Card>
             </div>
 
-            {/* Right Column - Summary */}
+ 
             <div className="space-y-6">
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>

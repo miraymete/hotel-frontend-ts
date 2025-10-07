@@ -1,3 +1,4 @@
+// yat istekleri için servis
 import api from './api';
 
 export interface Yacht {
@@ -28,25 +29,25 @@ export interface YachtSearchParams {
 }
 
 export const yachtService = {
-  // Tüm yatları getir
+  // tüm yatlar
   async getAllYachts(): Promise<Yacht[]> {
     const response = await api.get('/api/yachts');
     return response.data;
   },
 
-  // ID ile yacht getir
+  // ID ile yat 
   async getYachtById(id: number): Promise<Yacht> {
     const response = await api.get(`/api/yachts/${id}`);
     return response.data;
   },
 
-  // Önerilen yatları getir
+  // önerilen yatlar
   async getRecommendedYachts(): Promise<Yacht[]> {
     const response = await api.get('/api/yachts/recommended');
     return response.data;
   },
 
-  // Kategoriye göre yatları getir
+  // kategoriye göre yatlar
   async getYachtsByCategory(category: string, page = 0, size = 12): Promise<{
     content: Yacht[];
     totalElements: number;
@@ -58,7 +59,7 @@ export const yachtService = {
     return response.data;
   },
 
-  // Yatları ara
+  // yat ara
   async searchYachts(params: YachtSearchParams): Promise<{
     content: Yacht[];
     totalElements: number;
@@ -78,7 +79,7 @@ export const yachtService = {
     return response.data;
   },
 
-  // Filtreleme
+  // filtrele
   async filterYachts(params: YachtSearchParams): Promise<{
     content: Yacht[];
     totalElements: number;

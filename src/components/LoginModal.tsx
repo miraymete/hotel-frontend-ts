@@ -1,3 +1,8 @@
+/*
+  giriş modal
+  e posta ve şifre ile oturum açma
+  başarı durumunda onSuccess ile kullanıcıya bildir
+*/
 import { useState, type FormEvent } from "react";
 import { login, PublicUser, requestPasswordReset } from "@/lib/auth";
 import { Eye, EyeOff } from "lucide-react";
@@ -20,12 +25,13 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
 
   if (!open) return null;
 
+  // iriş doğrulaması ve login çağrısı
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      // login içinde de kontrol var ama kullanıcıya erken ve net mesaj vermek için ek kontrol
+      // login içinde de kontrol varyinede kullanıcıya erken ve net mesaj vermek için ek kontrol
       if (password.length < 6 || !/[A-Z]/.test(password) || !/\d/.test(password)) {
         throw new Error(t('passwordTooShort'));
       }
@@ -41,7 +47,7 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
 
   return (
     <>
-      {/* Arka plan karartma */}image.png
+      {/* arka plan karartma*/}
       <div
         className="fixed inset-0 z-[70] bg-black/50"
         role="presentation"
@@ -49,7 +55,7 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
         onClick={() => setOpen(false)}
       ></div>
 
-      {/* Modal panel */}
+     
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[80] w-[400px] rounded-xl border bg-white p-6 shadow-lg">
         <h2 className="mb-4 text-xl font-bold">{t('loginTitle')}</h2>
         
@@ -59,6 +65,7 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
           </div>
         )}
         
+        {/* giriş formu */}
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label className="text-sm text-gray-600">{t('email')}</label>
@@ -91,6 +98,8 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
             </div>
           </div>
           
+
+
           <button
             type="submit"
             disabled={loading}
@@ -123,12 +132,15 @@ export default function LoginModal({ open, setOpen, onSuccess }: Props) {
             onClick={() => setForgotOpen(false)}
             onKeyDown={(e) => e.key === 'Enter' && setForgotOpen(false)}
           />
+          {/* şifre sıfırlam */}
           <ForgotPassword onClose={() => setForgotOpen(false)} />
         </div>
       )}
     </>
   );
 }
+
+
 
 function ForgotPassword({ onClose }: { onClose: () => void }) {
   const { t } = useLanguage();
@@ -137,6 +149,7 @@ function ForgotPassword({ onClose }: { onClose: () => void }) {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // şifre sıfırlama maili 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -161,6 +174,7 @@ function ForgotPassword({ onClose }: { onClose: () => void }) {
       {error && (
         <div className="mb-3 rounded-md bg-red-50 p-2 text-sm text-red-700">{error}</div>
       )}
+      {/* e posta alanı ve gönder butonu */}
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label className="text-sm text-gray-600">{t('email')}</label>

@@ -1,3 +1,4 @@
+// uygulama giriş noktası reactdom ve router sarmalayıcı
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

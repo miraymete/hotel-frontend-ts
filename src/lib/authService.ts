@@ -1,31 +1,32 @@
+//auth isteklerini yapan servis
 import api from './api';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:6060';
 
-// login isteği için gerekli alanlar (username veya email ile login)
+// login isteği için gerekli lausername email ile login
 export interface LoginRequest {
   username: string; // Bu alan username veya email olabilir
   password: string;
 }
 
-// register isteği için gerekli alanlar (backend ile uyumlu)
+// register isteği için gerekli 
 export interface RegisterRequest {
-  fullName: string; // Backend'de username yerine fullName kullanılıyor
+  fullName: string; // backendde username değil de fullname 
   email: string;
   password: string;
-  role?: string; // Optional role alanı
+  role?: string; 
   phoneNumber?: string;
   dateOfBirth?: string;
 }
 
-// kullanıcı bilgileri (genişletilmiş - backend ile uyumlu)
+// kullanıcı bilgileri 
 export interface User {
   id: number;
   username: string;
   email: string;
   role: string;
-  fullName?: string; // Backend'de fullName kullanılıyor
+  fullName?: string; 
   phoneNumber?: string;
   dateOfBirth?: string;
   profileImageUrl?: string;
@@ -40,13 +41,14 @@ export interface AuthResponse {
   user: User;
 }
 
+//BURAYI TEKRAR ANLAMAYA ÇALIŞ!!
 // backend ile giriş yapma fonksiyonu tokeni localstorage a yazar
 export const login = async (credentials: LoginRequest): Promise<AuthResponse> => {
   try {
     // backend'e giriş isteği gönder
     const response = await api.post('/api/auth/login', credentials);
     
-    // backend'den gelen token ve kullanıcı bilgilerini al
+    // backendden gelen token ve kullanıcı bilgilerini al
     const { token, user } = response.data;
     
     // token ve kullanıcı bilgilerini tarayıcıda sakla
@@ -67,16 +69,16 @@ export const login = async (credentials: LoginRequest): Promise<AuthResponse> =>
   }
 };
 
-// backend ile kayıt olma fonksiyonu başarıda token ve user döndürür
+// backend ile kayıt olma fonksiyonu token ve user döndürür
 export const register = async (userData: RegisterRequest): Promise<AuthResponse> => {
   try {
-    // backend'e kayıt isteği gönder
+    // backende kayıt isteği gönder
     const response = await api.post('/api/auth/register', userData);
     
-    // backend'den gelen token ve kullanıcı bilgilerini al
+    // token ve kullanıcı bilgilerini al
     const { token, user } = response.data;
     
-    // token ve kullanıcı bilgilerini tarayıcıda sakla
+    // tarayıcıda sakla
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
 
@@ -92,26 +94,24 @@ export const register = async (userData: RegisterRequest): Promise<AuthResponse>
       errorMessage = error.message;
     }
     
-    console.error('Register error:', error); // Debug için log ekle
+    console.error('Register error:', error); 
     throw new Error(errorMessage);
   }
 };
 
-// çıkış fonksiyonu localstorage i temizler
 export const logout = () => {
   // tarayıcıdan token ve kullanıcı bilgilerini sil
   localStorage.removeItem('token');
   localStorage.removeItem('user');
 };
 
-// mevcut kullanıcıyı localstorage dan okur
 export const getCurrentUser = (): User | null => {
   // tarayıcıdan kullanıcı bilgilerini al
   const userStr = localStorage.getItem('user');
   if (!userStr) return null;
   
   try {
-    // json string'i user objesine çevir
+    // user objesine çevir
     return JSON.parse(userStr);
   } catch {
     return null;
@@ -120,11 +120,10 @@ export const getCurrentUser = (): User | null => {
 
 // kullanıcı oturumu var mı kontrol eder
 export const isAuthenticated = (): boolean => {
-  // token var mı kontrol et
   return !!localStorage.getItem('token');
 };
 
-// kullanıcı hesap bilgilerini getir
+//hesap bilgilerini getir
 export const getAccountInfo = async (): Promise<User> => {
   const token = localStorage.getItem('token');
   if (!token) {

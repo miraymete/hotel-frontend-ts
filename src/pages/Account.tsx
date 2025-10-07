@@ -1,11 +1,10 @@
 /**
- * Hesap Bilgileri Sayfası
+ * bilgileri sayfası
  * 
- * Bu sayfa kullanıcının hesap bilgilerini görüntüler:
- * - Profil bilgileri
- * - Rezervasyon geçmişi
- * - Hesap ayarları
- * - Çıkış yapma
+ * profil bilgileri
+ * rezervo geçmişi
+ * hesap ayarları
+ * çıkış yapma
  */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -37,18 +36,17 @@ export default function AccountPage({ user, onLogout }: Props) {
   const { t } = useLanguage();
   const navigate = useNavigate();
   
-  // Edit profile state
+  // edit profile 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editedName, setEditedName] = useState(user?.name || '');
   const [editedEmail, setEditedEmail] = useState(user?.email || '');
 
-  // Eğer kullanıcı giriş yapmamışsa login sayfasına yönlendir
+  // kullanıcı giriş yapmadıysa girişe yönlendirr
   if (!user) {
     navigate('/login');
     return null;
   }
 
-  // Mock veriler - gerçek uygulamada API'den gelecek
   interface Reservation {
     id: number;
     type: string;
@@ -62,7 +60,7 @@ export default function AccountPage({ user, onLogout }: Props) {
   }
   
   const mockReservations: Reservation[] = [];
-  const mockFavorites = 0; // Gerçek uygulamada API'den gelecek
+  const mockFavorites = 0; 
 
   const handleLogout = () => {
     onLogout();
@@ -76,10 +74,9 @@ export default function AccountPage({ user, onLogout }: Props) {
   };
 
   const handleSaveProfile = () => {
-    // Burada API çağrısı yapılacak
+    // api çağrısı
     console.log('Saving profile:', { name: editedName, email: editedEmail });
     setIsEditingProfile(false);
-    // Gerçek uygulamada user state'i güncellenecek
   };
 
   const handleCancelEdit = () => {
@@ -93,18 +90,18 @@ export default function AccountPage({ user, onLogout }: Props) {
   };
 
   const handleReviewsClick = () => {
-    // Reviews sayfasına yönlendir (henüz yok)
+    // REVIEW YAPMAYI UNUTMA!!
     console.log('Reviews clicked');
   };
 
   const handleSettingsClick = () => {
-    // Settings sayfasına yönlendir (henüz yok)
+    // SETTING YAPMAYI UNUTMA
     console.log('Settings clicked');
   };
 
   return (
     <div className="min-h-screen bg-gray-950">
-      {/* Header */}
+      {/* header */}
       <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-black/95 backdrop-blur-md border-b border-gray-800">
         <Link to="/" className="flex items-center space-x-3 text-white hover:text-yellow-400 transition-colors">
           <span className="text-xl font-light tracking-wider">{t('brand')}</span>
@@ -126,7 +123,6 @@ export default function AccountPage({ user, onLogout }: Props) {
       </header>
 
       <div className="container mx-auto px-6 py-12 max-w-6xl">
-        {/* Geri Dön Butonu */}
         <div className="mb-8">
           <Link 
             to="/" 
@@ -137,7 +133,7 @@ export default function AccountPage({ user, onLogout }: Props) {
           </Link>
         </div>
 
-        {/* Sayfa Başlığı */}
+        {/* başlık */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-light text-white mb-4">
             {t('myAccount')}
@@ -148,9 +144,8 @@ export default function AccountPage({ user, onLogout }: Props) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Sol Kolon - Profil Bilgileri */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Profil Kartı */}
+            {/* profil */}
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader className="text-center pb-4">
                 <div className="flex justify-center mb-4">
@@ -240,7 +235,6 @@ export default function AccountPage({ user, onLogout }: Props) {
               </CardContent>
             </Card>
 
-            {/* Hızlı İşlemler */}
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white text-lg font-light">
@@ -285,7 +279,7 @@ export default function AccountPage({ user, onLogout }: Props) {
             </Card>
           </div>
 
-          {/* Sağ Kolon - Rezervasyon Geçmişi */}
+          {/* rezervo geçmişi */}
           <div className="lg:col-span-2 space-y-6">
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
@@ -363,7 +357,6 @@ export default function AccountPage({ user, onLogout }: Props) {
               </CardContent>
             </Card>
 
-            {/* İstatistikler */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-6 text-center">

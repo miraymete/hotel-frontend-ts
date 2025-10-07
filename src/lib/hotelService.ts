@@ -1,4 +1,16 @@
+// otel istekleri için servis
 import api from './api';
+// hata mesajını güvenli biçimde çıkaran yardımcı
+function messageFromError(error: unknown, fallback: string): string {
+  // axios benzeri response.message yapısını güvenli kontrol et
+  if (typeof error === 'object' && error !== null && 'response' in error) {
+    const resp = (error as { response?: { data?: { message?: string } } }).response;
+    const msg = resp?.data?.message;
+    if (typeof msg === 'string' && msg.trim().length > 0) return msg;
+  }
+  if (error instanceof Error && error.message) return error.message;
+  return fallback;
+}
 
 // otel bilgileri
 export interface Hotel {
@@ -14,7 +26,6 @@ export interface Hotel {
   ratingLabel?: string;
   reviewCount?: number;
   imageUrl?: string;
-  lastMinute?: boolean;
   amenities?: string[];
 }
 
@@ -49,11 +60,11 @@ export interface SearchParams {
 // tüm otelleri getir
 export const getHotels = async (): Promise<Hotel[]> => {
   try {
-    // backend'den otel listesini al
+    // otel listesini al
     const response = await api.get('/api/hotels');
     return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Otel listesi alınamadı');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Otel listesi alınamadı'));
   }
 };
 
@@ -63,63 +74,46 @@ export const getHotelById = async (id: number): Promise<Hotel> => {
     // backend'den otel detayını al
     const response = await api.get(`/api/hotels/${id}`);
     return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Otel detayı alınamadı');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Otel detayı alınamadı'));
   }
 };
 
 // otel arama fonksiyonu
-export const searchHotels = async (params: SearchParams): Promise<{ content: Hotel[], totalElements: number, totalPages: number }> => {
+export const searchHotels = async (params: SearchParams): Promise<Hotel[]> => {
   try {
-    // backend'e arama parametreleri ile istek gönder
     const response = await api.get('/api/hotels/search', { params });
     return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Arama başarısız');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Arama başarısız'));
   }
 };
 
-// son dakika otellerini getir
-export const getLastMinuteHotels = async (page: number = 0, size: number = 10): Promise<{ content: Hotel[], totalElements: number, totalPages: number }> => {
-  try {
-    // backend'den son dakika otellerini al
-    const response = await api.get('/api/hotels/last-minute', {
-      params: { page, size }
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Son dakika otelleri alınamadı');
-  }
-};
-
-// yeni otel ekle (admin yetkisi gerekli)
+// yeni otel ekle 
 export const createHotel = async (hotelData: HotelRequest): Promise<Hotel> => {
   try {
-    // backend'e yeni otel bilgilerini gönder
     const response = await api.post('/api/hotels', hotelData);
     return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Otel eklenemedi');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Otel eklenemedi'));
   }
 };
 
-// mevcut oteli güncelle (admin yetkisi gerekli)
+// mevcut oteli güncelle
 export const updateHotel = async (id: number, hotelData: HotelRequest): Promise<Hotel> => {
   try {
-    // backend'e güncellenmiş otel bilgilerini gönder
     const response = await api.put(`/api/hotels/${id}`, hotelData);
     return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Otel güncellenemedi');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Otel güncellenemedi'));
   }
 };
 
-// oteli sil (admin yetkisi gerekli)
+// oteli sil 
 export const deleteHotel = async (id: number): Promise<void> => {
   try {
-    // backend'e otel silme isteği gönder
     await api.delete(`/api/hotels/${id}`);
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Otel silinemedi');
+  } catch (error: unknown) {
+    throw new Error(messageFromError(error, 'Otel silinemedi'));
   }
 };

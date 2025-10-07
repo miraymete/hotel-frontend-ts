@@ -1,3 +1,4 @@
+// tur istekleri için servis
 import api from './api';
 
 export interface Tour {
@@ -28,7 +29,7 @@ export interface TourSearchParams {
 }
 
 export const tourService = {
-  // Tüm turları getir
+  // turları getir
   async getAllTours(): Promise<Tour[]> {
     const response = await api.get('/api/tours');
     return response.data;
@@ -40,13 +41,13 @@ export const tourService = {
     return response.data;
   },
 
-  // Önerilen turları getir
+  // önerilen turlar
   async getRecommendedTours(): Promise<Tour[]> {
     const response = await api.get('/api/tours/recommended');
     return response.data;
   },
 
-  // Kategoriye göre turları getir
+  // kategoriye göre turlar
   async getToursByCategory(category: string, page = 0, size = 12): Promise<{
     content: Tour[];
     totalElements: number;
@@ -58,7 +59,7 @@ export const tourService = {
     return response.data;
   },
 
-  // Turları ara
+  // tur ara
   async searchTours(params: TourSearchParams): Promise<{
     content: Tour[];
     totalElements: number;
@@ -78,7 +79,7 @@ export const tourService = {
     return response.data;
   },
 
-  // Filtreleme
+  // filtrele
   async filterTours(params: TourSearchParams): Promise<{
     content: Tour[];
     totalElements: number;

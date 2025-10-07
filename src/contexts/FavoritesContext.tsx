@@ -8,7 +8,7 @@ export interface FavoriteHotel {
   image: string;        // görsel url
   location: string;     // konumu
   price?: string | number;        
-  rating: number;       // puan (1-5)
+  rating: number;       // puan 1-5
   reviews: number;      // yorum sayısı
   description?: string; // açıklama
   tags?: string[];      // etiketler
@@ -16,7 +16,7 @@ export interface FavoriteHotel {
 }
 
 interface FavoritesContextType {
-  favorites: FavoriteHotel[];                           // favori oteller listesi
+  favorites: FavoriteHotel[];                          
   addToFavorites: (hotel: FavoriteHotel) => void;      // favorilere ekleme
   removeFromFavorites: (hotelId: string) => void;      // favorilerden çıkarma
   isFavorite: (hotelId: string) => boolean;            // favori durumu kontrolü
@@ -25,7 +25,7 @@ interface FavoritesContextType {
 // başlangıçta undefined
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
-// contexti kullanmak için custom hook
+// contexti kullanmak için custom hook 
 export const useFavorites = () => {
   const context = useContext(FavoritesContext);
   if (context === undefined) {
@@ -39,10 +39,10 @@ interface Props {
 }
 
 export const FavoritesProvider: React.FC<Props> = ({ children }) => {
-  // favori oteller listesi statei
+  // favori oteller listesi statei 
   const [favorites, setFavorites] = useState<FavoriteHotel[]>([]);
 
-  // uygulama başladığında localstoragedan favorileri yükle
+  // uygulama başladığında localstoragedan favorileri yüklr
   useEffect(() => {
     const savedFavorites = localStorage.getItem('hotel-favorites');
     if (savedFavorites) {
@@ -54,7 +54,7 @@ export const FavoritesProvider: React.FC<Props> = ({ children }) => {
     }
   }, []);
 
-  // favoriler değiştiğinde localstoragea kaydet
+  // favoriler değiştiğinde localstoragea kaydetttt 
   useEffect(() => {
     localStorage.setItem('hotel-favorites', JSON.stringify(favorites));
   }, [favorites]);
@@ -76,7 +76,7 @@ export const FavoritesProvider: React.FC<Props> = ({ children }) => {
     setFavorites(prev => prev.filter(fav => fav.id !== hotelId));
   };
 
-  // otelin favori olup olmadığını kontrol etme 
+  // otelin favori olup olmadığını kontrol 
   const isFavorite = (hotelId: string) => {
     return favorites.some(fav => fav.id === hotelId);
   };

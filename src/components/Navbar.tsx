@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 function Navbar() {
   return (
     <nav className="flex space-x-8 text-gray-700 font-medium bg-white p-4 shadow-sm">
