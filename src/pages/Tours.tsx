@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Star, MapPin, Heart, Clock, Users } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Heart, Clock, Users, Calendar } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useAuth } from "@/lib/auth";
+import BookingModal, { BookingItem } from "@/components/BookingModal";
+import { Button } from "@/components/ui/button";
 
 interface Tour {
   id: string;
@@ -26,12 +29,52 @@ export default function ToursPage() {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
   const { formatPrice } = useCurrency();
+  const { isAuthenticated } = useAuth();
+  
+  // Booking modal state
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedTour, setSelectedTour] = useState<BookingItem | null>(null);
 
   const toggleFavorite = (tour: Tour) => {
     if (isFavorite(tour.id)) {
       removeFromFavorites(tour.id);
     } else {
       addToFavorites(tour);
+    }
+  };
+
+  const handleBookingClick = (tour: Tour) => {
+    if (!isAuthenticated()) {
+      alert('Rezervasyon yapmak için giriş yapmalısınız');
+      return;
+    }
+
+    const bookingItem: BookingItem = {
+      id: parseInt(tour.id),
+      name: tour.name,
+      location: tour.location,
+      type: 'tour',
+      basePrice: tour.price,
+      currency: 'TRY',
+      imageUrl: tour.image,
+      description: tour.description,
+    };
+
+    setSelectedTour(bookingItem);
+    setBookingModalOpen(true);
+  };
+
+  const handleBookingSubmit = async (bookingData: any) => {
+    try {
+      // Burada API çağrısı yapılacak
+      console.log('Tour booking data:', bookingData);
+      
+      // Mock success
+      alert('Tur rezervasyonu başarıyla oluşturuldu!');
+      setBookingModalOpen(false);
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Rezervasyon sırasında bir hata oluştu');
     }
   };
 
@@ -458,15 +501,29 @@ export default function ToursPage() {
                   <div className="text-2xl font-bold text-yellow-600">
                     {formatPrice(tour.price)}
                   </div>
-                       <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                       <Button 
+                         onClick={() => handleBookingClick(tour)}
+                         className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+                       >
+                         <Calendar className="w-4 h-4" />
                          {t('reservation')}
-                       </button>
+                       </Button>
                   </div>
                 </div>
               </div>
             ))}
         </div>
       </main>
+
+      {/* Booking Modal */}
+      {selectedTour && (
+        <BookingModal
+          isOpen={bookingModalOpen}
+          onClose={() => setBookingModalOpen(false)}
+          item={selectedTour}
+          onBookingSubmit={handleBookingSubmit}
+        />
+      )}
     </div>
   );
 }

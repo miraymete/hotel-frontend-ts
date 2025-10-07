@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Star, MapPin, Heart } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Heart, Calendar } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/lib/auth";
+import BookingModal, { BookingItem } from "@/components/BookingModal";
+import { Button } from "@/components/ui/button";
 
 interface Hotel {
   id: string;
@@ -24,12 +27,52 @@ export default function HotelsPage() {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { formatPrice } = useCurrency();
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
+  
+  // Booking modal state
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedHotel, setSelectedHotel] = useState<BookingItem | null>(null);
 
   const toggleFavorite = (hotel: Hotel) => {
     if (isFavorite(hotel.id)) {
       removeFromFavorites(hotel.id);
     } else {
       addToFavorites(hotel);
+    }
+  };
+
+  const handleBookingClick = (hotel: Hotel) => {
+    if (!isAuthenticated()) {
+      alert('Rezervasyon yapmak için giriş yapmalısınız');
+      return;
+    }
+
+    const bookingItem: BookingItem = {
+      id: parseInt(hotel.id),
+      name: hotel.name,
+      location: hotel.location,
+      type: 'hotel',
+      basePrice: hotel.price,
+      currency: 'TRY',
+      imageUrl: hotel.image,
+      description: hotel.description,
+    };
+
+    setSelectedHotel(bookingItem);
+    setBookingModalOpen(true);
+  };
+
+  const handleBookingSubmit = async (bookingData: any) => {
+    try {
+      // Burada API çağrısı yapılacak
+      console.log('Hotel booking data:', bookingData);
+      
+      // Mock success
+      alert('Rezervasyon başarıyla oluşturuldu!');
+      setBookingModalOpen(false);
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Rezervasyon sırasında bir hata oluştu');
     }
   };
 
@@ -362,15 +405,29 @@ export default function HotelsPage() {
                   <div className="text-2xl font-bold text-yellow-400">
                     {formatPrice(hotel.price)}
                   </div>
-                  <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                  <Button 
+                    onClick={() => handleBookingClick(hotel)}
+                    className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+                  >
+                    <Calendar className="w-4 h-4" />
                     {t('reservation')}
-                  </button>
+                  </Button>
                 </div>
                 </div>
               </div>
             ))}
         </div>
       </main>
+
+      {/* Booking Modal */}
+      {selectedHotel && (
+        <BookingModal
+          isOpen={bookingModalOpen}
+          onClose={() => setBookingModalOpen(false)}
+          item={selectedHotel}
+          onBookingSubmit={handleBookingSubmit}
+        />
+      )}
     </div>
   );
 }

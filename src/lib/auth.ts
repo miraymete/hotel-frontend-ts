@@ -91,3 +91,22 @@ export async function requestPasswordReset(email: string): Promise<void> {
 export function logout() {
   backendLogout();
 }
+
+// Authentication hook
+export function useAuth() {
+  const isAuthenticated = (): boolean => {
+    return !!localStorage.getItem('token');
+  };
+
+  const getCurrentUser = (): PublicUser | null => {
+    return getCurrentUser();
+  };
+
+  return {
+    isAuthenticated,
+    getCurrentUser,
+    login,
+    logout,
+    register
+  };
+}

@@ -4,6 +4,9 @@ import { ArrowLeft, Star, MapPin, Heart, Users, Calendar } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useAuth } from "@/lib/auth";
+import BookingModal, { BookingItem } from "@/components/BookingModal";
+import { Button } from "@/components/ui/button";
 
 interface Yacht {
   id: string;
@@ -26,12 +29,52 @@ export default function YachtsPage() {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { t } = useLanguage();
   const { formatPrice } = useCurrency();
+  const { isAuthenticated } = useAuth();
+  
+  // Booking modal state
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedYacht, setSelectedYacht] = useState<BookingItem | null>(null);
 
   const toggleFavorite = (yacht: Yacht) => {
     if (isFavorite(yacht.id)) {
       removeFromFavorites(yacht.id);
     } else {
       addToFavorites(yacht);
+    }
+  };
+
+  const handleBookingClick = (yacht: Yacht) => {
+    if (!isAuthenticated()) {
+      alert('Rezervasyon yapmak için giriş yapmalısınız');
+      return;
+    }
+
+    const bookingItem: BookingItem = {
+      id: parseInt(yacht.id),
+      name: yacht.name,
+      location: yacht.location,
+      type: 'yacht',
+      basePrice: yacht.price,
+      currency: 'TRY',
+      imageUrl: yacht.image,
+      description: yacht.description,
+    };
+
+    setSelectedYacht(bookingItem);
+    setBookingModalOpen(true);
+  };
+
+  const handleBookingSubmit = async (bookingData: any) => {
+    try {
+      // Burada API çağrısı yapılacak
+      console.log('Yacht booking data:', bookingData);
+      
+      // Mock success
+      alert('Yat rezervasyonu başarıyla oluşturuldu!');
+      setBookingModalOpen(false);
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Rezervasyon sırasında bir hata oluştu');
     }
   };
 
@@ -458,15 +501,29 @@ export default function YachtsPage() {
                   <div className="text-2xl font-bold text-yellow-600">
                     {formatPrice(yacht.price)}/gün
                   </div>
-                       <button className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                       <Button 
+                         onClick={() => handleBookingClick(yacht)}
+                         className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+                       >
+                         <Calendar className="w-4 h-4" />
                          {t('reservation')}
-                       </button>
+                       </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </main>
+
+      {/* Booking Modal */}
+      {selectedYacht && (
+        <BookingModal
+          isOpen={bookingModalOpen}
+          onClose={() => setBookingModalOpen(false)}
+          item={selectedYacht}
+          onBookingSubmit={handleBookingSubmit}
+        />
+      )}
     </div>
   );
 }
