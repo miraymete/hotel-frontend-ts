@@ -415,7 +415,7 @@ export default function ToursPage() {
               return tour.category === filterMap[activeFilter];
             })
             .map((tour) => (
-            <div key={tour.id} className="bg-white/10 backdrop-blur-sm rounded-none shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl hover:border-yellow-400/50 transition-all duration-300">
+            <div key={tour.id} className="bg-white/5 backdrop-blur-sm rounded-none shadow-lg border border-white/10 overflow-hidden hover:bg-white/10 hover:shadow-xl hover:border-yellow-400/50 transition-all duration-300">
               <div className="relative">
                   <img
                     src={tour.image}
