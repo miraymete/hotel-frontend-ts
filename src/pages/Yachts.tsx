@@ -386,7 +386,7 @@ export default function YachtsPage() {
               <button
                 key={filter.key}
                 onClick={() => handleFilter(filter.key)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-none text-sm font-medium transition-colors ${
                   activeFilter === filter.key
                     ? "bg-yellow-600 text-white"
                     : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/20"
@@ -411,7 +411,7 @@ export default function YachtsPage() {
               return yacht.category === filterMap[activeFilter];
             })
             .map((yacht) => (
-            <div key={yacht.id} className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl transition-all duration-300">
+            <div key={yacht.id} className="bg-white/10 backdrop-blur-sm rounded-none shadow-lg border border-white/20 overflow-hidden hover:bg-white/20 hover:shadow-xl hover:border-yellow-400/50 transition-all duration-300">
               <div className="relative">
                 <img
                   src={yacht.image}
@@ -420,14 +420,14 @@ export default function YachtsPage() {
                 />
                 {yacht.isRecommended && (
                        <div className="absolute top-3 right-3">
-                         <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                         <span className="bg-yellow-600 text-white px-3 py-1 rounded-none text-xs font-medium">
                            {t('recommended')}
                          </span>
                        </div>
                 )}
                 <button
                   onClick={() => toggleFavorite(yacht)}
-                  className="absolute top-3 left-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
+                  className="absolute top-3 left-3 p-2 bg-white/80 rounded-none hover:bg-white transition-colors"
                 >
                   <Heart
                     className={`w-5 h-5 ${
@@ -451,7 +451,7 @@ export default function YachtsPage() {
                   {yacht.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-white/20 text-white/90 rounded-full text-xs font-medium border border-white/30"
+                      className="px-3 py-1 bg-white/20 text-white/90 rounded-none text-xs font-medium border border-white/30"
                     >
                       {translateText(tag)}
                     </span>
@@ -490,7 +490,7 @@ export default function YachtsPage() {
                   </div>
                        <Button 
                          onClick={() => handleBookingClick(yacht)}
-                         className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+                         className="bg-yellow-400 text-black hover:bg-yellow-300 font-medium px-6 py-2 rounded-none transition-colors flex items-center gap-2"
                        >
                          <Calendar className="w-4 h-4" />
                          {t('reservation')}
